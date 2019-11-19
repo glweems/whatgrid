@@ -1,17 +1,15 @@
 import React from 'react';
-import { Layout, Grid, Box } from '../components';
+import { Layout, Grid, Controls } from '../components';
 import useGrid from '../hooks/useGrid';
 
 export default function IndexPage() {
-  const { state, addRow } = useGrid();
-  console.log('TCL: IndexPage -> state', state);
+  const reducer = useGrid();
+
   return (
     <Layout>
       <p>Hello, world!</p>
-      {JSON.stringify(state)}
-      {/* <Controls /> */}
-      <button onClick={addRow}>click</button>
-      <Grid {...state}></Grid>
+      <Controls {...reducer} />
+      <Grid {...reducer} />
     </Layout>
   );
 }

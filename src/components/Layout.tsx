@@ -1,10 +1,8 @@
 import { graphql, useStaticQuery } from 'gatsby';
-import React, { FC } from 'react';
+import React, { ReactNode } from 'react';
 import { Helmet } from 'react-helmet-async';
-import { theme } from '../utils/theme';
-import useGrid from '../hooks/useGrid';
 
-export const Layout: FC = ({ children }) => {
+export default ({ children }: { children: ReactNode }) => {
   const data = useStaticQuery(graphql`
     {
       site {
@@ -20,10 +18,7 @@ export const Layout: FC = ({ children }) => {
 
   return (
     <React.StrictMode>
-      <Helmet
-        titleTemplate={`%s | ${data.site.siteMetadata.title}`}
-        defaultTitle={data.site.siteMetadata.title}
-      >
+      <Helmet titleTemplate={`%s | ${data.site.siteMetadata.title}`} defaultTitle={data.site.siteMetadata.title}>
         <html lang={data.site.siteMetadata.languageCode} />
         <meta name="description" content={data.site.siteMetadata.description} />
 

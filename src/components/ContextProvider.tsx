@@ -1,48 +1,46 @@
+/* eslint-disable max-len */
 import * as React from 'react';
-import useGrid, { initialState, UseGridValues } from '../hooks/useGrid';
 import { StateInspector } from 'reinspect';
+import uuid from 'uuid/v4';
+import useGrid, { UseGrid, initialRows, initialColumns } from '../hooks/useGrid';
 
-const GridContext = React.createContext<UseGridValues>({
-  state: initialState,
+const GridContext = React.createContext({
+  rows: initialRows,
+  columns: initialColumns,
   addRow: () => {},
-  deleteRow: (item: GridValue) => {},
+  deleteRow: () => {},
   addColumn: () => {},
-  deleteColumn: (item: GridValue) => {},
+  deleteColumn: () => {},
+  updateGridItem: () => {},
+  gridTemplateRows: '1fr 1fr 1fr',
+  gridTemplateColumns: '1fr 1fr 1fr',
+  gap: '1em 1em',
 });
 
 const GridProvider: React.FC = ({ children }) => {
-  const { state, addRow, deleteRow, addColumn, deleteColumn } = useGrid();
-  return (
-    <GridContext.Provider
-      value={{ state, addRow, deleteRow, addColumn, deleteColumn }}
-    >
-      <StateInspector>{children}</StateInspector>
-    </GridContext.Provider>
-  );
+  const grid = useGrid();
+  return <GridContext.Provider value={{ ...grid }}>{children}</GridContext.Provider>;
 };
 
-const ProviderComposer = ({ contexts, children }: any) => {
-  return contexts.reduceRight((kids: any, parent: any) => {
-    return React.cloneElement(parent, {
-      children: kids,
-    });
-  }, children);
-};
+const ProviderComposer: React.FC<{ contexts: any }> = ({ contexts, children }: any) =>
+  contexts.reduceRight(
+    (kids: any, parent: any) =>
+      React.cloneElement(parent, {
+        children: kids,
+      }),
+    children,
+  );
 
 const ContextProvider: React.FC = ({ children }: any) => (
-  <ProviderComposer contexts={[<GridProvider />]}>{children}</ProviderComposer>
+  <ProviderComposer contexts={[<GridProvider key={uuid()} />]}>{children}</ProviderComposer>
 );
 
 export default ContextProvider;
 
-export const wrapRootElement: React.FC<{ element: React.ReactNode }> = ({
-  element,
-}) => (
-  <ContextProvider>
-    <StateInspector name="css grid" initialState={initialState}>
-      {element}
-    </StateInspector>
-  </ContextProvider>
+export const wrapPageElement: React.FC<{ element: React.ReactNode }> = ({ element }) => (
+  <ContextProvider>{element}</ContextProvider>
 );
 
-// export const wrapPageElement: React.FC = ({ children }) => <>{children}</>;
+export const wrapRootElement: React.FC<{ element: React.ReactElement }> = ({ element }) => (
+  <StateInspector name="css-grid">{element}</StateInspector>
+);

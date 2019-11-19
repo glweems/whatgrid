@@ -12,34 +12,24 @@
     "prettier/@typescript-eslint",
     "prettier/react"
   ],
-  "plugins": [
-    "style-components"
-  ],
   "env": {
     "browser": true
   },
   "rules": {
+    "@typescript-eslint/no-empty-interface": "warn",
     "react/prop-types": "off",
     "@typescript-eslint/explicit-function-return-type": "off",
-    "emotion/syntax-preference": [
-      "error",
-      "string"
-    ],
     "react/jsx-filename-extension": [
       "error",
       {
-        "extensions": [
-          ".tsx"
-        ]
+        "extensions": [".tsx"]
       }
     ],
     "react/jsx-props-no-spreading": "off"
   },
   "overrides": [
     {
-      "files": [
-        "**/*.test.{ts,tsx}"
-      ],
+      "files": ["**/*.test.{ts,tsx}"],
       "rules": {
         "import/no-extraneous-dependencies": [
           "error",

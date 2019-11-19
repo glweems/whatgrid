@@ -1,1 +1,1 @@
-export { wrapRootElement, wrapPageElement } from './src/components';
+export { wrapRootElement, wrapPageElement } from './src/components/ContextProvider.tsx';

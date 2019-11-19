@@ -1,14 +1,25 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
+import useGrid from '../hooks/useGrid';
 
-interface Props {
-  columns: GridValue;
-}
+export default () => {
+  const { GridItems, gridTemplateRows, gridTemplateColumns, gap } = useGrid();
 
-export const Grid: React.FC<Props> = ({ columns, children }) => {
-  return <Wrapper columns={columns}>{children}</Wrapper>;
+  return (
+    <CssGrid
+      style={{
+        gridTemplateColumns,
+        gridTemplateRows,
+        gap,
+      }}
+    >
+      <GridItems />
+    </CssGrid>
+  );
 };
 
-const Wrapper = styled.div<Props>`
+const CssGrid = styled.div`
   display: grid;
+  width: 100%;
+  height: 100%;
 `;

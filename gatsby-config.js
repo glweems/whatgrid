@@ -1,8 +1,7 @@
 module.exports = {
   siteMetadata: {
     title: 'Gatsby Strict Starter',
-    description:
-      'Demo for a Gatsby starter with strict linting and auto-formatting rules.',
+    description: 'Demo for a Gatsby starter with strict linting and auto-formatting rules.',
     languageCode: 'en',
     countryCode: 'US',
   },
