@@ -7,6 +7,7 @@ export default () => {
 
   return (
     <CssGrid
+      className="CssGrid"
       style={{
         gridTemplateColumns,
         gridTemplateRows,

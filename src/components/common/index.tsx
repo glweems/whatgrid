@@ -1,5 +1,5 @@
 import React, { FC, Fragment } from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/macro';
 import uuid from 'uuid/v4';
 
 export const Box = styled.div`

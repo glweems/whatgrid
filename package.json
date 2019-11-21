@@ -14,11 +14,18 @@
     "test": "jest",
     "type-check": "tsc --noEmit"
   },
+  "babelMacros": {
+    "styledComponents": {
+      "pure": true,
+      "ssr": false
+    }
+  },
   "dependencies": {
     "@rhysforyou/gatsby-plugin-react-helmet-async": "^0.1.1",
     "@types/styled-components": "^4.4.0",
     "@types/uuid": "^3.4.6",
     "babel-jest": "^24.9.0",
+    "babel-plugin-console": "^0.2.1",
     "csstype": "^2.6.7",
     "emotion-theming": "^10.0.19",
     "formik": "^2.0.4",
@@ -28,13 +35,14 @@
     "gatsby-plugin-typescript": "^2.1.18",
     "gitmoji-cli": "^3.0.0",
     "lodash": "^4.17.15",
+    "polished": "^3.4.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-helmet-async": "^1.0.4",
     "react-spring": "^8.0.27",
     "react-testing-library": "^8.0.1",
     "reinspect": "^1.0.2",
-    "styled-components": "^5.0.0-rc.2",
+    "styled-components": "^4.4.1",
     "uuid": "^3.3.3"
   },
   "devDependencies": {
@@ -47,6 +55,8 @@
     "@types/react-helmet": "^5.0.14",
     "@typescript-eslint/eslint-plugin": "^2.8.0",
     "@typescript-eslint/parser": "^2.8.0",
+    "babel-plugin-styled-components": "^1.10.6",
+    "babel-preset-gatsby": "^0.2.22",
     "eslint": "^6.6.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-config-prettier": "^6.6.0",

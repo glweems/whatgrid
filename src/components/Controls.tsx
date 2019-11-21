@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC, SyntheticEvent, ChangeEvent, useState, KeyboardEvent } from 'react';
 import uuid from 'uuid/v4';
 import useGrid from '../hooks/useGrid';
 
@@ -9,24 +9,30 @@ interface ControlProps {
   deleteValue: (item: { id: string; [key: string]: any }) => void;
 }
 
-const Control: React.FC<ControlProps> = ({ type, item, updateValue, deleteValue }) => {
-  const handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void = (e) => {
-    e.preventDefault();
+const Control: FC<ControlProps> = ({ type, item, updateValue, deleteValue }) => {
+  const [text, setText] = useState(item.value);
 
-    updateValue({
-      ...item,
-      [e.target.name]: e.target.value,
-    });
+  const handleChange: (e: ChangeEvent<HTMLInputElement>) => void = (e) => {
+    e.preventDefault();
+    setText(e.target.value);
+  };
+  const handleKeyDown: (e: KeyboardEvent<HTMLInputElement>) => void = (e) => {
+    if (e.key === 'Enter') {
+      updateValue({
+        ...item,
+        [e.target.name]: e.target.value,
+      });
+    }
   };
 
-  const handleDelete: (e: React.SyntheticEvent<HTMLButtonElement, MouseEvent>) => void = (e) => {
+  const handleDelete: (e: SyntheticEvent<HTMLButtonElement, MouseEvent>) => void = (e) => {
     e.preventDefault();
     deleteValue(item);
   };
 
   return (
     <div>
-      <input type="text" name="value" onChange={handleChange} value={item.value} />
+      <input type="text" name="value" defaultValue={item.value} onChange={handleChange} onKeyDown={handleKeyDown} />
       <button type="button" onClick={handleDelete}>
         {`delete ${type}`}
       </button>
@@ -34,26 +40,25 @@ const Control: React.FC<ControlProps> = ({ type, item, updateValue, deleteValue 
   );
 };
 
-export const Controls: React.FC = () => {
-  const { columns, getRows, addRow, deleteRow, addColumn, deleteColumn, updateGridItem } = useGrid();
-  const rows = getRows();
+const Controls: FC = () => {
+  const { rows, columns, addRow, deleteRow, addColumn, deleteColumn, updateGridItem } = useGrid();
   return (
-    <div>
+    <div className="Controls">
       <h4>Grid Controls</h4>
       <button
         type="button"
-        onClick={(e: React.SyntheticEvent<HTMLButtonElement>): void => {
+        onClick={(e: SyntheticEvent<HTMLButtonElement>): void => {
           e.preventDefault();
-          addRow({ value: '1fr' });
+          addRow();
         }}
       >
         add row
       </button>
       <button
         type="button"
-        onClick={(e: React.SyntheticEvent<HTMLButtonElement>): void => {
+        onClick={(e: SyntheticEvent<HTMLButtonElement>): void => {
           e.preventDefault();
-          addColumn({ value: '1fr' });
+          addColumn();
         }}
       >
         add column
@@ -71,4 +76,5 @@ export const Controls: React.FC = () => {
     </div>
   );
 };
+
 export default Controls;

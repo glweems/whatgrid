@@ -107,13 +107,24 @@ const useGrid = () => {
       payload: item,
     });
 
-  const addRow = (row: { value: string }) => addGridItem({ id: uuid(), type: 'ROW', ...row });
+  const addRow = () =>
+    awaitUpdate({
+      type: actionTypes.ADD_GRID_ITEM,
+      payload: { id: uuid(), type: 'ROW', value: '1fr' },
+    });
+
+  const addColumn = () =>
+    awaitUpdate({
+      type: actionTypes.ADD_GRID_ITEM,
+      payload: { id: uuid(), type: 'COLUMN', value: '1fr' },
+    });
+
   const deleteRow = (row: { id: string; type: 'ROW'; value: string }) => deleteGridItem({ type: 'ROW', ...row });
-  const addColumn = (column: { value: string }) => addGridItem({ id: uuid(), type: 'COLUMN', ...column });
+
   const deleteColumn = (column: { id: string; type: 'COLUMN'; value: string }) =>
     deleteGridItem({ type: 'COLUMN', ...column });
 
-  const getRows = () => state.gridItems.filter(({ type }) => type === 'ROW');
+  const rows = state.gridItems.filter(({ type }) => type === 'ROW');
   const columns = state.gridItems.filter(({ type }) => type === 'COLUMN');
 
   const getGridTemplateCss = (values: GridItem[]): string => {
@@ -124,15 +135,16 @@ const useGrid = () => {
     return css;
   };
 
-  const gridTemplateRows = getGridTemplateCss(getRows());
+  const gridTemplateRows = getGridTemplateCss(rows);
   const gridTemplateColumns = getGridTemplateCss(columns);
 
   const gap = `${state.verticalGap.amount}${state.verticalGap.unit} ${state.horizontalGap.amount}${state.horizontalGap.unit}`;
 
-  const GridItems = () => Boxes({ rows: getRows(), columns });
+  const GridItems = () => Boxes({ rows, columns });
 
   return {
-    getRows,
+    dispatch,
+    rows,
     columns,
     addRow,
     deleteRow,

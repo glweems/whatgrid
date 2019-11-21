@@ -1,0 +1,9 @@
+{
+  "presets": [
+    "babel-preset-gatsby"
+  ],
+  "plugins": [
+    "babel-plugin-console",
+    "babel-plugin-styled-components"
+  ]
+}
