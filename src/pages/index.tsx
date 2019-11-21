@@ -7,7 +7,7 @@ export default function IndexPage() {
   return (
     <Layout Main={Main}>
       <h1 className="title">CSS GRIDZ</h1>
-      <Controls />
+      {/* <Controls /> */}
       <CssGrid />
     </Layout>
   );
@@ -16,10 +16,10 @@ export default function IndexPage() {
 const Main = styled.main`
   display: grid;
   grid-template-areas:
-    'title title'
-    'controls css-grid';
-  grid-template-rows: auto 1fr;
-  grid-template-columns: 300px 1fr;
+    'title'
+    'css-grid';
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr;
 
   .title {
     grid-area: title;

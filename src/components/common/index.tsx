@@ -23,12 +23,12 @@ interface BoxesProps {
   columns: GridItem[];
 }
 
-export const Boxes: React.FC<BoxesProps> = ({ rows, columns }) => (
+export const Boxes: React.FC<BoxesProps> = ({ rows, columns, ...rest }) => (
   <Fragment key={uuid()}>
     {rows.map(() => (
       <Fragment key={uuid()}>
         {columns.map(() => (
-          <Box key={uuid()} />
+          <Box key={uuid()} {...rest} />
         ))}
       </Fragment>
     ))}
