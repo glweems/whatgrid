@@ -1,14 +1,13 @@
 import React from 'react';
 import uuid from 'uuid/v4';
 
-interface Props {
+interface Props extends React.SelectHTMLAttributes<HTMLSelectElement> {
   options: string[];
-  // onChange:
 }
 
-const Select = ({ options, ...rest }: Props): React.ReactElement<HTMLSelectElement> => {
+const Select = ({ options, ...props }: Props): React.ReactElement<HTMLSelectElement> => {
   return (
-    <select {...rest}>
+    <select {...props}>
       {options.map((o) => (
         <option key={uuid()} value={o}>
           {o}

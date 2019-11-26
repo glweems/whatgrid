@@ -5,15 +5,15 @@ import { Boxes } from '../components';
 export const availableUnits = ['fr', '%', 'px', 'vw', 'vh', 'em', 'rem'];
 
 export const initialRows: GridItem[] = [
-  { id: uuid(), type: 'ROW', value: '1fr', amount: 1, unit: 'fr' },
-  { id: uuid(), type: 'ROW', value: '1fr', amount: 1, unit: 'fr' },
-  { id: uuid(), type: 'ROW', value: '1fr', amount: 1, unit: 'fr' },
+  { id: uuid(), type: 'ROW', amount: 1, unit: 'fr' },
+  { id: uuid(), type: 'ROW', amount: 1, unit: 'fr' },
+  { id: uuid(), type: 'ROW', amount: 1, unit: 'fr' },
 ];
 
 export const initialColumns: GridItem[] = [
-  { id: uuid(), type: 'COLUMN', value: '1fr', amount: 1, unit: 'fr' },
-  { id: uuid(), type: 'COLUMN', value: '1fr', amount: 1, unit: 'fr' },
-  { id: uuid(), type: 'COLUMN', value: '1fr', amount: 1, unit: 'fr' },
+  { id: uuid(), type: 'COLUMN', amount: 1, unit: 'fr' },
+  { id: uuid(), type: 'COLUMN', amount: 1, unit: 'fr' },
+  { id: uuid(), type: 'COLUMN', amount: 1, unit: 'fr' },
 ];
 
 export const initialGridItems = [...initialRows, ...initialColumns];
@@ -25,10 +25,13 @@ export const initialState = {
   gridItems: initialGridItems,
   horizontalGap: defaultGridGap,
   verticalGap: defaultGridGap,
-  updating: false,
 };
 
-type Action = { type: string; payload: { id: string; type: 'ROW' | 'COLUMN'; value: string } };
+type State = {
+  gridItems: GridItem[];
+  horizontalGap: GridGap;
+  verticleGap: GridGap;
+};
 
 export const actionTypes = {
   ADD_GRID_ITEM: 'ADD_GRID_ITEM',
@@ -38,7 +41,12 @@ export const actionTypes = {
   UPDATED: 'UPDATED',
 };
 
-export const gridReducer: (state: typeof initialState, payload?: any) => typeof initialState = (state, action) => {
+type Action = {
+  type: typeof actionTypes[keyof typeof actionTypes];
+  payload?: any;
+};
+
+export const gridReducer: (state: State, action: Action) => any = (state, action) => {
   switch (action.type) {
     case actionTypes.ADD_GRID_ITEM:
       return {
@@ -63,61 +71,34 @@ export const gridReducer: (state: typeof initialState, payload?: any) => typeof 
         }),
       };
 
-    case '@@INIT': {
-      return { ...initialState };
-    }
-
     default:
       return state;
   }
 };
 
 const useGrid = () => {
-  const [state, dispatch] = useReducer(gridReducer, initialState, (state) => initialState, 'css-grid');
+  const [state, dispatch] = useReducer(gridReducer, initialState, 'css-grid');
 
-  const awaitUpdate = (event: Action) => {
-    dispatch({ type: actionTypes.UPDATING });
-    dispatch(event);
-    dispatch({ type: actionTypes.UPDATED });
-  };
-
-  const addGridItem = (item: GridItem) =>
-    awaitUpdate({
+  const addGridItem = (item: NoIdGridItem) =>
+    dispatch({
       type: actionTypes.ADD_GRID_ITEM,
       payload: { id: uuid(), ...item },
     });
 
   const deleteGridItem = (item: GridItem) =>
-    awaitUpdate({
+    dispatch({
       type: actionTypes.DELETE_GRID_ITEM,
       payload: item,
     });
 
   const updateGridItem = (item: GridItem) =>
-    awaitUpdate({
+    dispatch({
       type: actionTypes.UPDATE_GRID_ITEM,
       payload: item,
     });
 
-  const addRow = () =>
-    awaitUpdate({
-      type: actionTypes.ADD_GRID_ITEM,
-      payload: { id: uuid(), type: 'ROW', value: '1fr' },
-    });
-
-  const addColumn = () =>
-    awaitUpdate({
-      type: actionTypes.ADD_GRID_ITEM,
-      payload: { id: uuid(), type: 'COLUMN', value: '1fr' },
-    });
-
-  const deleteRow = (row: { id: string; type: 'ROW'; value: string }) => deleteGridItem({ type: 'ROW', ...row });
-
-  const deleteColumn = (column: { id: string; type: 'COLUMN'; value: string }) =>
-    deleteGridItem({ type: 'COLUMN', ...column });
-
-  const rows = state.gridItems.filter(({ type }) => type === 'ROW');
-  const columns = state.gridItems.filter(({ type }) => type === 'COLUMN');
+  const rows: GridItem[] = state.gridItems.filter((item: GridItem) => item.type === 'ROW');
+  const columns: GridItem[] = state.gridItems.filter((item: GridItem) => item.type === 'COLUMN');
 
   const getGridTemplateCss = (values: GridItem[]): string => {
     let css = '';
@@ -138,10 +119,7 @@ const useGrid = () => {
     dispatch,
     rows,
     columns,
-    addRow,
-    deleteRow,
-    addColumn,
-    deleteColumn,
+    addGridItem,
     deleteGridItem,
     updateGridItem,
     gridTemplateRows,

@@ -1,33 +1,36 @@
-import React from 'react';
+import React, { SyntheticEvent } from 'react';
 import styled from 'styled-components/macro';
 import useGrid from '../hooks/useGrid';
 import Controls from './Controls';
 
 export default () => {
-  const { GridItems, gridTemplateRows, gridTemplateColumns, gap, addRow, addColumn } = useGrid();
+  const { GridItems, gridTemplateRows, gridTemplateColumns, gap, addGridItem } = useGrid();
 
-  const handleAddRow = (e: SyntheticEvent<HTMLButtonElement>): void => {
+  const addRow = (e: SyntheticEvent<HTMLButtonElement>): void => {
     e.preventDefault();
-    addRow();
+    addGridItem({ type: 'ROW', amount: 1, unit: 'fr' });
   };
-  const handleAddColumn = (e: SyntheticEvent<HTMLButtonElement>): void => {
+  const addColumn = (e: SyntheticEvent<HTMLButtonElement>): void => {
     e.preventDefault();
-    addColumn();
+    addGridItem({ type: 'COLUMN', amount: 1, unit: 'fr' });
   };
 
   return (
     <CssGrid className="CssGrid" gap={gap} rows={gridTemplateRows} columns={gridTemplateColumns}>
       <Controls />
+
       <div className="boxes">
-        <GridItems className="grid-item" />
+        <GridItems />
       </div>
+
       <div className="add-row">
-        <button type="button" onClick={handleAddRow}>
+        <button type="button" onClick={addRow}>
           add row
         </button>
       </div>
+
       <div className="add-column">
-        <button type="button" onClick={handleAddColumn}>
+        <button type="button" onClick={addColumn}>
           add column
         </button>
       </div>

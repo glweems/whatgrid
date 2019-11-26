@@ -14,11 +14,12 @@ const Control: FC<ControlProps> = ({ type, item }) => {
   const handleChange: (e: ChangeEvent<HTMLInputElement>) => void = (e) => {
     e.preventDefault();
   };
+
   const handleKeyDown: (e: KeyboardEvent<HTMLInputElement>) => void = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' || e.key === 'Tab') {
       updateGridItem({
         ...item,
-        amount: e.currentTarget.value,
+        amount: Number(e.currentTarget.value),
       });
     }
   };
@@ -28,10 +29,18 @@ const Control: FC<ControlProps> = ({ type, item }) => {
     deleteGridItem(item);
   };
 
+  const handleUnitChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    event.preventDefault();
+    updateGridItem({
+      ...item,
+      unit: event.currentTarget.value,
+    });
+  };
+
   return (
     <div className={`${type}-control`.toLowerCase()}>
       <input type="number" name="amount" defaultValue={item.amount} onChange={handleChange} onKeyDown={handleKeyDown} />
-      <Select options={availableUnits} />
+      <Select options={availableUnits} onChange={handleUnitChange} defaultValue={item.unit} />
       <button type="button" onClick={handleDelete}>
         {`delete ${type}`}
       </button>
@@ -40,7 +49,7 @@ const Control: FC<ControlProps> = ({ type, item }) => {
 };
 
 const Controls: FC = () => {
-  const { rows, columns, addRow, deleteRow, addColumn, deleteColumn, updateGridItem } = useGrid();
+  const { rows, columns } = useGrid();
   return (
     <>
       <div className="col">

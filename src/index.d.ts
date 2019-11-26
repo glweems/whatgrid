@@ -4,4 +4,5 @@
  */
 type GridUnit = '%' | 'fr' | 'px' | 'vw' | 'vh' | 'em' | 'rem' | string;
 
-type GridItem = { id: string; type: 'ROW' | 'COLUMN'; amount: string; unit: GridUnit };
+type GridItem = { id: string; type: string | 'ROW' | 'COLUMN'; amount: number; unit: GridUnit };
+type NoIdGridItem = { id?: string; type: string | 'ROW' | 'COLUMN'; amount: number; unit: GridUnit };
