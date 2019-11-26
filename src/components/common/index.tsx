@@ -15,7 +15,7 @@ export const Box = styled.div`
   color: #56437c;
   font-weight: 500;
   text-align: center;
-  background: linear-gradient(90deg, rgba(126, 104, 168, 1) 0%, rgba(187, 170, 221, 1) 100%);
+  background: linear-gradient(90deg, rgba(126, 104, 168, 0.25) 0%, rgba(187, 170, 221, 0.25) 100%);
   border-radius: 3px;
 `;
 interface BoxesProps {

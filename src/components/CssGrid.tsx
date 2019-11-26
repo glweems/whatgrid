@@ -4,14 +4,32 @@ import useGrid from '../hooks/useGrid';
 import Controls from './Controls';
 
 export default () => {
-  const { GridItems, gridTemplateRows, gridTemplateColumns, gap } = useGrid();
+  const { GridItems, gridTemplateRows, gridTemplateColumns, gap, addRow, addColumn } = useGrid();
+
+  const handleAddRow = (e: SyntheticEvent<HTMLButtonElement>): void => {
+    e.preventDefault();
+    addRow();
+  };
+  const handleAddColumn = (e: SyntheticEvent<HTMLButtonElement>): void => {
+    e.preventDefault();
+    addColumn();
+  };
 
   return (
     <CssGrid className="CssGrid" gap={gap} rows={gridTemplateRows} columns={gridTemplateColumns}>
       <Controls />
-      {/* <div /> */}
       <div className="boxes">
         <GridItems className="grid-item" />
+      </div>
+      <div className="add-row">
+        <button type="button" onClick={handleAddRow}>
+          add row
+        </button>
+      </div>
+      <div className="add-column">
+        <button type="button" onClick={handleAddColumn}>
+          add column
+        </button>
       </div>
     </CssGrid>
   );

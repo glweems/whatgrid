@@ -5,15 +5,15 @@ import { Boxes } from '../components';
 export const availableUnits = ['fr', '%', 'px', 'vw', 'vh', 'em', 'rem'];
 
 export const initialRows: GridItem[] = [
-  { id: uuid(), type: 'ROW', value: '1fr' },
-  { id: uuid(), type: 'ROW', value: '1fr' },
-  { id: uuid(), type: 'ROW', value: '1fr' },
+  { id: uuid(), type: 'ROW', value: '1fr', amount: 1, unit: 'fr' },
+  { id: uuid(), type: 'ROW', value: '1fr', amount: 1, unit: 'fr' },
+  { id: uuid(), type: 'ROW', value: '1fr', amount: 1, unit: 'fr' },
 ];
 
 export const initialColumns: GridItem[] = [
-  { id: uuid(), type: 'COLUMN', value: '1fr' },
-  { id: uuid(), type: 'COLUMN', value: '1fr' },
-  { id: uuid(), type: 'COLUMN', value: '1fr' },
+  { id: uuid(), type: 'COLUMN', value: '1fr', amount: 1, unit: 'fr' },
+  { id: uuid(), type: 'COLUMN', value: '1fr', amount: 1, unit: 'fr' },
+  { id: uuid(), type: 'COLUMN', value: '1fr', amount: 1, unit: 'fr' },
 ];
 
 export const initialGridItems = [...initialRows, ...initialColumns];
@@ -30,21 +30,29 @@ export const initialState = {
 
 type Action = { type: string; payload: { id: string; type: 'ROW' | 'COLUMN'; value: string } };
 
+export const actionTypes = {
+  ADD_GRID_ITEM: 'ADD_GRID_ITEM',
+  DELETE_GRID_ITEM: 'DELETE_GRID_ITEM',
+  UPDATE_GRID_ITEM: 'UPDATE_GRID_ITEM',
+  UPDATING: 'UPDATING',
+  UPDATED: 'UPDATED',
+};
+
 export const gridReducer: (state: typeof initialState, payload?: any) => typeof initialState = (state, action) => {
   switch (action.type) {
-    case 'ADD_GRID_ITEM':
+    case actionTypes.ADD_GRID_ITEM:
       return {
         ...state,
         gridItems: [...state.gridItems, action.payload],
       };
 
-    case 'DELETE_GRID_ITEM':
+    case actionTypes.DELETE_GRID_ITEM:
       return {
         ...state,
         gridItems: state.gridItems.filter((item) => item.id !== action.payload.id),
       };
 
-    case 'UPDATE_GRID_ITEM':
+    case actionTypes.UPDATE_GRID_ITEM:
       return {
         ...state,
         gridItems: state.gridItems.map((item) => {
@@ -55,33 +63,17 @@ export const gridReducer: (state: typeof initialState, payload?: any) => typeof 
         }),
       };
 
-    case 'UPDATING':
-      return {
-        ...state,
-        updating: true,
-      };
-
-    case 'UPDATED':
-      return {
-        ...state,
-        updating: false,
-      };
+    case '@@INIT': {
+      return { ...initialState };
+    }
 
     default:
       return state;
   }
 };
 
-export const actionTypes = {
-  ADD_GRID_ITEM: 'ADD_GRID_ITEM',
-  DELETE_GRID_ITEM: 'DELETE_GRID_ITEM',
-  UPDATE_GRID_ITEM: 'UPDATE_GRID_ITEM',
-  UPDATING: 'UPDATING',
-  UPDATED: 'UPDATED',
-};
-
 const useGrid = () => {
-  const [state, dispatch] = useReducer(gridReducer, initialState, 'css-grid');
+  const [state, dispatch] = useReducer(gridReducer, initialState, (state) => initialState, 'css-grid');
 
   const awaitUpdate = (event: Action) => {
     dispatch({ type: actionTypes.UPDATING });
@@ -129,8 +121,8 @@ const useGrid = () => {
 
   const getGridTemplateCss = (values: GridItem[]): string => {
     let css = '';
-    values.forEach(({ value }) => {
-      css += `${value} `;
+    values.forEach(({ amount, unit }) => {
+      css += `${amount}${unit} `;
     });
     return css;
   };
@@ -150,6 +142,7 @@ const useGrid = () => {
     deleteRow,
     addColumn,
     deleteColumn,
+    deleteGridItem,
     updateGridItem,
     gridTemplateRows,
     gridTemplateColumns,
