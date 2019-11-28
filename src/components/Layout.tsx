@@ -1,8 +1,7 @@
 import { graphql, useStaticQuery } from 'gatsby';
-import React, { ReactNode, useContext } from 'react';
+import React, { ReactNode } from 'react';
 import { Helmet } from 'react-helmet-async';
 import styled, { StyledComponent } from 'styled-components/macro';
-import { ThemeContext } from './ContextProvider';
 
 const DefaultMain = styled.main``;
 interface Props {
@@ -11,7 +10,6 @@ interface Props {
 }
 
 export default ({ children, Main = DefaultMain }: Props) => {
-  const { toggleTheme } = useContext(ThemeContext);
   const data = useStaticQuery(graphql`
     {
       site {
@@ -37,15 +35,11 @@ export default ({ children, Main = DefaultMain }: Props) => {
         />
       </Helmet>
 
-      <header>{/* TODO */}</header>
-
-      <button type="button" onClick={toggleTheme}>
-        toggle theme
-      </button>
+      {/* <header>TODO</header> */}
 
       <Main>{children}</Main>
 
-      <footer>{/* TODO */}</footer>
+      {/* <footer>TODO</footer> */}
     </>
   );
 };

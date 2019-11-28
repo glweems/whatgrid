@@ -1,5 +1,7 @@
-import React, { FC, SyntheticEvent, ChangeEvent, useState, KeyboardEvent } from 'react';
+/* eslint-disable @typescript-eslint/no-use-before-define */
+import React, { FC, SyntheticEvent, ChangeEvent, KeyboardEvent } from 'react';
 import uuid from 'uuid/v4';
+import styled from 'styled-components/macro';
 import useGrid, { availableUnits } from '../hooks/useGrid';
 import Select from './Select';
 
@@ -37,21 +39,35 @@ const Control: FC<ControlProps> = ({ type, item }) => {
     });
   };
 
+  const ControlType = type === 'row' ? RowControl : ColumnControl;
+
   return (
-    <div className={`${type}-control`.toLowerCase()}>
+    <ControlType className={`${type}-control`}>
       <input type="number" name="amount" defaultValue={item.amount} onChange={handleChange} onKeyDown={handleKeyDown} />
       <Select options={availableUnits} onChange={handleUnitChange} defaultValue={item.unit} />
       <button type="button" onClick={handleDelete}>
-        {`delete ${type}`}
+        X
       </button>
-    </div>
+    </ControlType>
   );
 };
+
+const ControlStyles = styled.div`
+  display: grid;
+  grid-template-rows: 30px;
+  grid-template-columns: repeat(3, 50px);
+  align-content: center;
+  align-items: center;
+`;
+
+const RowControl = styled(ControlStyles)``;
+
+const ColumnControl = styled(ControlStyles)``;
 
 const Controls: FC = () => {
   const { rows, columns } = useGrid();
   return (
-    <>
+    <Wrapper>
       <div className="col">
         {rows.map((row) => (
           <Control key={uuid()} type="row" item={row} />
@@ -63,8 +79,10 @@ const Controls: FC = () => {
           <Control key={uuid()} type="column" item={column} />
         ))}
       </div>
-    </>
+    </Wrapper>
   );
 };
+
+const Wrapper = styled.div``;
 
 export default Controls;

@@ -5,15 +5,15 @@ import { Boxes } from '../components';
 export const availableUnits = ['fr', '%', 'px', 'vw', 'vh', 'em', 'rem'];
 
 export const initialRows: GridItem[] = [
-  { id: uuid(), type: 'ROW', amount: 1, unit: 'fr' },
-  { id: uuid(), type: 'ROW', amount: 1, unit: 'fr' },
-  { id: uuid(), type: 'ROW', amount: 1, unit: 'fr' },
+  { id: uuid(), type: 'row', amount: 1, unit: 'fr' },
+  { id: uuid(), type: 'row', amount: 1, unit: 'fr' },
+  { id: uuid(), type: 'row', amount: 1, unit: 'fr' },
 ];
 
 export const initialColumns: GridItem[] = [
-  { id: uuid(), type: 'COLUMN', amount: 1, unit: 'fr' },
-  { id: uuid(), type: 'COLUMN', amount: 1, unit: 'fr' },
-  { id: uuid(), type: 'COLUMN', amount: 1, unit: 'fr' },
+  { id: uuid(), type: 'column', amount: 1, unit: 'fr' },
+  { id: uuid(), type: 'column', amount: 1, unit: 'fr' },
+  { id: uuid(), type: 'column', amount: 1, unit: 'fr' },
 ];
 
 export const initialGridItems = [...initialRows, ...initialColumns];
@@ -43,9 +43,11 @@ export const actionTypes = {
 
 type Action = {
   type: typeof actionTypes[keyof typeof actionTypes];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   payload?: any;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const gridReducer: (state: State, action: Action) => any = (state, action) => {
   switch (action.type) {
     case actionTypes.ADD_GRID_ITEM:
@@ -97,8 +99,8 @@ const useGrid = () => {
       payload: item,
     });
 
-  const rows: GridItem[] = state.gridItems.filter((item: GridItem) => item.type === 'ROW');
-  const columns: GridItem[] = state.gridItems.filter((item: GridItem) => item.type === 'COLUMN');
+  const rows: GridItem[] = state.gridItems.filter((item: GridItem) => item.type === 'row');
+  const columns: GridItem[] = state.gridItems.filter((item: GridItem) => item.type === 'column');
 
   const getGridTemplateCss = (values: GridItem[]): string => {
     let css = '';

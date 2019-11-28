@@ -5,20 +5,6 @@ import { darken } from 'polished';
 export const colors = {
   primary: '#4e67eb',
   primaryDark: darken(0.1, '#4e67eb'),
-  modes: {
-    light: {
-      name: 'light',
-      text: '#131217',
-      bg: '#fff',
-      secondary: '#47444e',
-    },
-    dark: {
-      name: 'dark',
-      text: '#dcdcdc',
-      bg: '#131217',
-      secondary: '#47444e',
-    },
-  },
   blacks: [
     'rgba(0,0,0,.0125)',
     'rgba(0,0,0,.025)',
@@ -47,31 +33,6 @@ export const colors = {
     'rgba(255,255,255,.8)',
     'rgba(255,255,255,.9)',
   ],
-  'dark-red': '#e7040f',
-  red: '#ff4136',
-  'light-red': '#ff725c',
-  orange: '#ff6300',
-  gold: '#ffb700',
-  yellow: '#ffd700',
-  'light-yellow': '#fbf1a9',
-  purple: '#5e2ca5',
-  'light-purple': '#a463f2',
-  'dark-pink': '#d5008f',
-  'hot-pink': ' #ff41b4',
-  pink: '#ff80cc',
-  'light-pink': '#ffa3d7',
-  'dark-green': '#137752',
-  green: '#19a974',
-  'light-green': '#9eebcf',
-  navy: '#001b44',
-  'dark-blue': '#00449e',
-  blue: '#357edd',
-  'light-blue': '#96ccff',
-  'lightest-blue': '#cdecff',
-  'washed-blue': '#f6fffe',
-  'washed-green': '#e8fdf5',
-  'washed-yellow': '#fffceb',
-  'washed-red': '#ffdfdf',
 };
 
 export const modes = [
@@ -106,22 +67,53 @@ export const baseTheme = {
   width: [16, 32, 64, 128, 256],
   heights: [16, 32, 64, 128, 256],
   maxWidths: [16, 32, 64, 128, 256, 512, 768, 1024, 1536],
-  colors,
+  modes: {
+    light: {
+      name: 'light',
+      text: '#131217',
+      bg: '#fff',
+      secondary: '#47444e',
+    },
+    dark: {
+      name: 'dark',
+      text: '#dcdcdc',
+      bg: '#131217',
+      secondary: '#47444e',
+    },
+  },
+};
+
+type BaseTheme = typeof baseTheme;
+
+type ColorModes = {
+  name: typeof baseTheme.modes.light.name | typeof baseTheme.modes.dark.name;
+  text: typeof baseTheme.modes.light.text | typeof baseTheme.modes.dark.text;
+  bg: typeof baseTheme.modes.light.bg | typeof baseTheme.modes.dark.bg;
+  secondary: typeof baseTheme.modes.light.secondary | typeof baseTheme.modes.dark.secondary;
 };
 
 export const GlobalStyle = createGlobalStyle`
+  html, body {
+    margin: 0;
+    padding: 0;
+  }
+
   body {
-    color: ${({ theme }) => theme.colors.text};
+    color: ${({ theme }: { theme: Theme }) => theme.colors.text};
     font: 100%/1.5 'Noto Sans', sans-serif;
     font-size: 16px;
-    background-color:${({ theme }) => theme.colors.bg};
+    background-color:${({ theme }: { theme: Theme }) => theme.colors.bg};
   }
 `;
 
 export const getTheme = (mode = 'light') =>
   merge({}, baseTheme, {
-    colors: get(baseTheme.colors.modes, mode, baseTheme.colors),
+    colors: { ...colors, ...get(baseTheme.modes, mode, colors) },
   });
+
+const defaultTheme = getTheme();
+
+export type Theme = typeof defaultTheme;
 
 export const lightMode = getTheme('light');
 export const darkMode = getTheme('dark');

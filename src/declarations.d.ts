@@ -7,3 +7,8 @@
 // And to shim assets, use (one file extension per `declare`):
 // declare module '*.png';
 // My css.d.ts file
+import { Theme } from './utils/theme';
+
+declare module 'styled-components' {
+  interface DefaultTheme extends Theme {}
+}
