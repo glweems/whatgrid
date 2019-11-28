@@ -12,6 +12,6 @@
     "allowJs": true,
     "jsx": "react",
     // Define Emotion `css` prop
-    "types": ["react", "jest", "styled-components"]
+    "types": ["react", "jest", "styled-components/macro"]
   }
 }

@@ -1,5 +1,7 @@
-import { gridReducer, initialState } from './useGrid';
+/* eslint-disable prefer-const */
+import { reducer, initialState } from './useGrid';
 
-test('basic', () => {
-  expect(gridReducer(initialState)).toBe(0);
+test('reducer', () => {
+  const state = reducer(initialState);
+  expect(state).toEqual({});
 });

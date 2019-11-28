@@ -1,21 +1,22 @@
 import React, { SyntheticEvent, useContext } from 'react';
 import styled from 'styled-components/macro';
+import uuid from 'uuid/v4';
 import { ThemeContext } from './ContextProvider';
 import useGrid from '../hooks/useGrid';
-import { Controls } from '.';
+import { Control } from '.';
 
 export const Sidebar: React.FC = () => {
-  const { addGridItem } = useGrid();
+  const { rows, columns, addGridItem } = useGrid();
   const { toggleTheme } = useContext(ThemeContext);
 
   const addRow = (e: SyntheticEvent<HTMLButtonElement>): void => {
     e.preventDefault();
-    addGridItem({ type: 'row', amount: 1, unit: 'fr' });
+    addGridItem({ type: 'row' });
   };
 
   const addColumn = (e: SyntheticEvent<HTMLButtonElement>): void => {
     e.preventDefault();
-    addGridItem({ type: 'column', amount: 1, unit: 'fr' });
+    addGridItem({ type: 'column' });
   };
 
   return (
@@ -24,18 +25,25 @@ export const Sidebar: React.FC = () => {
         toggleTheme
       </button>
 
-      <div className="add-row">
+      <div className="col">
+        <p>Rows</p>
+        {rows.map((row) => (
+          <Control key={uuid()} type="row" item={row} />
+        ))}
         <button type="button" onClick={addRow}>
           add row
         </button>
       </div>
 
-      <div className="add-column">
+      <div className="row">
+        <p>Columns</p>
+        {columns.map((column) => (
+          <Control key={uuid()} type="column" item={column} />
+        ))}
         <button type="button" onClick={addColumn}>
           add column
         </button>
       </div>
-      <Controls />
     </Wrapper>
   );
 };
