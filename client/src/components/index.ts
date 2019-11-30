@@ -1,5 +1,5 @@
 /* eslint-disable import/no-cycle */
-export { Box } from './common';
+export * from './common';
 export { default as Control } from './Control';
 export { default as CssGrid } from './CssGrid';
 export { default as Layout } from './Layout';
