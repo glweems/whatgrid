@@ -1,25 +1,24 @@
-import React, { SyntheticEvent, useContext } from 'react';
+import React, { useCallback, useContext } from 'react';
 import styled from 'styled-components/macro';
 import uuid from 'uuid/v4';
 import { ThemeContext } from './ContextProvider';
-import useGrid from '../hooks/useGrid';
 import { Control } from '.';
 import { Button } from './common';
 import GridGapControl from './GridGapControls';
+import { useStoreActions, useStoreState } from '../store';
 
 export const Sidebar: React.FC = () => {
-  const { rows, columns, addGridItem, gridGap } = useGrid();
   const { toggleTheme } = useContext(ThemeContext);
+  const { rows, columns, gridGap } = useStoreState(({ grid }) => grid);
+  const { addGridItem } = useStoreActions(({ grid }) => grid);
 
-  const addRow = (e: SyntheticEvent<HTMLButtonElement>): void => {
-    e.preventDefault();
-    addGridItem({ type: 'row' });
-  };
+  const addRow = useCallback(async () => {
+    addGridItem('row');
+  }, [addGridItem]);
 
-  const addColumn = (e: SyntheticEvent<HTMLButtonElement>): void => {
-    e.preventDefault();
-    addGridItem({ type: 'column' });
-  };
+  const addColumn = useCallback(async () => {
+    addGridItem('column');
+  }, [addGridItem]);
 
   return (
     <Wrapper className="Sidebar">

@@ -4,7 +4,7 @@ import { Box } from '.';
 import dragTypes from '../utils/dragTypes';
 
 interface Props {
-  isDragging: boolean;
+  isDragging?: boolean;
 }
 
 const GridItem: FC<Props> = () => {
@@ -17,6 +17,7 @@ const GridItem: FC<Props> = () => {
 
   const [{ canDrop, isOver }, drop] = useDrop({
     accept: dragTypes.GRID_ITEM,
+    // eslint-disable-next-line no-console
     drop: () => console.log('drop'),
     collect: (monitor) => ({
       isOver: monitor.isOver(),
@@ -26,6 +27,7 @@ const GridItem: FC<Props> = () => {
 
   const isActive = canDrop && isOver;
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   let backgroundColor = '#222';
   if (isActive) {
     backgroundColor = 'darkgreen';

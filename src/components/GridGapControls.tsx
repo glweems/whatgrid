@@ -1,21 +1,23 @@
-import React, { FC, SyntheticEvent, ChangeEvent, KeyboardEvent } from 'react';
+import React, { FC, ChangeEvent, KeyboardEvent } from 'react';
 import styled from 'styled-components/macro';
-import uuid from 'uuid/v4';
-import useGrid, { availableGridGapUnits, GridGap } from '../hooks/useGrid';
+import { useStoreActions } from '../store';
+import { availableGridGapUnits, GridGap } from '../hooks/useGrid';
 import Select from './Select';
 
 const GridGapControl: FC<GridGap> = ({ type, amount, unit }) => {
-  const { updateGridGap } = useGrid();
+  const { updateGridGap } = useStoreActions((actions) => actions.grid);
 
   const handleChange: (event: ChangeEvent<HTMLInputElement>) => void = (event) => {
-    event.preventDefault();
-    const { name, value } = event.target;
-
+    // event.preventDefault();
+    const { name, value } = event.currentTarget;
     updateGridGap({ type, [name]: value });
+    event.persist();
   };
 
-  const handleKeyDown: (event: KeyboardEvent<HTMLInputElement>) => void = ({ key, currentTarget: { name, value } }) => {
-    if (key === 'Enter' || key === 'Tab') updateGridGap({ type, [name]: value });
+  const handleKeyDown: (event: KeyboardEvent<HTMLInputElement>) => void = (event) => {
+    const { name, value } = event.currentTarget;
+    if (event.key === 'Enter' || event.key === 'Tab') updateGridGap({ type, [name]: value });
+    event.persist();
   };
 
   const handleUnitChange: (event: React.ChangeEvent<HTMLSelectElement>) => void = ({

@@ -5,9 +5,11 @@ import uuid from 'uuid/v4';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components/macro';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
+import { StoreProvider } from 'easy-peasy';
 import useGrid from '../hooks/useGrid';
 import useTheme from '../hooks/useTheme';
 import { GlobalStyle, getTheme } from '../utils/theme';
+import store from '../store';
 
 export const ThemeContext = React.createContext({
   theme: getTheme('light'),
@@ -39,7 +41,12 @@ const ProviderComposer: React.FC<{ contexts: any }> = ({ contexts, children }: a
 const ContextProvider: React.FC = ({ children }: any) => {
   return (
     <ProviderComposer
-      contexts={[<DndProvider backend={HTML5Backend} />, <ThemeProvider />, <GridProvider key={uuid()} />]}
+      contexts={[
+        <StoreProvider store={store} />,
+        <DndProvider backend={HTML5Backend} />,
+        <ThemeProvider />,
+        <GridProvider key={uuid()} />,
+      ]}
     >
       {children}
     </ProviderComposer>

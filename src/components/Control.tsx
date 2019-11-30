@@ -1,9 +1,9 @@
-import React, { FC, SyntheticEvent, ChangeEvent, KeyboardEvent } from 'react';
+import React, { FC, ChangeEvent, KeyboardEvent, useCallback } from 'react';
 import styled from 'styled-components/macro';
-import uuid from 'uuid/v4';
-import useGrid, { availableUnits, availableGridGapUnits } from '../hooks/useGrid';
+import { availableUnits } from '../hooks/useGrid';
 import Select from './Select';
 import { Button } from './common';
+import { useStoreActions } from '../store';
 
 interface ControlProps {
   type: 'row' | 'column';
@@ -11,33 +11,35 @@ interface ControlProps {
 }
 
 const Control: FC<ControlProps> = ({ type, item }) => {
-  const { updateGridItem, deleteGridItem } = useGrid();
+  const { deleteGridItem, updateGridItem } = useStoreActions((actions) => actions.grid);
 
   const handleChange: (event: ChangeEvent<HTMLInputElement>) => void = (event) => {
     event.preventDefault();
+    updateGridItem({
+      ...item,
+      [event.currentTarget.name]: Number(event.currentTarget.value),
+    });
   };
 
   const handleKeyDown: (event: KeyboardEvent<HTMLInputElement>) => void = (event) => {
     if (event.key === 'Enter' || event.key === 'Tab') {
       updateGridItem({
         ...item,
-        amount: Number(event.currentTarget.value),
+        [event.currentTarget.name]: Number(event.currentTarget.value),
       });
     }
   };
 
   const handleUnitChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    event.preventDefault();
     updateGridItem({
       ...item,
-      unit: event.currentTarget.value,
+      [event.currentTarget.name]: event.currentTarget.value,
     });
   };
 
-  const handleDelete: (event: SyntheticEvent<HTMLButtonElement, MouseEvent>) => void = (event) => {
-    event.preventDefault();
+  const handleDelete = useCallback(() => {
     deleteGridItem(item);
-  };
+  }, [deleteGridItem, item]);
 
   return (
     <Wrapper className={`${type}-control`}>
@@ -48,7 +50,7 @@ const Control: FC<ControlProps> = ({ type, item }) => {
         onKeyDown={handleKeyDown}
         {...item.inputProps}
       />
-      <Select options={availableUnits} onChange={handleUnitChange} defaultValue={item.unit} />
+      <Select name="unit" options={availableUnits} onChange={handleUnitChange} defaultValue={item.unit} />
       <Button onClick={handleDelete}>X</Button>
     </Wrapper>
   );

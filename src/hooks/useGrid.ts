@@ -88,6 +88,7 @@ export const reducer: Reducer = (state, action) => {
             item = { ...item, amount: 25, inputProps: { ...item.inputProps, min: 0, max: 100, step: 5 } };
           if (shouldUpdate && payloadUnit === 'px')
             item = { ...item, amount: 500, inputProps: { ...item.inputProps, min: 0, max: 10000, step: 5 } };
+
           if (shouldUpdate && payloadUnit === 'vw') item.amount = 25;
           if (shouldUpdate && payloadUnit === 'vh') item.amount = 25;
           if (shouldUpdate && payloadUnit === 'em') item.amount = 25;
