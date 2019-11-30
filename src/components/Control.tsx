@@ -1,8 +1,9 @@
-/* eslint-disable @typescript-eslint/no-use-before-define */
 import React, { FC, SyntheticEvent, ChangeEvent, KeyboardEvent } from 'react';
 import styled from 'styled-components/macro';
-import useGrid, { availableUnits } from '../hooks/useGrid';
+import uuid from 'uuid/v4';
+import useGrid, { availableUnits, availableGridGapUnits } from '../hooks/useGrid';
 import Select from './Select';
+import { Button } from './common';
 
 interface ControlProps {
   type: 'row' | 'column';
@@ -12,22 +13,17 @@ interface ControlProps {
 const Control: FC<ControlProps> = ({ type, item }) => {
   const { updateGridItem, deleteGridItem } = useGrid();
 
-  const handleChange: (e: ChangeEvent<HTMLInputElement>) => void = (e) => {
-    e.preventDefault();
+  const handleChange: (event: ChangeEvent<HTMLInputElement>) => void = (event) => {
+    event.preventDefault();
   };
 
-  const handleKeyDown: (e: KeyboardEvent<HTMLInputElement>) => void = (e) => {
-    if (e.key === 'Enter' || e.key === 'Tab') {
+  const handleKeyDown: (event: KeyboardEvent<HTMLInputElement>) => void = (event) => {
+    if (event.key === 'Enter' || event.key === 'Tab') {
       updateGridItem({
         ...item,
-        amount: Number(e.currentTarget.value),
+        amount: Number(event.currentTarget.value),
       });
     }
-  };
-
-  const handleDelete: (e: SyntheticEvent<HTMLButtonElement, MouseEvent>) => void = (e) => {
-    e.preventDefault();
-    deleteGridItem(item);
   };
 
   const handleUnitChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -36,6 +32,11 @@ const Control: FC<ControlProps> = ({ type, item }) => {
       ...item,
       unit: event.currentTarget.value,
     });
+  };
+
+  const handleDelete: (event: SyntheticEvent<HTMLButtonElement, MouseEvent>) => void = (event) => {
+    event.preventDefault();
+    deleteGridItem(item);
   };
 
   return (
@@ -48,9 +49,7 @@ const Control: FC<ControlProps> = ({ type, item }) => {
         {...item.inputProps}
       />
       <Select options={availableUnits} onChange={handleUnitChange} defaultValue={item.unit} />
-      <button type="button" onClick={handleDelete}>
-        X
-      </button>
+      <Button onClick={handleDelete}>X</Button>
     </Wrapper>
   );
 };
@@ -58,10 +57,10 @@ const Control: FC<ControlProps> = ({ type, item }) => {
 export default Control;
 
 const Wrapper = styled.div`
-  display: grid;
-  grid-template-rows: 1fr;
-  grid-template-columns: repeat(3, auto);
-  gap: 1em;
+  input {
+    max-width: 50%;
+  }
+  display: flex;
   align-content: center;
   align-items: center;
   justify-content: stretch;

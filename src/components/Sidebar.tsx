@@ -4,9 +4,11 @@ import uuid from 'uuid/v4';
 import { ThemeContext } from './ContextProvider';
 import useGrid from '../hooks/useGrid';
 import { Control } from '.';
+import { Button } from './common';
+import GridGapControl from './GridGapControls';
 
 export const Sidebar: React.FC = () => {
-  const { rows, columns, addGridItem } = useGrid();
+  const { rows, columns, addGridItem, gridGap } = useGrid();
   const { toggleTheme } = useContext(ThemeContext);
 
   const addRow = (e: SyntheticEvent<HTMLButtonElement>): void => {
@@ -21,29 +23,35 @@ export const Sidebar: React.FC = () => {
 
   return (
     <Wrapper className="Sidebar">
-      <button type="button" onClick={toggleTheme}>
-        toggleTheme
-      </button>
+      <div>
+        <Button onClick={toggleTheme}>toggleTheme</Button>
+      </div>
 
-      <div className="col">
-        <p>Rows</p>
+      <SidebarSection>
+        <h3>Rows</h3>
         {rows.map((row) => (
           <Control key={uuid()} type="row" item={row} />
         ))}
-        <button type="button" onClick={addRow}>
+        <Button type="button" onClick={addRow}>
           add row
-        </button>
-      </div>
+        </Button>
+      </SidebarSection>
 
-      <div className="row">
-        <p>Columns</p>
-        {columns.map((column) => (
-          <Control key={uuid()} type="column" item={column} />
+      <SidebarSection>
+        <h3>Columns</h3>
+        <div>
+          {columns.map((column) => (
+            <Control key={uuid()} type="column" item={column} />
+          ))}
+        </div>
+        <Button onClick={addColumn}>add column</Button>
+      </SidebarSection>
+
+      <SidebarSection>
+        {gridGap.map((gap) => (
+          <GridGapControl key={uuid()} {...gap} />
         ))}
-        <button type="button" onClick={addColumn}>
-          add column
-        </button>
-      </div>
+      </SidebarSection>
     </Wrapper>
   );
 };
@@ -54,5 +62,15 @@ const Wrapper = styled.div`
   position: sticky;
   top: 0;
   left: 0;
-  background-color: ${({ theme }) => theme.colors.primary};
+  display: flex;
+  flex-direction: column;
+  /* background-color: ${({ theme }) => theme.colors.text}; */
+`;
+
+const SidebarSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: 0.5em;
+  padding: 1em;
+  border-radius: 0.25em;
 `;

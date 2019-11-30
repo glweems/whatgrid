@@ -1,12 +1,13 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 import useGrid from '../hooks/useGrid';
+import { GridItems } from './GridItems';
 
 export default () => {
-  const { GridItems, gridTemplateRows, gridTemplateColumns, gap } = useGrid();
+  const { gridTemplateRows, gridTemplateColumns, gridGapCss } = useGrid();
 
   return (
-    <CssGrid className="CssGrid" gap={gap} rows={gridTemplateRows} columns={gridTemplateColumns}>
+    <CssGrid className="CssGrid" gap={gridGapCss} rows={gridTemplateRows} columns={gridTemplateColumns}>
       <GridItems />
     </CssGrid>
   );

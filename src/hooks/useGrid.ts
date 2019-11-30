@@ -1,9 +1,9 @@
 /* eslint-disable import/no-cycle */
 import uuid from 'uuid/v4';
 import { useReducer } from 'reinspect';
-import { Boxes } from '../components';
 
 export const availableUnits = ['fr', '%', 'px', 'vw', 'vh', 'em', 'rem', 'auto'];
+export const availableGridGapUnits = ['px', 'em', 'vh', 'vw'];
 
 const defaultInputProps = {
   min: 0,
@@ -27,24 +27,20 @@ export const initialColumns: GridItem[] = [
 
 export const initialGridItems = [...initialRows, ...initialColumns];
 
-type GridGap = { amount: number; unit: 'px' | 'em' | 'rem' | 'vw' | 'vh' };
-const defaultGridGap: GridGap = { amount: 1, unit: 'em' };
+export type GridGap = { type: string; amount: number; unit: typeof availableGridGapUnits[number] };
 
 export const initialState = {
   gridItems: initialGridItems,
-  horizontalGap: defaultGridGap,
-  verticalGap: defaultGridGap,
-};
-
-type State = {
-  gridItems: GridItem[];
-  horizontalGap: GridGap;
-  verticleGap: GridGap;
+  gridGap: [
+    { type: 'vertical', amount: 1, unit: 'em' },
+    { type: 'horizontal', amount: 1, unit: 'em' },
+  ],
 };
 
 export const actionTypes = {
   ADD_GRID_ITEM: 'ADD_GRID_ITEM',
   DELETE_GRID_ITEM: 'DELETE_GRID_ITEM',
+  UPDATE_GRID_GAP: 'UPDATE_GRID_GAP',
   UPDATE_GRID_ITEM: 'UPDATE_GRID_ITEM',
 };
 
@@ -52,7 +48,7 @@ type Action =
   | {
       type: typeof actionTypes[keyof typeof actionTypes];
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      payload: GridItem;
+      payload: any;
     }
   | undefined;
 
@@ -103,6 +99,10 @@ export const reducer: Reducer = (state, action) => {
         }),
       };
 
+    case actionTypes.UPDATE_GRID_GAP: {
+      return { ...state, gridGap: action.payload };
+    }
+
     default:
       return state;
   }
@@ -114,6 +114,8 @@ const useGrid = () => {
   const rows: GridItem[] = state.gridItems.filter(({ type: rowType }) => rowType === 'row');
 
   const columns: GridItem[] = state.gridItems.filter(({ type: colType }) => colType === 'column');
+
+  const [verticalGap, horizontalGap] = state.gridGap;
 
   const addGridItem = ({ type }: { type: string }) =>
     dispatch({
@@ -138,6 +140,14 @@ const useGrid = () => {
       payload: item,
     });
 
+  const updateGridGap: (gridGap: { type: string; amount?: number; unit?: string }) => void = (gridGap) => {
+    const newGap: [GridGap, GridGap] =
+      gridGap.type === 'vertical'
+        ? [{ ...verticalGap, ...gridGap }, horizontalGap]
+        : [verticalGap, { ...horizontalGap, ...gridGap }];
+    dispatch({ type: actionTypes.UPDATE_GRID_GAP, payload: newGap });
+  };
+
   const getGridTemplateCss = (values: GridItem[]): string => {
     let css = '';
     values.forEach(({ amount, unit }) => {
@@ -149,21 +159,20 @@ const useGrid = () => {
   const gridTemplateRows = getGridTemplateCss(rows);
   const gridTemplateColumns = getGridTemplateCss(columns);
 
-  const gap = `${state.verticalGap.amount}${state.verticalGap.unit} ${state.horizontalGap.amount}${state.horizontalGap.unit}`;
-
-  const GridItems = () => Boxes({ rows, columns });
+  const gridGapCss = `${verticalGap.amount}${verticalGap.unit} ${horizontalGap.amount}${horizontalGap.unit}`;
 
   return {
+    ...state,
     dispatch,
     rows,
     columns,
     addGridItem,
     deleteGridItem,
     updateGridItem,
+    updateGridGap,
     gridTemplateRows,
     gridTemplateColumns,
-    gap,
-    GridItems,
+    gridGapCss,
   };
 };
 

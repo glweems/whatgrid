@@ -17,7 +17,7 @@ const Main = styled.main`
   display: grid;
   grid-template-areas: 'sidebar css-grid';
   grid-template-rows: 1fr;
-  grid-template-columns: 230px 1fr;
+  grid-template-columns: 300px 1fr;
   height: 100vh;
   .title {
     grid-area: title;
