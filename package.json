@@ -22,7 +22,7 @@
   },
   "dependencies": {
     "@rhysforyou/gatsby-plugin-react-helmet-async": "^0.1.1",
-    "@types/styled-components": "^4.4.0",
+    "@types/styled-components": "4.1.8",
     "@types/uuid": "^3.4.6",
     "babel-jest": "^24.9.0",
     "babel-plugin-console": "^0.2.1",

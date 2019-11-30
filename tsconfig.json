@@ -11,7 +11,6 @@
     "resolveJsonModule": true,
     "allowJs": true,
     "jsx": "react",
-    // Define Emotion `css` prop
-    "types": ["react", "jest", "styled-components/macro"]
+    "types": ["react", "jest"]
   }
 }
