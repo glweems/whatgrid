@@ -12,7 +12,7 @@
     "lint:style": "stylelint --ignore-path .gitignore \"src/**/*.{ts,tsx,js}\"",
     "serve": "gatsby serve",
     "test": "jest",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc"
   },
   "babelMacros": {
     "styledComponents": {

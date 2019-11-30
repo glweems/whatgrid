@@ -11,6 +11,8 @@
     "resolveJsonModule": true,
     "allowJs": true,
     "jsx": "react",
+    "noEmit": true,
+    "pretty": true,
     "types": ["react", "jest"]
   }
 }

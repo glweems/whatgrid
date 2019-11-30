@@ -1,9 +1,6 @@
-// hidden-message.js
 import React from 'react';
 
-// NOTE: React Testing Library works with React Hooks _and_ classes just as well
-// and your tests will be the same however you write your components.
-function HiddenMessage({ children }) {
+const HiddenMessage: React.FC = ({ children }) => {
   const [showMessage, setShowMessage] = React.useState(false);
   return (
     <div>
@@ -14,6 +11,6 @@ function HiddenMessage({ children }) {
       {showMessage ? children : null}
     </div>
   );
-}
+};
 
 export default HiddenMessage;

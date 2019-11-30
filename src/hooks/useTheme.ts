@@ -1,13 +1,13 @@
 /* eslint-disable no-nested-ternary */
 /* eslint-disable no-unused-expressions */
 import { useEffect, useState } from 'react';
-import { getTheme } from '../utils/theme';
+import { modes, getTheme } from '../utils/theme';
 
 const useTheme = () => {
   const [theme, setTheme] = useState('light');
   const [componentMounted, setComponentMounted] = useState(false);
 
-  const setMode = (mode) => {
+  const setMode = (mode: typeof modes[number]) => {
     window.localStorage.setItem('theme', mode);
     setTheme(mode);
   };
@@ -18,7 +18,6 @@ const useTheme = () => {
     } else {
       setMode('light');
     }
-    console.debug('Mode:', theme);
   };
 
   useEffect(() => {

@@ -10,7 +10,7 @@ import HiddenMessage from './hidden-message';
 
 test('shows the children when the checkbox is checked', () => {
   const testMessage = 'Test Message';
-  const { queryByText, getByLabelText, getByText } = render(<HiddenMessage>{testMessage}</HiddenMessage>);
+  const { queryByText, getByLabelText } = render(<HiddenMessage>{testMessage}</HiddenMessage>);
 
   // query* functions will return the element or null if it cannot be found
   // get* functions will return the element or throw an error if it cannot be found
@@ -21,5 +21,5 @@ test('shows the children when the checkbox is checked', () => {
 
   // .toBeInTheDocument() is an assertion that comes from jest-dom
   // otherwise you could use .toBeDefined()
-  expect(queryByText(testMessage)).toBeInTheDocument();
+  expect(queryByText(testMessage)).toBeDefined();
 });
