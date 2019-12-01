@@ -5,6 +5,8 @@ import { Action, action, computed, Computed } from 'easy-peasy';
 export const availableUnits = ['fr', '%', 'px', 'vw', 'vh', 'em', 'rem', 'auto'];
 export const availableGridGapUnits = ['px', 'em', 'vh', 'vw'];
 
+export type GridGap = { type: string; amount: number; unit: typeof availableGridGapUnits[number] };
+
 const defaultInputProps = {
   min: 0,
   max: 100,
@@ -24,8 +26,6 @@ export const initialColumns: GridItem[] = [
   { id: uuid(), type: 'column', amount: 1, unit: 'fr', inputProps: defaultInputProps },
   { id: uuid(), type: 'column', amount: 1, unit: 'fr', inputProps: defaultInputProps },
 ];
-
-type GridGap = { type: string; amount: number; unit: typeof availableGridGapUnits[number] };
 
 export interface GridModel {
   items: GridItem[];

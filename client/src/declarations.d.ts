@@ -8,8 +8,10 @@
 // declare module '*.png';
 // My css.d.ts file
 import { Theme } from './utils/theme';
+import defaut from '../node_modules/@types/styled-components/index.d';
 
 declare module 'styled-components' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
   interface DefaultTheme extends Theme {}
+  export type styled = typeof defaut;
 }

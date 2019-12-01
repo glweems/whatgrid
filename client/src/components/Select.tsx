@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import uuid from 'uuid/v4';
 
 interface Props extends React.SelectHTMLAttributes<HTMLSelectElement> {

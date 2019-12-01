@@ -1,7 +1,7 @@
 import React, { FC, ChangeEvent, KeyboardEvent } from 'react';
 import styled from 'styled-components/macro';
 import { useStoreActions } from '../store';
-import { availableGridGapUnits, GridGap } from '../hooks/useGrid';
+import { availableGridGapUnits, GridGap } from '../store/grid';
 import Select from './Select';
 
 const GridGapControl: FC<GridGap> = ({ type, amount, unit }) => {

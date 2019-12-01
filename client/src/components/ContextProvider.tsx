@@ -6,7 +6,7 @@ import { ThemeProvider as StyledThemeProvider } from 'styled-components/macro';
 import HTML5Backend from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
 import { StoreProvider } from 'easy-peasy';
-import useGrid from '../hooks/useGrid';
+// import useGrid from '../hooks/useGrid';
 import useTheme from '../hooks/useTheme';
 import { GlobalStyle, getTheme } from '../utils/theme';
 import store from '../store';
@@ -22,12 +22,6 @@ const ThemeProvider: React.FC = ({ children }) => {
 
   return <ThemeContext.Provider value={{ theme, componentMounted, toggleTheme }}>{children}</ThemeContext.Provider>;
 };
-const GridContext = React.createContext({});
-
-const GridProvider: React.FC = ({ children }) => {
-  const grid = useGrid();
-  return <GridContext.Provider value={grid}>{children}</GridContext.Provider>;
-};
 
 const ProviderComposer: React.FC<{ contexts: any }> = ({ contexts, children }: any) =>
   contexts.reduceRight(
@@ -41,12 +35,7 @@ const ProviderComposer: React.FC<{ contexts: any }> = ({ contexts, children }: a
 const ContextProvider: React.FC = ({ children }: any) => {
   return (
     <ProviderComposer
-      contexts={[
-        <StoreProvider store={store} />,
-        <DndProvider backend={HTML5Backend} />,
-        <ThemeProvider />,
-        <GridProvider key={uuid()} />,
-      ]}
+      contexts={[<StoreProvider store={store} />, <DndProvider backend={HTML5Backend} />, <ThemeProvider />]}
     >
       {children}
     </ProviderComposer>

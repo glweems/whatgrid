@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+
 module.exports = {
   siteMetadata: {
     title: 'Gatsby Strict Starter',

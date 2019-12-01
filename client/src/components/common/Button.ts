@@ -1,10 +1,10 @@
-import styled from 'styled-components/macro';
+import styled, { StyledComponent } from 'styled-components/macro';
 
 interface Props {
   type?: 'button';
 }
 
-const Button = styled.button<Props>`
+const Button: StyledComponent<'button', Props> = styled.button`
   position: relative;
   display: inline-block;
   box-sizing: border-box;

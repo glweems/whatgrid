@@ -1,8 +1,8 @@
-import React, { FC, ChangeEvent, KeyboardEvent, useCallback } from 'react';
+import * as React from 'react';
 import styled from 'styled-components/macro';
-import { availableUnits } from '../hooks/useGrid';
+import { availableUnits } from '../store/grid';
 import Select from './Select';
-import { Button } from './common';
+import Button from './common/Button';
 import { useStoreActions } from '../store';
 
 interface ControlProps {
@@ -10,10 +10,10 @@ interface ControlProps {
   item: GridItem;
 }
 
-const Control: FC<ControlProps> = ({ type, item }) => {
+const Control: React.FC<ControlProps> = ({ type, item }) => {
   const { deleteGridItem, updateGridItem } = useStoreActions((actions) => actions.grid);
 
-  const handleChange: (event: ChangeEvent<HTMLInputElement>) => void = (event) => {
+  const handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void = (event) => {
     event.preventDefault();
     updateGridItem({
       ...item,
@@ -21,7 +21,7 @@ const Control: FC<ControlProps> = ({ type, item }) => {
     });
   };
 
-  const handleKeyDown: (event: KeyboardEvent<HTMLInputElement>) => void = (event) => {
+  const handleKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => void = (event) => {
     if (event.key === 'Enter' || event.key === 'Tab') {
       updateGridItem({
         ...item,
@@ -37,7 +37,7 @@ const Control: FC<ControlProps> = ({ type, item }) => {
     });
   };
 
-  const handleDelete = useCallback(() => {
+  const handleDelete = React.useCallback(() => {
     deleteGridItem(item);
   }, [deleteGridItem, item]);
 
