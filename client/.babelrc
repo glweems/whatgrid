@@ -1,9 +1,11 @@
 {
   "presets": [
-    "babel-preset-gatsby"
+    "next/babel",
+    "@babel/preset-typescript"
   ],
   "plugins": [
-    "babel-plugin-console",
-    "babel-plugin-styled-components"
+    "babel-plugin-macros",
+    "import-graphql",
+    "@babel/plugin-proposal-optional-chaining"
   ]
 }

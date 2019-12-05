@@ -1,18 +1,45 @@
 {
-  "include": ["src"],
-  // Reference: https://blogs.msdn.microsoft.com/typescript/2018/08/27/typescript-and-babel-7/
   "compilerOptions": {
-    "strict": true,
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "isolatedModules": false,
+    "isolatedModules": true,
     "resolveJsonModule": true,
     "allowJs": true,
-    "jsx": "react",
+    "jsx": "preserve",
     "noEmit": true,
     "pretty": true,
-    "types": ["react", "jest"]
-  }
+    "types": [
+      "react"
+    ],
+    "typeRoots": [
+      "@types/"
+    ],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": false
+  },
+  "files": [
+    "next-env.d.ts"
+  ],
+  "include": [
+    "./components/**/*.ts",
+    "./pages/**/*.ts",
+    "./hooks/**/*.ts",
+    "./utils/**/*.ts",
+    "./store/**/*.ts",
+    "utils/helpers.tsx",
+    "utils/theme.tsx",
+    "utils/apollo.tsx"
+  ],
+  "exclude": [
+    "node_modules/**/*",
+    "**/*.spec.ts"
+  ]
 }

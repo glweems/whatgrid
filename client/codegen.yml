@@ -1,0 +1,17 @@
+overwrite: true
+schema: 'http://localhost:4000/graphql'
+documents: '**/*.gql'
+generates:
+  components/Graphql.tsx:
+    hooks:
+      afterOneFileWrite:
+        - prettier --write
+    plugins:
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-react-apollo'
+    config:
+      withMutationFn: true
+      withMutationOptionsType: true
+      withResultType: true
+      withHooks: true
