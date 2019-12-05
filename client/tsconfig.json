@@ -1,6 +1,4 @@
 {
-  "include": ["src"],
-  // Reference: https://blogs.msdn.microsoft.com/typescript/2018/08/27/typescript-and-babel-7/
   "compilerOptions": {
     "strict": true,
     "target": "esnext",
@@ -13,6 +11,23 @@
     "jsx": "react",
     "noEmit": true,
     "pretty": true,
-    "types": ["react", "jest"]
-  }
+    "types": [
+      "react",
+      "jest"
+    ],
+    "typeRoots": [
+      "node_modules/@types",
+      "src"
+    ]
+  },
+  "files": [
+    "graphql.d.ts"
+  ],
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts"
+  ]
 }

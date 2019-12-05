@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import React from 'react';
 import styled from 'styled-components/macro';
-import { Layout, Sidebar, CssGrid } from '../components';
+import Layout from '../components/Layout';
+import CssGrid from '../components/CssGrid';
+import Sidebar from '../components/Sidebar';
 
 export default function IndexPage() {
   return (

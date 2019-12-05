@@ -1,9 +1,9 @@
 import * as React from 'react';
 import styled from 'styled-components/macro';
-import { availableUnits } from '../store/grid';
+import { availableUnits } from '../pages/store/grid';
 import Select from './Select';
 import Button from './common/Button';
-import { useStoreActions } from '../store';
+import { useStoreActions } from '../pages/store';
 
 interface ControlProps {
   type: 'row' | 'column';

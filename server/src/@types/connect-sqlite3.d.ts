@@ -1,1 +1,1 @@
-declare module "connect-sqlite3";
+declare module 'connect-sqlite3';

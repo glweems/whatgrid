@@ -1,9 +1,11 @@
 {
-  "presets": [
-    "babel-preset-gatsby"
-  ],
   "plugins": [
     "babel-plugin-console",
-    "babel-plugin-styled-components"
+    "babel-plugin-styled-components",
+    "babel-plugin-import-graphql",
+    "graphql-tag"
+  ],
+  "presets": [
+    "babel-preset-gatsby"
   ]
 }

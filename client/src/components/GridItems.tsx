@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import uuid from 'uuid/v4';
 import GridItem from './GridItem';
-import { useStoreState } from '../store';
+import { useStoreState } from '../pages/store';
 
 interface Props {
   rows: GridItem[];

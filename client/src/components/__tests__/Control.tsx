@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as renderer from 'react-test-renderer';
 import Control from '../Control';
-import { initialRows } from '../../store/grid';
+import { initialRows } from '../../pages/store/grid';
 
 describe('Control', () => {
   it('renders correctly', () => {

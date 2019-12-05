@@ -4,9 +4,10 @@ import uuid from 'uuid/v4';
 import { ThemeContext } from './ContextProvider';
 import GridGapControl from './GridGapControls';
 import { useStoreActions, useStoreState } from '../store';
-import { Button, Control } from '.';
+import Button from './common/Button';
+import Control from './Control';
 
-export const Sidebar: React.FC = () => {
+const Sidebar: React.FC = () => {
   const { toggleTheme } = useContext(ThemeContext);
   const { rows, columns, gridGap } = useStoreState(({ grid }) => grid);
   const { addGridItem } = useStoreActions(({ grid }) => grid);

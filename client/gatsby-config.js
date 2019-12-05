@@ -1,4 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
+require('dotenv').config();
 
 module.exports = {
   siteMetadata: {
@@ -25,5 +26,11 @@ module.exports = {
     '@rhysforyou/gatsby-plugin-react-helmet-async',
     'gatsby-plugin-typescript',
     'gatsby-plugin-styled-components',
+    {
+      resolve: 'gatsby-plugin-apollo',
+      options: {
+        uri: process.env.GRAPHQL_API,
+      },
+    },
   ],
 };

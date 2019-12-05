@@ -1,15 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as React from 'react';
 import { StateInspector } from 'reinspect';
-import uuid from 'uuid/v4';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components/macro';
-import HTML5Backend from 'react-dnd-html5-backend';
-import { DndProvider } from 'react-dnd';
 import { StoreProvider } from 'easy-peasy';
-// import useGrid from '../hooks/useGrid';
-import useTheme from '../hooks/useTheme';
+
+import useTheme from '../mutations/useTheme';
 import { GlobalStyle, getTheme } from '../utils/theme';
-import store from '../store';
+import store from '../pages/store';
 
 export const ThemeContext = React.createContext({
   theme: getTheme('light'),
@@ -34,11 +31,7 @@ const ProviderComposer: React.FC<{ contexts: any }> = ({ contexts, children }: a
 
 const ContextProvider: React.FC = ({ children }: any) => {
   return (
-    <ProviderComposer
-      contexts={[<StoreProvider store={store} />, <DndProvider backend={HTML5Backend} />, <ThemeProvider />]}
-    >
-      {children}
-    </ProviderComposer>
+    <ProviderComposer contexts={[<StoreProvider store={store} />, <ThemeProvider />]}>{children}</ProviderComposer>
   );
 };
 
@@ -61,10 +54,8 @@ export const wrapRootElement: React.FC<{ element: React.ReactNode }> = ({ elemen
   <ContextProvider>{element}</ContextProvider>
 );
 
-export const wrapPageElement: React.FC<{ element: React.ReactElement }> = ({ element }) => {
-  return (
-    <StateInspector name="css-grid">
-      <StyledWrapper>{element}</StyledWrapper>
-    </StateInspector>
-  );
-};
+export const wrapPageElement: React.FC<{ element: React.ReactElement }> = ({ element }) => (
+  <StateInspector name="css-grid">
+    <StyledWrapper>{element}</StyledWrapper>
+  </StateInspector>
+);

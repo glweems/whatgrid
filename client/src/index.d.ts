@@ -23,3 +23,7 @@ type GridItem = {
 };
 
 type NoIdGridItem = { id?: string; type: string | 'row' | 'column'; amount: number; unit: GridUnit };
+
+interface ENV extends NodeJS.Process {
+  GRAPHQL_API: string;
+}

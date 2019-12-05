@@ -1,11 +1,13 @@
-import { Query, Resolver, UseMiddleware } from "type-graphql";
-import { isAuth } from "../middleware/isAuth";
+import { Query, Resolver, UseMiddleware } from 'type-graphql';
+import { isAuth } from '../middleware/isAuth';
 
 @Resolver()
 export class BookResolver {
   @Query(() => String)
   @UseMiddleware(isAuth)
-  book() {
-    return "The Republic";
+  static book() {
+    return 'The Republic';
   }
 }
+
+export default BookResolver;

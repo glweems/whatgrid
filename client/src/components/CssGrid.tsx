@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/macro';
 import { GridItems } from './GridItems';
-import { useStoreState } from '../store';
+import { useStoreState } from '../pages/store';
 
 export default () => {
   const { gridTemplateRows, gridTemplateColumns, gridGapCss } = useStoreState(({ grid }) => grid);
