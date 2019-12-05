@@ -1,33 +1,45 @@
 {
   "compilerOptions": {
-    "strict": true,
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",
     "esModuleInterop": true,
-    "isolatedModules": false,
+    "isolatedModules": true,
     "resolveJsonModule": true,
     "allowJs": true,
-    "jsx": "react",
+    "jsx": "preserve",
     "noEmit": true,
     "pretty": true,
     "types": [
-      "react",
-      "jest"
+      "react"
     ],
     "typeRoots": [
-      "node_modules/@types",
-      "src"
-    ]
+      "@types/"
+    ],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "strict": false
   },
   "files": [
-    "graphql.d.ts"
+    "next-env.d.ts"
   ],
   "include": [
-    "src/**/*"
+    "./components/**/*.ts",
+    "./pages/**/*.ts",
+    "./hooks/**/*.ts",
+    "./utils/**/*.ts",
+    "./store/**/*.ts",
+    "utils/helpers.tsx",
+    "utils/theme.tsx",
+    "utils/apollo.tsx"
   ],
   "exclude": [
-    "node_modules",
+    "node_modules/**/*",
     "**/*.spec.ts"
   ]
 }

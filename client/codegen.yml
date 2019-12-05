@@ -1,11 +1,10 @@
 overwrite: true
 schema: 'http://localhost:4000/graphql'
-documents: 'src/**/*.graphql'
+documents: '**/*.gql'
 generates:
-  src/graphql.tsx:
+  components/Graphql.tsx:
     hooks:
       afterOneFileWrite:
-        - eslint --fix
         - prettier --write
     plugins:
       - 'typescript'
@@ -15,3 +14,4 @@ generates:
       withMutationFn: true
       withMutationOptionsType: true
       withResultType: true
+      withHooks: true
