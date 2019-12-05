@@ -5,6 +5,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "export": "next export",
+    "deploy": "next build && next export",
     "format": "prettier --ignore-path .gitignore --write \"**/*.{ts,tsx,js,json,yml,md}\"",
     "lint": "npm run lint:es && npm run lint:style",
     "lint:fix": "npm run lint:es --fix && npm run lint:style",
