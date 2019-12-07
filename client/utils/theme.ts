@@ -1,5 +1,4 @@
 import { createGlobalStyle } from 'styled-components';
-import { merge, get } from 'lodash';
 import { darken } from 'polished';
 
 export const colors = {
@@ -35,13 +34,88 @@ export const colors = {
   ],
 };
 
+const colorModes: Modes = {
+  light: {
+    name: 'light',
+    text: '#131217',
+    bg: '#fff',
+    secondary: '#47444e',
+  },
+  dark: {
+    name: 'dark',
+    text: '#dcdcdc',
+    bg: '#131217',
+    secondary: '#47444e',
+  },
+};
+
 export const modes = [
   'light',
   'dark',
   // more than two modes can follow...
 ];
 
-export const baseTheme = {
+export interface ThemeRoot {
+  breakpoints: number[];
+  space: number[];
+  fontSizes: number[];
+  fontWeights: number[];
+  lineHeights: LineHeights;
+  letterSpacings: LetterSpacings;
+  fonts: Fonts;
+  borders: (number | string)[];
+  radii: (number | string)[];
+  width: number[];
+  heights: number[];
+  maxWidths: number[];
+  modes: Modes;
+}
+
+export interface Modes {
+  light: ColorMode;
+  dark: ColorMode;
+}
+
+interface ColorMode {
+  name: string;
+  text: string;
+  bg: string;
+  secondary: string;
+}
+
+interface Fonts {
+  serif: string;
+  sansSerif: string;
+}
+/**
+ * Letter spacings
+ */
+interface LetterSpacings {
+  normal: string;
+  tracked: string;
+  tight: string;
+  mega: string;
+}
+
+interface LineHeights {
+  solid: number;
+  title: number;
+  copy: number;
+}
+
+export type Mode = keyof Modes;
+export type BaseColors = typeof colors;
+export type Colors = BaseColors & Modes[Mode];
+export type GetColors = (mode: Mode) => Colors;
+export type GetTheme = (mode: Mode) => Theme;
+
+/**
+ * breakpoints: number[];
+ *
+ */
+export type Theme = { colors: Colors } & ThemeRoot;
+
+export const baseTheme: ThemeRoot = {
   breakpoints: [32, 48, 64],
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
   fontSizes: [12, 14, 16, 20, 24, 36, 48, 80, 96],
@@ -83,14 +157,8 @@ export const baseTheme = {
   },
 };
 
-// type BaseTheme = typeof baseTheme;
-
-// type ColorModes = {
-//   name: typeof baseTheme.modes.light.name | typeof baseTheme.modes.dark.name;
-//   text: typeof baseTheme.modes.light.text | typeof baseTheme.modes.dark.text;
-//   bg: typeof baseTheme.modes.light.bg | typeof baseTheme.modes.dark.bg;
-//   secondary: typeof baseTheme.modes.light.secondary | typeof baseTheme.modes.dark.secondary;
-// };
+const getColors: GetColors = (mode) => ({ ...colors, ...colorModes[mode] });
+export const getTheme: GetTheme = (mode) => ({ ...baseTheme, colors: getColors(mode) });
 
 export const GlobalStyle = createGlobalStyle`
   html, body {
@@ -105,17 +173,5 @@ export const GlobalStyle = createGlobalStyle`
     background-color:${({ theme }: { theme: Theme }) => theme.colors.bg};
   }
 `;
-
-export const getTheme = (mode = 'light') =>
-  merge({}, baseTheme, {
-    colors: { ...colors, ...get(baseTheme.modes, mode, colors) },
-  });
-
-const defaultTheme = getTheme();
-
-export type Theme = typeof defaultTheme;
-
-export const lightMode = getTheme('light');
-export const darkMode = getTheme('dark');
 
 export default baseTheme;

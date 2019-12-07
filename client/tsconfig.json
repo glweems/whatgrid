@@ -4,6 +4,7 @@
     "allowSyntheticDefaultImports": true,
     "jsx": "preserve",
     "lib": [
+      "DOM.Iterable",
       "dom",
       "es2019"
     ],

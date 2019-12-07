@@ -2,7 +2,8 @@ import * as React from 'react';
 import styled from 'styled-components/macro';
 import { availableUnits, GridItem } from '../store/grid';
 import Select from './Select';
-import Button from './common/Button';
+import { Button } from 'rebass/styled-components';
+import { Input } from '@rebass/forms';
 import { useStoreActions } from '../store';
 
 interface ControlProps {
@@ -43,7 +44,7 @@ const Control: React.FC<ControlProps> = ({ type, item }) => {
 
   return (
     <Wrapper className={`${type}-control`}>
-      <input
+      <Input
         name="amount"
         defaultValue={item.amount}
         onChange={handleChange}

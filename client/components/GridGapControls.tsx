@@ -3,6 +3,7 @@ import styled from 'styled-components/macro';
 import { useStoreActions } from '../store';
 import { availableGridGapUnits, GridGap } from '../store/grid';
 import Select from './Select';
+import { Input } from '@rebass/forms';
 
 const GridGapControl: FC<GridGap> = ({ type, amount, unit }) => {
   const { updateGridGap } = useStoreActions((actions) => actions.grid);
@@ -26,7 +27,7 @@ const GridGapControl: FC<GridGap> = ({ type, amount, unit }) => {
 
   return (
     <Wrapper>
-      <input
+      <Input
         name="amount"
         defaultValue={amount}
         onKeyDown={handleKeyDown}
