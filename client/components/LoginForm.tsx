@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useFormik } from 'formik';
-import { useSignUpMutation, AuthInput, SignUpDocument } from './Graphql';
-import CodeHelper from './CodeHelper';
+import { AuthInput } from './Graphql';
 import { useLoginMutation } from '../components/Graphql';
 const LoginForm: React.FC = () => {
   const [login] = useLoginMutation();
-  const [msg, setMsg] = useState('');
+  const [msg] = useState('');
 
   const formik = useFormik<AuthInput>({
     initialValues: {

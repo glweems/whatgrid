@@ -1,5 +1,5 @@
-import gridModel, { GridModel } from './grid';
 import { createStore, createTypedHooks } from 'easy-peasy';
+import gridModel, { GridModel } from './grid';
 
 export interface StoreModel {
   grid: GridModel;

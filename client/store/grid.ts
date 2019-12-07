@@ -1,5 +1,7 @@
+/* eslint-disable no-param-reassign */
 import { Action, action, computed, Computed } from 'easy-peasy';
 import uuid from 'uuid/v4';
+
 export type GridUnits = ['fr', '%', 'px', 'vw', 'vh', 'em', 'rem', 'auto'];
 
 export type GridUnit = GridUnits[number] | string;
@@ -19,12 +21,6 @@ export type GridItem = {
   unit: GridUnit;
   inputProps: InputProps;
 };
-
-type NoIdGridItem = { id?: string; type: string | 'row' | 'column'; amount: number; unit: GridUnit };
-
-interface ENV extends NodeJS.Process {
-  GRAPHQL_API: string;
-}
 
 export const availableUnits = ['fr', '%', 'px', 'vw', 'vh', 'em', 'rem', 'auto'];
 export const availableGridGapUnits = ['px', 'em', 'vh', 'vw'];

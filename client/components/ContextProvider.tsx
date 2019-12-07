@@ -13,11 +13,11 @@ export const ThemeContext = React.createContext({
   toggleTheme: () => {},
 });
 
-const ThemeProvider: React.FC = ({ children }) => {
-  const { theme, componentMounted, toggleTheme } = useTheme();
+// const ThemeProvider: React.FC = ({ children }) => {
+//   const { theme, componentMounted, toggleTheme } = useTheme();
 
-  return <ThemeContext.Provider value={{ theme, componentMounted, toggleTheme }}>{children}</ThemeContext.Provider>;
-};
+//   return <ThemeContext.Provider value={{ theme, componentMounted, toggleTheme }}>{children}</ThemeContext.Provider>;
+// };
 
 const ProviderComposer: React.FC<{ contexts: any }> = ({ contexts, children }: any) =>
   contexts.reduceRight(
@@ -29,11 +29,14 @@ const ProviderComposer: React.FC<{ contexts: any }> = ({ contexts, children }: a
   );
 
 const ContextProvider: React.FC = ({ children }: any) => {
-  const { theme, componentMounted } = useTheme();
-  // if (!componentMounted) return <div />;
+  const { theme, componentMounted, toggleTheme } = useTheme();
+
+  if (!componentMounted) return <div />;
 
   return (
-    <ProviderComposer contexts={[<StoreProvider store={store} />, <StyledThemeProvider theme={theme} />]}>
+    <ProviderComposer
+      contexts={[<StoreProvider store={store} />, <StyledThemeProvider theme={{ ...theme, toggleTheme }} />]}
+    >
       {children}
     </ProviderComposer>
   );
@@ -42,7 +45,7 @@ const ContextProvider: React.FC = ({ children }: any) => {
 export default ContextProvider;
 
 export const StyledWrapper: React.FC = ({ children }) => {
-  const { theme, componentMounted } = React.useContext(ThemeContext);
+  const { theme } = React.useContext(ThemeContext);
   // if (!componentMounted) return <div />;
   return (
     <StyledThemeProvider theme={theme}>

@@ -1,4 +1,4 @@
-import { default as Next, Container } from 'next/app';
+import { default as Next } from 'next/app';
 import ContextProvider from '../components/ContextProvider';
 import { ApolloClient } from 'apollo-boost';
 import React from 'react';

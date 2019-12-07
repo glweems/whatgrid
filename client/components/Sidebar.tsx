@@ -1,15 +1,15 @@
 import React, { useCallback, useContext } from 'react';
-import styled from 'styled-components/macro';
+import styled, { ThemeContext } from 'styled-components';
 import uuid from 'uuid/v4';
-import { ThemeContext } from './ContextProvider';
+// import { ThemeContext } from './ContextProvider';
 import GridGapControl from './GridGapControls';
 import { useStoreActions, useStoreState } from '../store';
-import Button from './common/Button';
 import Control from './Control';
-import useTheme from '../hooks/useTheme';
+// import useTheme from '../hooks/useTheme';
+import { Text, Button } from 'rebass/styled-components';
 
 export const Sidebar: React.FC = () => {
-  const { toggleTheme } = useTheme();
+  const { toggleTheme } = useContext(ThemeContext);
   const { rows, columns, gridGap } = useStoreState(({ grid }) => grid);
   const { addGridItem } = useStoreActions(({ grid }) => grid);
 
@@ -23,9 +23,9 @@ export const Sidebar: React.FC = () => {
 
   return (
     <Wrapper className="Sidebar">
-      <div>
-        <Button onClick={toggleTheme}>toggleTheme</Button>
-      </div>
+      <Button variant="secondary" onClick={toggleTheme}>
+        toggleTheme
+      </Button>
 
       <SidebarSection>
         <h3>Rows</h3>
@@ -38,7 +38,7 @@ export const Sidebar: React.FC = () => {
       </SidebarSection>
 
       <SidebarSection>
-        <h3>Columns</h3>
+        <Text>Columns</Text>
         <div>
           {columns.map((column) => (
             <Control key={uuid()} type="column" item={column} />

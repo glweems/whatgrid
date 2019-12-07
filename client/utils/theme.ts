@@ -83,14 +83,14 @@ export const baseTheme = {
   },
 };
 
-type BaseTheme = typeof baseTheme;
+// type BaseTheme = typeof baseTheme;
 
-type ColorModes = {
-  name: typeof baseTheme.modes.light.name | typeof baseTheme.modes.dark.name;
-  text: typeof baseTheme.modes.light.text | typeof baseTheme.modes.dark.text;
-  bg: typeof baseTheme.modes.light.bg | typeof baseTheme.modes.dark.bg;
-  secondary: typeof baseTheme.modes.light.secondary | typeof baseTheme.modes.dark.secondary;
-};
+// type ColorModes = {
+//   name: typeof baseTheme.modes.light.name | typeof baseTheme.modes.dark.name;
+//   text: typeof baseTheme.modes.light.text | typeof baseTheme.modes.dark.text;
+//   bg: typeof baseTheme.modes.light.bg | typeof baseTheme.modes.dark.bg;
+//   secondary: typeof baseTheme.modes.light.secondary | typeof baseTheme.modes.dark.secondary;
+// };
 
 export const GlobalStyle = createGlobalStyle`
   html, body {
