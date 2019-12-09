@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import styled from 'styled-components/macro';
 import { Box, Text } from 'rebass/styled-components';
+import LogoutButton from './LogoutButton';
 interface Props {}
 
 const Navbar: React.FC<Props> = () => {
@@ -22,6 +23,7 @@ const Navbar: React.FC<Props> = () => {
           <Link href="/login">
             <a>Login</a>
           </Link>
+          <LogoutButton />
         </nav>
       </Box>
     </Header>

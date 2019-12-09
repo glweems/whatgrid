@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import LogoutButton from './LogoutButton';
 
 const links = [
   { href: 'https://zeit.co/now', label: 'ZEIT' },
@@ -22,6 +23,7 @@ const Nav = () => (
           <a href={href}>{label}</a>
         </li>
       ))}
+      <LogoutButton />
     </ul>
 
     <style jsx>{`
