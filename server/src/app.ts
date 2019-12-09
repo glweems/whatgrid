@@ -14,12 +14,12 @@ const SQLiteStore = connectSqlite3(session);
 
 (async () => {
   const app = express();
+const corsOptions ={
+  credentials: true,
+  origin: "http://localhost:3000"
+}
 
-
-  app.use(cors({
-    credentials: true,
-    origin: "http://localhost:3000"
-  }))
+  app.use(cors(corsOptions))
 
 
   app.use(
@@ -54,7 +54,7 @@ const SQLiteStore = connectSqlite3(session);
     context: ({ req, res }) => ({ req, res })
   });
 
-  apolloServer.applyMiddleware({ app, cors: true });
+  apolloServer.applyMiddleware({ app, cors: corsOptions });
 
   const port = process.env.PORT || 4000;
 
