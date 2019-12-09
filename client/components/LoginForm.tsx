@@ -4,9 +4,12 @@ import { AuthInput } from './Graphql';
 import { useLoginMutation } from '../components/Graphql';
 import { Label, Input } from '@rebass/forms';
 import { Button } from 'rebass/styled-components';
+import { useStoreActions } from '../store';
 
 const LoginForm: React.FC = () => {
   const [login] = useLoginMutation();
+  const { setUser } = useStoreActions((actions) => actions.user);
+
   const [msg] = useState('');
 
   const formik = useFormik<AuthInput>({
@@ -15,7 +18,7 @@ const LoginForm: React.FC = () => {
       password: '',
     },
     onSubmit: ({ email, password }) => {
-      login({ variables: { input: { email, password } } }).then(({ data: { login } }) => console.log(login));
+      login({ variables: { input: { email, password } } }).then(({ data: { login: { user } } }) => setUser(user));
     },
   });
 
@@ -25,7 +28,14 @@ const LoginForm: React.FC = () => {
       <Label htmlFor="email">
         Email Address
         <br />
-        <Input id="email" name="email" type="email" onChange={formik.handleChange} value={formik.values.email} placeholder="Email Address"/>
+        <Input
+          id="email"
+          name="email"
+          type="email"
+          onChange={formik.handleChange}
+          value={formik.values.email}
+          placeholder="Email Address"
+        />
       </Label>
 
       <Label htmlFor="password">

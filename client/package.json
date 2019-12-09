@@ -11,7 +11,7 @@
     "format": "prettier --ignore-path .gitignore --write \"**/*.{ts,tsx,js,json,yml,md}\"",
     "lint": "npm run lint:es && npm run lint:style",
     "lint:fix": "npm run lint:es --fix && npm run lint:style",
-    "lint:es": "eslint --ignore-path .gitignore \"**/*.{ts,tsx,js}\"",
+    "lint:es": "eslint -c .eslintrc --ignore-path .gitignore \"**/*.{ts,tsx,js}\"",
     "lint:style": "stylelint --ignore-path .gitignore \"**/*.{ts,tsx,js}\"",
     "gql-ts": "yarn run apollo codegen:generate --localSchemaFile=graphql-schema.json --target=typescript --includes=graphql/**/*.ts --tagName=gql --addTypename --globalTypesFile=src/graphql-global-types.ts types",
     "get-types": "yarn gql-json && yarn gql-ts",

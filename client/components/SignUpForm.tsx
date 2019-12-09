@@ -3,14 +3,12 @@ import { useFormik } from 'formik';
 import { useSignUpMutation, AuthInput, SignUpDocument } from './Graphql';
 import { Label, Input } from '@rebass/forms';
 import { Button } from 'rebass/styled-components';
+import { useStoreActions } from '../store';
 
 const SignupForm = () => {
-  const [signUp, { data }] = useSignUpMutation(SignUpDocument);
+  const [signUp] = useSignUpMutation(SignUpDocument);
+  const { setUser } = useStoreActions((actions) => actions.user);
   const [msg, setMsg] = useState('');
-
-  useEffect(() => {
-    console.log(data);
-  }, []);
 
   const formik = useFormik<AuthInput>({
     initialValues: {
@@ -19,7 +17,7 @@ const SignupForm = () => {
     },
 
     onSubmit: ({ email, password }) => {
-      signUp({ variables: { input: { email, password } } });
+      signUp({ variables: { input: { email, password } } }).then(({ data }) => setUser(data.register.user));
     },
   });
 

@@ -1,12 +1,15 @@
 import { createStore, createTypedHooks } from 'easy-peasy';
 import gridModel, { GridModel } from './grid';
+import userModel, { UserModel } from './user';
 
 export interface StoreModel {
   grid: GridModel;
+  user?: UserModel;
 }
 
 const storeModel = {
   grid: gridModel,
+  user: userModel,
 };
 
 const store = createStore(storeModel);

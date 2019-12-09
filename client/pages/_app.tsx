@@ -1,5 +1,5 @@
 import { default as Next } from 'next/app';
-import ContextProvider from '../components/ContextProvider';
+import ContextProvider from '../context';
 import { ApolloClient } from 'apollo-boost';
 import React from 'react';
 import { withApollo } from '../utils/apollo';
