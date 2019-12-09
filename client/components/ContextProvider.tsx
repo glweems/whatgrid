@@ -2,22 +2,14 @@
 import * as React from 'react';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 import { StoreProvider } from 'easy-peasy';
-
 import useTheme from '../hooks/useTheme';
 import { GlobalStyle, getTheme } from '../utils/theme';
 import store from '../store';
-
 export const ThemeContext = React.createContext({
   theme: getTheme('light'),
   componentMounted: false,
   toggleTheme: () => {},
 });
-
-// const ThemeProvider: React.FC = ({ children }) => {
-//   const { theme, componentMounted, toggleTheme } = useTheme();
-
-//   return <ThemeContext.Provider value={{ theme, componentMounted, toggleTheme }}>{children}</ThemeContext.Provider>;
-// };
 
 const ProviderComposer: React.FC<{ contexts: any }> = ({ contexts, children }: any) =>
   contexts.reduceRight(

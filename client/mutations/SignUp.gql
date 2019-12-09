@@ -6,6 +6,7 @@ mutation SignUp($input: AuthInput!) {
     }
     errors {
       path
+      message
     }
   }
 }

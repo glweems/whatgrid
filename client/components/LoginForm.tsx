@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import { AuthInput } from './Graphql';
 import { useLoginMutation } from '../components/Graphql';
+import { Label, Input } from '@rebass/forms';
+import { Button } from 'rebass/styled-components';
+
 const LoginForm: React.FC = () => {
   const [login] = useLoginMutation();
   const [msg] = useState('');
@@ -12,29 +15,31 @@ const LoginForm: React.FC = () => {
       password: '',
     },
     onSubmit: ({ email, password }) => {
-      login({ variables: { input: { email, password } } });
+      login({ variables: { input: { email, password } } }).then(({ data: { login } }) => console.log(login));
     },
   });
 
   return (
     <form onSubmit={formik.handleSubmit}>
       <p>{msg}</p>
-      <label htmlFor="email">
+      <Label htmlFor="email">
         Email Address
-        <input id="email" name="email" type="email" onChange={formik.handleChange} value={formik.values.email} />
-      </label>
+        <br />
+        <Input id="email" name="email" type="email" onChange={formik.handleChange} value={formik.values.email} placeholder="Email Address"/>
+      </Label>
 
-      <label htmlFor="password">
-        Last Name
-        <input
+      <Label htmlFor="password">
+        Password
+        <Input
           id="password"
           name="password"
           type="text"
           onChange={formik.handleChange}
           value={formik.values.password}
+          placeholder="Password"
         />
-      </label>
-      <button type="submit">Submit</button>
+      </Label>
+      <Button type="submit">Submit</Button>
     </form>
   );
 };

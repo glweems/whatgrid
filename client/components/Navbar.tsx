@@ -1,21 +1,33 @@
 import React from 'react';
 import Link from 'next/link';
+import styled from 'styled-components/macro';
+import { Box, Text } from 'rebass/styled-components';
 interface Props {}
 
 const Navbar: React.FC<Props> = () => {
   return (
-    <nav>
-      <Link href="/">
-        <a>Home</a>
-      </Link>
-      <Link href="/signup">
-        <a>Sign Up</a>
-      </Link>
-      <Link href="/login">
-        <a>Login</a>
-      </Link>
-    </nav>
+    <Header>
+      <Box color="primary">
+        <Link href="/">
+          <a>
+            <Text fontSize={[3, 4, 5]} fontWeight="bold" color="primary">
+              Home
+            </Text>
+          </a>
+        </Link>
+        <nav>
+          <Link href="/signup">
+            <a>Sign Up</a>
+          </Link>
+          <Link href="/login">
+            <a>Login</a>
+          </Link>
+        </nav>
+      </Box>
+    </Header>
   );
 };
+
+const Header = styled.header``;
 
 export default Navbar;

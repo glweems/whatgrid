@@ -77,7 +77,7 @@ export type SignUpMutationVariables = {
 export type SignUpMutation = { __typename?: 'Mutation' } & {
   register: { __typename?: 'UserResponse' } & {
     user: Maybe<{ __typename?: 'User' } & Pick<User, 'id' | 'email'>>;
-    errors: Maybe<Array<{ __typename?: 'FieldError' } & Pick<FieldError, 'path'>>>;
+    errors: Maybe<Array<{ __typename?: 'FieldError' } & Pick<FieldError, 'path' | 'message'>>>;
   };
 };
 
@@ -158,6 +158,7 @@ export const SignUpDocument = gql`
       }
       errors {
         path
+        message
       }
     }
   }

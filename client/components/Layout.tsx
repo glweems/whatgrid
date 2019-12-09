@@ -2,7 +2,10 @@ import React, { ReactNode } from 'react';
 import styled, { StyledComponent } from 'styled-components/macro';
 import useTheme from '../hooks/useTheme';
 import Navbar from './Navbar';
-const DefaultMain = styled.main``;
+import { GlobalStyle } from '../utils/theme';
+// import { Flex, Box, Text } from 'rebass/styled-components';
+import Sidebar from './Sidebar';
+import { withApollo } from '@apollo/react-hoc';
 
 // const withStore = (Component: React.ReactNode) => <StoreProvider></StoreProvider>;
 
@@ -12,21 +15,48 @@ interface Props {
   Component?: ReactNode;
 }
 
-const Layout: React.FC<Props> = ({ children, Main = DefaultMain }) => {
+const Layout: React.FC<any> = ({ children, Main = styled.main`` }) => {
   const { componentMounted } = useTheme();
   if (!componentMounted) return <div />;
+
   return (
-    // <header>TODO</header>
-    // {printCode(props)}
-    // <GlobalStyle />
-    <>
-      <Main>
-        <Navbar />
-        {children}
-      </Main>
-    </>
-    //{/* <footer>TODO</footer> */}
+    <Wrapper>
+      <Navbar />
+      <Sidebar />
+      <Main>{children}</Main>
+      <GlobalStyle />
+    </Wrapper>
   );
 };
 
-export default Layout;
+const Wrapper = styled.div`
+  position: relative;
+  display: grid;
+  grid-template-areas:
+    'navbar navbar'
+    'sidebar css-grid';
+  grid-template-rows: auto 1fr;
+  grid-template-columns: 300px 1fr;
+  height: 100%;
+  height: 100vh;
+  overflow-y: auto;
+
+  header {
+    grid-area: navbar;
+  }
+
+  .title {
+    grid-area: title;
+  }
+
+  .Sidebar {
+    grid-area: sidebar;
+    height: 100%;
+  }
+
+  .CssGrid {
+    grid-area: css-grid;
+  }
+`;
+
+export default withApollo(Layout);

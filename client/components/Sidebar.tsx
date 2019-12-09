@@ -58,7 +58,7 @@ export const Sidebar: React.FC = () => {
 
 export default Sidebar;
 
-const Wrapper = styled.div`
+const Wrapper = styled.aside`
   position: sticky;
   top: 0;
   left: 0;

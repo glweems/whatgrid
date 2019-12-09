@@ -14,7 +14,14 @@ const SQLiteStore = connectSqlite3(session);
 
 (async () => {
   const app = express();
-app.use(cors())
+
+
+  app.use(cors({
+    credentials: true,
+    origin: "http://localhost:3000"
+  }))
+
+
   app.use(
     session({
       store: new SQLiteStore({
@@ -47,8 +54,10 @@ app.use(cors())
     context: ({ req, res }) => ({ req, res })
   });
 
-  apolloServer.applyMiddleware({ app, cors: false });
+  apolloServer.applyMiddleware({ app, cors: true });
+
   const port = process.env.PORT || 4000;
+
   app.listen(port, () => {
     console.log(`server started at http://localhost:${port}/graphql`);
   });

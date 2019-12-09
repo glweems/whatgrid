@@ -13,4 +13,4 @@ const LoginPage: React.FC<Props> = () => {
   );
 };
 
-export default withApollo(LoginPage);
+export default LoginPage;
