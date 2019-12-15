@@ -5,8 +5,11 @@ import { StoreProvider } from 'easy-peasy';
 import useTheme from '../hooks/useTheme';
 import store from '../store';
 import UserProvider from './user';
+import withApollo from '../apollo/withApollo';
+import { ApolloProvider } from 'react-apollo';
+import { ApolloClient } from 'apollo-boost';
 
-const ProviderComposer: React.FC<{ contexts: any }> = ({ contexts, children }: any) =>
+const ProviderComposer: React.FC<{ contexts: React.ReactNode[] | any }> = ({ contexts, children }: any) =>
   contexts.reduceRight(
     (kids: any, parent: any) =>
       React.cloneElement(parent, {
@@ -15,22 +18,26 @@ const ProviderComposer: React.FC<{ contexts: any }> = ({ contexts, children }: a
     children,
   );
 
-const ContextProvider: React.FC = ({ children }: any) => {
+type Props = { apolloClient: typeof ApolloClient };
+
+const ContextProvider: React.FC<Props> = ({ children, apolloClient }) => {
   const { theme, componentMounted, toggleTheme } = useTheme();
 
-  if (!componentMounted) return <div />;
+  if (!componentMounted && !apolloClient) return <div />;
 
   return (
-    <ProviderComposer
-      contexts={[
-        <StoreProvider store={store} />,
-        <StyledThemeProvider theme={{ ...theme, toggleTheme }} />,
-        <UserProvider />,
-      ]}
-    >
-      {children}
-    </ProviderComposer>
+    <ApolloProvider client={apolloClient}>
+      <ProviderComposer
+        contexts={[
+          <StoreProvider store={store} />,
+          <StyledThemeProvider theme={{ ...theme, toggleTheme }} />,
+          <UserProvider />,
+        ]}
+      >
+        {children}
+      </ProviderComposer>
+    </ApolloProvider>
   );
 };
 
-export default ContextProvider;
+export default withApollo(ContextProvider);

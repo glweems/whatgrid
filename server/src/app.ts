@@ -5,6 +5,7 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import 'dotenv/config';
 import 'reflect-metadata';
+import 'colors';
 import { createConnection } from 'typeorm';
 import config from './ormconfig';
 import express from 'express';
@@ -14,7 +15,7 @@ import { ApolloServer } from 'apollo-server-express';
 import { buildSchema } from 'type-graphql';
 import { AuthResolver } from './resolvers/AuthResolver';
 import { BookResolver } from './resolvers/BookResolver';
-
+import morgan from 'morgan';
 (async () => {
   try {
     const connection = await createConnection(config);
@@ -31,6 +32,7 @@ import { BookResolver } from './resolvers/BookResolver';
     };
 
     app.use(cors(corsOptions));
+    app.use(morgan(`${':method'.white} ${`:url`.green} ${`:status`.yellow.bold} - ${':response-time ms'.grey}`));
 
     app.use(
       session({

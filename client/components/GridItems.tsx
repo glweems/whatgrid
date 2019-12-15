@@ -2,6 +2,7 @@ import React, { Fragment } from 'react';
 import uuid from 'uuid/v4';
 import GridItem from './GridItem';
 import { useStoreState } from '../store';
+import Box from './common/Box';
 
 export const GridItems: React.FC = () => {
   const { rows, columns } = useStoreState((state) => state.grid);
@@ -10,7 +11,7 @@ export const GridItems: React.FC = () => {
       {rows.map(() => (
         <Fragment key={uuid()}>
           {columns.map(() => (
-            <GridItem key={uuid()} />
+            <Box bg="primary" key={uuid()} />
           ))}
         </Fragment>
       ))}

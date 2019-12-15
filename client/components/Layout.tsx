@@ -6,6 +6,7 @@ import { GlobalStyle } from '../utils/theme';
 // import { Flex, Box, Text } from 'rebass/styled-components';
 import Sidebar from './Sidebar';
 import { withApollo } from '@apollo/react-hoc';
+import Grid from './common/Grid';
 
 // const withStore = (Component: React.ReactNode) => <StoreProvider></StoreProvider>;
 
@@ -54,9 +55,9 @@ const Wrapper = styled.div`
     height: 100%;
   }
 
-  .CssGrid {
+  ${(Grid as any)} {
     grid-area: css-grid;
   }
 `;
 
-export default withApollo(Layout);
+export default Layout;

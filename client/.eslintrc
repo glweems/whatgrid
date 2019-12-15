@@ -22,6 +22,12 @@
     }
   },
   "rules": {
+    "import/extensions": [
+      "error",
+      {
+        ".ts": "never"
+      }
+    ],
     "react/no-array-index-key": "off",
     "@typescript-eslint/no-explicit-any": "off",
     "react/jsx-props-no-spreading": "off",

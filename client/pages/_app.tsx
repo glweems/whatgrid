@@ -1,17 +1,15 @@
-import { default as Next } from 'next/app';
+import App from 'next/app';
 import ContextProvider from '../context';
 import { ApolloClient } from 'apollo-boost';
 import React from 'react';
-import { withApollo } from '../utils/apollo';
 import { GlobalStyle } from '../utils/theme';
+import withApollo from '../apollo/withApollo';
+import { ApolloProvider } from 'react-apollo';
 
-interface Props {
-  apollo: typeof ApolloClient;
-}
-
-class App extends Next<Props> {
+class MyApp extends App<any> {
   render() {
     const { Component, pageProps } = this.props;
+    console.log('TCL: MyApp -> render -> this.props', this.props);
     return (
       <ContextProvider>
         <GlobalStyle />
@@ -21,4 +19,4 @@ class App extends Next<Props> {
   }
 }
 
-export default withApollo(App);
+export default MyApp;

@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import { AuthInput } from './Graphql';
 import { useLoginMutation } from '../components/Graphql';
-import { Label, Input } from '@rebass/forms';
 import { Button } from 'rebass/styled-components';
 import { useStoreActions } from '../store';
+import Form from './common/Form';
+import TextField from './TextField';
+import { UserModel } from '../store/user';
 
 const LoginForm: React.FC = () => {
   const [login] = useLoginMutation();
@@ -12,45 +14,29 @@ const LoginForm: React.FC = () => {
 
   const [msg] = useState('');
 
-  const formik = useFormik<AuthInput>({
+  const {
+    values: { email, password },
+    handleChange,
+    handleSubmit,
+  } = useFormik<AuthInput>({
     initialValues: {
       email: '',
       password: '',
     },
-    onSubmit: ({ email, password }) => {
-      login({ variables: { input: { email, password } } }).then(({ data: { login: { user } } }) => setUser(user));
+    onSubmit: async ({ email, password }) => {
+      await login({ variables: { input: { email, password } } }).then(({ data }) => setUser(data?.login?.user));
     },
   });
 
   return (
-    <form onSubmit={formik.handleSubmit}>
+    <Form columns={2} gap="1em" onSubmit={handleSubmit}>
       <p>{msg}</p>
-      <Label htmlFor="email">
-        Email Address
-        <br />
-        <Input
-          id="email"
-          name="email"
-          type="email"
-          onChange={formik.handleChange}
-          value={formik.values.email}
-          placeholder="Email Address"
-        />
-      </Label>
+      <TextField label="Email Address" name="email" type="text" onChange={handleChange} />
 
-      <Label htmlFor="password">
-        Password
-        <Input
-          id="password"
-          name="password"
-          type="text"
-          onChange={formik.handleChange}
-          value={formik.values.password}
-          placeholder="Password"
-        />
-      </Label>
+      <TextField label="Password" name="password" type="password" onChange={handleChange} />
+
       <Button type="submit">Submit</Button>
-    </form>
+    </Form>
   );
 };
 
