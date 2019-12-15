@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useFormik } from 'formik';
-import { useSignUpMutation, AuthInput, SignUpDocument } from './Graphql';
 import { Label, Input } from '@rebass/forms';
 import { Button } from 'rebass/styled-components';
+import { useSignUpMutation, AuthInput, SignUpDocument } from './Graphql';
 import { useStoreActions } from '../store';
 
 const SignupForm = () => {
@@ -17,9 +17,10 @@ const SignupForm = () => {
     },
 
     onSubmit: ({ email, password }) => {
-      signUp({ variables: { input: { email, password } } }).then(({ data }) =>
-        setUser(data.register.user),
-      );
+      signUp({ variables: { input: { email, password } } }).then(({ data }) => {
+        setUser(data.register.user);
+        setMsg('Success');
+      });
     },
   });
 

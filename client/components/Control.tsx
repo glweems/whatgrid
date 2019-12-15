@@ -1,9 +1,9 @@
 import * as React from 'react';
 import styled from 'styled-components/macro';
-import { availableUnits, GridItem } from '../store/grid';
-import Select from './Select';
 import { Button } from 'rebass/styled-components';
 import { Input } from '@rebass/forms';
+import { availableUnits, GridItem } from '../store/grid';
+import Select from './Select';
 import { useStoreActions } from '../store';
 
 interface ControlProps {

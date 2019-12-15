@@ -1,12 +1,10 @@
 import React, { useCallback, useContext } from 'react';
 import styled, { ThemeContext } from 'styled-components';
 import uuid from 'uuid/v4';
-// import { ThemeContext } from './ContextProvider';
+import { Text, Button } from 'rebass/styled-components';
 import GridGapControl from './GridGapControls';
 import { useStoreActions, useStoreState } from '../store';
 import Control from './Control';
-// import useTheme from '../hooks/useTheme';
-import { Text, Button } from 'rebass/styled-components';
 
 export const Sidebar: React.FC = () => {
   const { toggleTheme } = useContext(ThemeContext);

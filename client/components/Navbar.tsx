@@ -3,9 +3,8 @@ import Link from 'next/link';
 import styled from 'styled-components/macro';
 import { Box, Text } from 'rebass/styled-components';
 import LogoutButton from './LogoutButton';
-interface Props {}
 
-const Navbar: React.FC<Props> = () => {
+const Navbar: React.FC = () => {
   return (
     <Header>
       <Box color="primary">

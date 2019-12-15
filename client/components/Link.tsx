@@ -2,19 +2,19 @@ import React from 'react';
 import { Flex, Box, Text, Link as RebassLink } from 'rebass/styled-components';
 import NextLink from 'next/link';
 
-interface Props {}
+interface Props {
+  children: React.ReactNode;
+}
 
-const Link: React.FC<Props> = () => {
+const Link: React.FC<Props> = ({ children }) => {
   return (
     <Flex px={2} color="white" bg="black" alignItems="center">
       <Text p={2} fontWeight="bold">
-        Rebass
+        {children}
       </Text>
       <Box mx="auto" />
-      <NextLink>
-        <RebassLink variant="nav" href="#!">
-          Profile
-        </RebassLink>
+      <NextLink href="#!">
+        <RebassLink variant="nav">Profile</RebassLink>
       </NextLink>
     </Flex>
   );

@@ -7,7 +7,7 @@ type UserContextShape = null | User;
 const UserContext = createContext<UserContextShape>(null);
 
 const UserProvider: React.FC = ({ children }) => {
-  const { data, loading, error } = useMeQuery();
+  const { data, loading } = useMeQuery();
   const { setUser, setGuest } = useStoreActions(actions => actions.user);
 
   useEffect(() => {

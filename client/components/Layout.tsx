@@ -3,12 +3,8 @@ import styled, { StyledComponent } from 'styled-components/macro';
 import useTheme from '../hooks/useTheme';
 import Navbar from './Navbar';
 import { GlobalStyle } from '../utils/theme';
-// import { Flex, Box, Text } from 'rebass/styled-components';
 import Sidebar from './Sidebar';
-import { withApollo } from '@apollo/react-hoc';
 import Grid from './common/Grid';
-
-// const withStore = (Component: React.ReactNode) => <StoreProvider></StoreProvider>;
 
 interface Props {
   children?: ReactNode;

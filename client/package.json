@@ -19,7 +19,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn format"
+      "pre-commit": "yarn lint:fix"
     }
   },
   "babelMacros": {
@@ -46,6 +46,7 @@
     "babel-plugin-graphql-tag": "^2.5.0",
     "babel-plugin-import-graphql": "^2.7.0",
     "babel-plugin-styled-components": "^1.10.6",
+    "cookie": "^0.4.0",
     "dotenv": "^8.2.0",
     "easy-peasy": "^3.2.3",
     "formik": "^2.0.6",

@@ -2,12 +2,12 @@
 import * as React from 'react';
 import { ThemeProvider as StyledThemeProvider } from 'styled-components';
 import { StoreProvider } from 'easy-peasy';
+import { ApolloProvider } from 'react-apollo';
+import { ApolloClient } from 'apollo-boost';
 import useTheme from '../hooks/useTheme';
 import store from '../store';
 import UserProvider from './user';
 import withApollo from '../apollo/withApollo';
-import { ApolloProvider } from 'react-apollo';
-import { ApolloClient } from 'apollo-boost';
 
 const ProviderComposer: React.FC<{ contexts: React.ReactNode[] | any }> = ({
   contexts,

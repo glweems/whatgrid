@@ -1,7 +1,6 @@
-/* eslint-disable import/no-duplicates */
 declare module 'rebass/styled-components' {
   import * as r from 'rebass';
-  import { CSSObject, CSSObject, StyledComponent } from 'styled-components';
+  import { CSSObject, StyledComponent } from 'styled-components/macro';
 
   export interface BaseProps {
     sx?: CSSObject;

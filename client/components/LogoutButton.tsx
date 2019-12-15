@@ -3,9 +3,7 @@ import { Button } from 'rebass/styled-components';
 import { useLogoutMutation } from './Graphql';
 import { useStoreActions } from '../store';
 
-interface Props {}
-
-const LogoutButton: React.FC<Props> = () => {
+const LogoutButton: React.FC = () => {
   const [logout] = useLogoutMutation();
   const { clearUser } = useStoreActions(actions => actions.user);
 

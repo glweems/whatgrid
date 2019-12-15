@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
-import { AuthInput } from './Graphql';
-import { useLoginMutation } from '../components/Graphql';
 import { Button } from 'rebass/styled-components';
+import { AuthInput, useLoginMutation } from './Graphql';
 import { useStoreActions } from '../store';
 import Form from './common/Form';
 import TextField from './TextField';
-import { UserModel } from '../store/user';
 
 const LoginForm: React.FC = () => {
   const [login] = useLoginMutation();
@@ -14,11 +12,7 @@ const LoginForm: React.FC = () => {
 
   const [msg] = useState('');
 
-  const {
-    values: { email, password },
-    handleChange,
-    handleSubmit,
-  } = useFormik<AuthInput>({
+  const { handleChange, handleSubmit } = useFormik<AuthInput>({
     initialValues: {
       email: '',
       password: '',

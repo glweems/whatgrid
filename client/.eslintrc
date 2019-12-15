@@ -22,6 +22,8 @@
     }
   },
   "rules": {
+    "react/prop-types": "off",
+    "jsx-a11y/anchor-is-valid": "off",
     "import/no-named-as-default": "off",
     "react/jsx-filename-extension": [1, { "extensions": [".tsx"] }],
     "import/extensions": [

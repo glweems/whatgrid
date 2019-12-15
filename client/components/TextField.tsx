@@ -1,7 +1,12 @@
-import React, { SyntheticEvent } from 'react';
+import React from 'react';
 import { Label as RebassLabel } from '@rebass/forms';
 import styled from 'styled-components/macro';
 import Input from './common/Input';
+
+const defaultProps = {
+  type: 'text',
+};
+
 /**
  * No need for labels
  */
@@ -10,10 +15,6 @@ type Props = {
   name: string;
 } & React.HtmlHTMLAttributes<HTMLInputElement> &
   typeof defaultProps;
-
-const defaultProps = {
-  type: 'text',
-};
 
 const TextField: React.FC<Props> = ({ label, name, ...props }) => (
   <Label htmlFor={name}>

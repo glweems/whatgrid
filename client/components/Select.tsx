@@ -1,6 +1,7 @@
 import * as React from 'react';
 import uuid from 'uuid/v4';
 import { Select } from '@rebass/forms';
+
 interface Props extends React.SelectHTMLAttributes<HTMLSelectElement> {
   options: string[];
 }
