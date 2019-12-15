@@ -19,7 +19,8 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn lint:fix"
+      "pre-commit": "yarn lint:fix",
+      "pre-push": "yarn build"
     }
   },
   "babelMacros": {
