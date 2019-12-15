@@ -22,10 +22,24 @@ export type GridItem = {
   inputProps: InputProps;
 };
 
-export const availableUnits = ['fr', '%', 'px', 'vw', 'vh', 'em', 'rem', 'auto'];
+export const availableUnits = [
+  'fr',
+  '%',
+  'px',
+  'vw',
+  'vh',
+  'em',
+  'rem',
+  'auto',
+];
+
 export const availableGridGapUnits = ['px', 'em', 'vh', 'vw'];
 
-export type GridGap = { type: string; amount: number; unit: typeof availableGridGapUnits[number] };
+export type GridGap = {
+  type: string;
+  amount: number;
+  unit: typeof availableGridGapUnits[number];
+};
 
 const defaultInputProps = {
   min: 0,
@@ -36,15 +50,51 @@ const defaultInputProps = {
 };
 
 export const initialRows: GridItem[] = [
-  { id: uuid(), type: 'row', amount: 1, unit: 'fr', inputProps: defaultInputProps },
-  { id: uuid(), type: 'row', amount: 1, unit: 'fr', inputProps: defaultInputProps },
-  { id: uuid(), type: 'row', amount: 1, unit: 'fr', inputProps: defaultInputProps },
+  {
+    id: uuid(),
+    type: 'row',
+    amount: 1,
+    unit: 'fr',
+    inputProps: defaultInputProps,
+  },
+  {
+    id: uuid(),
+    type: 'row',
+    amount: 1,
+    unit: 'fr',
+    inputProps: defaultInputProps,
+  },
+  {
+    id: uuid(),
+    type: 'row',
+    amount: 1,
+    unit: 'fr',
+    inputProps: defaultInputProps,
+  },
 ];
 
 export const initialColumns: GridItem[] = [
-  { id: uuid(), type: 'column', amount: 1, unit: 'fr', inputProps: defaultInputProps },
-  { id: uuid(), type: 'column', amount: 1, unit: 'fr', inputProps: defaultInputProps },
-  { id: uuid(), type: 'column', amount: 1, unit: 'fr', inputProps: defaultInputProps },
+  {
+    id: uuid(),
+    type: 'column',
+    amount: 1,
+    unit: 'fr',
+    inputProps: defaultInputProps,
+  },
+  {
+    id: uuid(),
+    type: 'column',
+    amount: 1,
+    unit: 'fr',
+    inputProps: defaultInputProps,
+  },
+  {
+    id: uuid(),
+    type: 'column',
+    amount: 1,
+    unit: 'fr',
+    inputProps: defaultInputProps,
+  },
 ];
 
 export interface GridModel {
@@ -62,41 +112,50 @@ export interface GridModel {
   horizontalGap: GridGap;
   gridGap: Computed<GridModel, GridGap[]>;
   gridGapCss: Computed<GridModel, string>;
-  updateGridGap: Action<GridModel, { type: string; amount?: number; unit?: string }>;
+  updateGridGap: Action<
+    GridModel,
+    { type: string; amount?: number; unit?: string }
+  >;
 }
 
 const getGridTemplateCss = (values: GridItem[]): string =>
-  values.map(({ amount, unit }) => (unit === 'auto' ? unit : `${amount}${unit}`)).join(' ');
+  values
+    .map(({ amount, unit }) => (unit === 'auto' ? unit : `${amount}${unit}`))
+    .join(' ');
 
 const gridModel: GridModel = {
   items: [...initialRows, ...initialColumns],
 
   rows: computed(({ items }) => items.filter(({ type }) => type === 'row')),
 
-  columns: computed(({ items }) => items.filter(({ type }) => type === 'column')),
+  columns: computed(({ items }) =>
+    items.filter(({ type }) => type === 'column'),
+  ),
 
   rowCount: computed(({ rows }) => rows.length),
 
   columnCount: computed(({ columns }) => columns.length),
 
-  addGridItem: action(({ items, rows, columns, rowCount, columnCount }, payload) => {
-    let newItem;
-    if (payload === 'row') newItem = rows[rowCount - 1];
-    if (payload === 'column') newItem = columns[columnCount - 1];
-    if (newItem) items.push({ ...newItem, id: uuid() });
-  }),
+  addGridItem: action(
+    ({ items, rows, columns, rowCount, columnCount }, payload) => {
+      let newItem;
+      if (payload === 'row') newItem = rows[rowCount - 1];
+      if (payload === 'column') newItem = columns[columnCount - 1];
+      if (newItem) items.push({ ...newItem, id: uuid() });
+    },
+  ),
 
   deleteGridItem: action(({ items }, payload) => {
-    const index = items.findIndex((item) => item.id === payload.id);
+    const index = items.findIndex(item => item.id === payload.id);
     const item = items[index];
 
-    const others = items.filter((other) => other.type === item.type);
+    const others = items.filter(other => other.type === item.type);
 
     if (others.length > 1) items.splice(index, 1);
   }),
 
   updateGridItem: action(({ items }, payload) => {
-    const index = items.findIndex((item) => item.id === payload.id);
+    const index = items.findIndex(item => item.id === payload.id);
     let newItem: GridItem = { ...items[index], ...payload };
     const isItem = items[index].id === payload.id;
     const shouldUpdate = isItem && items[index].amount === payload.amount;
@@ -137,7 +196,11 @@ const gridModel: GridModel = {
       };
 
     if (shouldUpdate && payload.unit === 'auto')
-      newItem = { ...newItem, amount: 0, inputProps: { ...newItem.inputProps, disabled: true } };
+      newItem = {
+        ...newItem,
+        amount: 0,
+        inputProps: { ...newItem.inputProps, disabled: true },
+      };
     items[index] = newItem;
   }),
 
@@ -148,15 +211,22 @@ const gridModel: GridModel = {
 
   horizontalGap: { type: 'horizontal', amount: 1, unit: 'em' },
 
-  gridGap: computed(({ verticalGap, horizontalGap }) => [verticalGap, horizontalGap]),
+  gridGap: computed(({ verticalGap, horizontalGap }) => [
+    verticalGap,
+    horizontalGap,
+  ]),
 
-  gridGapCss: computed(({ gridGap }) => gridGap.map((gap) => `${gap.amount}${gap.unit}`).join(' ')),
+  gridGapCss: computed(({ gridGap }) =>
+    gridGap.map(gap => `${gap.amount}${gap.unit}`).join(' '),
+  ),
 
   updateGridGap: action((state, payload) => {
     const { verticalGap, horizontalGap } = state;
 
-    if (payload.type === 'vertical') state.verticalGap = { ...verticalGap, ...payload };
-    if (payload.type === 'horizontal') state.horizontalGap = { ...horizontalGap, ...payload };
+    if (payload.type === 'vertical')
+      state.verticalGap = { ...verticalGap, ...payload };
+    if (payload.type === 'horizontal')
+      state.horizontalGap = { ...horizontalGap, ...payload };
   }),
 };
 

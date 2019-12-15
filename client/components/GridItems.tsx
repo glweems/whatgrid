@@ -5,7 +5,7 @@ import { useStoreState } from '../store';
 import Box from './common/Box';
 
 export const GridItems: React.FC = () => {
-  const { rows, columns } = useStoreState((state) => state.grid);
+  const { rows, columns } = useStoreState(state => state.grid);
   return (
     <Fragment key={uuid()}>
       {rows.map(() => (

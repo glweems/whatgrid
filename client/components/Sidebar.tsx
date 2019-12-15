@@ -29,7 +29,7 @@ export const Sidebar: React.FC = () => {
 
       <SidebarSection>
         <h3>Rows</h3>
-        {rows.map((row) => (
+        {rows.map(row => (
           <Control key={uuid()} type="row" item={row} />
         ))}
         <Button type="button" onClick={addRow}>
@@ -40,7 +40,7 @@ export const Sidebar: React.FC = () => {
       <SidebarSection>
         <Text>Columns</Text>
         <div>
-          {columns.map((column) => (
+          {columns.map(column => (
             <Control key={uuid()} type="column" item={column} />
           ))}
         </div>
@@ -48,7 +48,7 @@ export const Sidebar: React.FC = () => {
       </SidebarSection>
 
       <SidebarSection>
-        {gridGap.map((gap) => (
+        {gridGap.map(gap => (
           <GridGapControl key={uuid()} {...gap} />
         ))}
       </SidebarSection>

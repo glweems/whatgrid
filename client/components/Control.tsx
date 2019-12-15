@@ -12,9 +12,13 @@ interface ControlProps {
 }
 
 const Control: React.FC<ControlProps> = ({ type, item }) => {
-  const { deleteGridItem, updateGridItem } = useStoreActions((actions) => actions.grid);
+  const { deleteGridItem, updateGridItem } = useStoreActions(
+    actions => actions.grid,
+  );
 
-  const handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void = (event) => {
+  const handleChange: (
+    event: React.ChangeEvent<HTMLInputElement>,
+  ) => void = event => {
     event.preventDefault();
     updateGridItem({
       ...item,
@@ -22,7 +26,9 @@ const Control: React.FC<ControlProps> = ({ type, item }) => {
     });
   };
 
-  const handleKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => void = (event) => {
+  const handleKeyDown: (
+    event: React.KeyboardEvent<HTMLInputElement>,
+  ) => void = event => {
     if (event.key === 'Enter' || event.key === 'Tab') {
       updateGridItem({
         ...item,
@@ -51,7 +57,12 @@ const Control: React.FC<ControlProps> = ({ type, item }) => {
         onKeyDown={handleKeyDown}
         {...item.inputProps}
       />
-      <Select name="unit" options={availableUnits} onChange={handleUnitChange} defaultValue={item.unit} />
+      <Select
+        name="unit"
+        options={availableUnits}
+        onChange={handleUnitChange}
+        defaultValue={item.unit}
+      />
       <Button onClick={handleDelete}>X</Button>
     </Wrapper>
   );

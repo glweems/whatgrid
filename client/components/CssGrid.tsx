@@ -4,9 +4,16 @@ import { GridItems } from './GridItems';
 import { useStoreState } from '../store';
 
 export default () => {
-  const { gridTemplateRows, gridTemplateColumns, gridGapCss } = useStoreState(({ grid }) => grid);
+  const { gridTemplateRows, gridTemplateColumns, gridGapCss } = useStoreState(
+    ({ grid }) => grid,
+  );
   return (
-    <CssGrid className="CssGrid" gap={gridGapCss} rows={gridTemplateRows} columns={gridTemplateColumns}>
+    <CssGrid
+      className="CssGrid"
+      gap={gridGapCss}
+      rows={gridTemplateRows}
+      columns={gridTemplateColumns}
+    >
       <GridItems />
     </CssGrid>
   );

@@ -9,7 +9,10 @@ import { isBrowser } from './isBrowser';
 import redirect from './redirect';
 
 function parseCookies(req?: any, options = {}) {
-  return cookie.parse(req ? req.headers.cookie || '' : document.cookie, options);
+  return cookie.parse(
+    req ? req.headers.cookie || '' : document.cookie,
+    options,
+  );
 }
 
 export default (App: any) => {
@@ -50,7 +53,14 @@ export default (App: any) => {
         // and extract the resulting data
         try {
           // Run all GraphQL queries
-          await getDataFromTree(<App {...appProps} Component={Component} router={router} apolloClient={apollo} />);
+          await getDataFromTree(
+            <App
+              {...appProps}
+              Component={Component}
+              router={router}
+              apolloClient={apollo}
+            />,
+          );
         } catch (error) {
           // Prevent Apollo Client GraphQL errors from crashing SSR.
           // Handle them in components via the data.error prop:

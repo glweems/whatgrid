@@ -7,7 +7,7 @@ import { useStoreActions } from '../store';
 
 const SignupForm = () => {
   const [signUp] = useSignUpMutation(SignUpDocument);
-  const { setUser } = useStoreActions((actions) => actions.user);
+  const { setUser } = useStoreActions(actions => actions.user);
   const [msg, setMsg] = useState('');
 
   const formik = useFormik<AuthInput>({
@@ -17,7 +17,9 @@ const SignupForm = () => {
     },
 
     onSubmit: ({ email, password }) => {
-      signUp({ variables: { input: { email, password } } }).then(({ data }) => setUser(data.register.user));
+      signUp({ variables: { input: { email, password } } }).then(({ data }) =>
+        setUser(data.register.user),
+      );
     },
   });
 
@@ -26,7 +28,13 @@ const SignupForm = () => {
       <p>{msg}</p>
       <Label htmlFor="email">
         Email
-        <Input id="email" name="email" type="email" onChange={formik.handleChange} value={formik.values.email} />
+        <Input
+          id="email"
+          name="email"
+          type="email"
+          onChange={formik.handleChange}
+          value={formik.values.email}
+        />
       </Label>
 
       <Label htmlFor="password">

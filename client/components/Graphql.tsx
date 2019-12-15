@@ -4,6 +4,7 @@ import * as React from 'react';
 import * as ApolloReactComponents from '@apollo/react-components';
 import * as ApolloReactHoc from '@apollo/react-hoc';
 import * as ApolloReactHooks from '@apollo/react-hooks';
+
 export type Maybe<T> = T | null;
 export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 /** All built-in and custom scalars, mapped to their actual values */
@@ -66,13 +67,18 @@ export type LoginMutationVariables = {
 export type LoginMutation = { __typename?: 'Mutation' } & {
   login: { __typename?: 'UserResponse' } & {
     user: Maybe<{ __typename?: 'User' } & Pick<User, 'id' | 'email'>>;
-    errors: Maybe<Array<{ __typename?: 'FieldError' } & Pick<FieldError, 'path'>>>;
+    errors: Maybe<
+      Array<{ __typename?: 'FieldError' } & Pick<FieldError, 'path'>>
+    >;
   };
 };
 
 export type LogoutMutationVariables = {};
 
-export type LogoutMutation = { __typename?: 'Mutation' } & Pick<Mutation, 'logout'>;
+export type LogoutMutation = { __typename?: 'Mutation' } & Pick<
+  Mutation,
+  'logout'
+>;
 
 export type SignUpMutationVariables = {
   input: AuthInput;
@@ -81,13 +87,19 @@ export type SignUpMutationVariables = {
 export type SignUpMutation = { __typename?: 'Mutation' } & {
   register: { __typename?: 'UserResponse' } & {
     user: Maybe<{ __typename?: 'User' } & Pick<User, 'id' | 'email'>>;
-    errors: Maybe<Array<{ __typename?: 'FieldError' } & Pick<FieldError, 'path' | 'message'>>>;
+    errors: Maybe<
+      Array<
+        { __typename?: 'FieldError' } & Pick<FieldError, 'path' | 'message'>
+      >
+    >;
   };
 };
 
 export type MeQueryVariables = {};
 
-export type MeQuery = { __typename?: 'Query' } & { me: Maybe<{ __typename?: 'User' } & Pick<User, 'id' | 'email'>> };
+export type MeQuery = { __typename?: 'Query' } & {
+  me: Maybe<{ __typename?: 'User' } & Pick<User, 'id' | 'email'>>;
+};
 
 export const LoginDocument = gql`
   mutation Login($input: AuthInput!) {
@@ -102,14 +114,23 @@ export const LoginDocument = gql`
     }
   }
 `;
-export type LoginMutationFn = ApolloReactCommon.MutationFunction<LoginMutation, LoginMutationVariables>;
+export type LoginMutationFn = ApolloReactCommon.MutationFunction<
+  LoginMutation,
+  LoginMutationVariables
+>;
 export type LoginComponentProps = Omit<
-  ApolloReactComponents.MutationComponentOptions<LoginMutation, LoginMutationVariables>,
+  ApolloReactComponents.MutationComponentOptions<
+    LoginMutation,
+    LoginMutationVariables
+  >,
   'mutation'
 >;
 
 export const LoginComponent = (props: LoginComponentProps) => (
-  <ApolloReactComponents.Mutation<LoginMutation, LoginMutationVariables> mutation={LoginDocument} {...props} />
+  <ApolloReactComponents.Mutation<LoginMutation, LoginMutationVariables>
+    mutation={LoginDocument}
+    {...props}
+  />
 );
 
 export type LoginProps<TChildProps = {}> =
@@ -123,13 +144,15 @@ export function withLogin<TProps, TChildProps = {}>(
     LoginProps<TChildProps>
   >,
 ) {
-  return ApolloReactHoc.withMutation<TProps, LoginMutation, LoginMutationVariables, LoginProps<TChildProps>>(
-    LoginDocument,
-    {
-      alias: 'login',
-      ...operationOptions,
-    },
-  );
+  return ApolloReactHoc.withMutation<
+    TProps,
+    LoginMutation,
+    LoginMutationVariables,
+    LoginProps<TChildProps>
+  >(LoginDocument, {
+    alias: 'login',
+    ...operationOptions,
+  });
 }
 
 /**
@@ -150,26 +173,46 @@ export function withLogin<TProps, TChildProps = {}>(
  * });
  */
 export function useLoginMutation(
-  baseOptions?: ApolloReactHooks.MutationHookOptions<LoginMutation, LoginMutationVariables>,
+  baseOptions?: ApolloReactHooks.MutationHookOptions<
+    LoginMutation,
+    LoginMutationVariables
+  >,
 ) {
-  return ApolloReactHooks.useMutation<LoginMutation, LoginMutationVariables>(LoginDocument, baseOptions);
+  return ApolloReactHooks.useMutation<LoginMutation, LoginMutationVariables>(
+    LoginDocument,
+    baseOptions,
+  );
 }
 export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
-export type LoginMutationResult = ApolloReactCommon.MutationResult<LoginMutation>;
-export type LoginMutationOptions = ApolloReactCommon.BaseMutationOptions<LoginMutation, LoginMutationVariables>;
+export type LoginMutationResult = ApolloReactCommon.MutationResult<
+  LoginMutation
+>;
+export type LoginMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  LoginMutation,
+  LoginMutationVariables
+>;
 export const LogoutDocument = gql`
   mutation Logout {
     logout
   }
 `;
-export type LogoutMutationFn = ApolloReactCommon.MutationFunction<LogoutMutation, LogoutMutationVariables>;
+export type LogoutMutationFn = ApolloReactCommon.MutationFunction<
+  LogoutMutation,
+  LogoutMutationVariables
+>;
 export type LogoutComponentProps = Omit<
-  ApolloReactComponents.MutationComponentOptions<LogoutMutation, LogoutMutationVariables>,
+  ApolloReactComponents.MutationComponentOptions<
+    LogoutMutation,
+    LogoutMutationVariables
+  >,
   'mutation'
 >;
 
 export const LogoutComponent = (props: LogoutComponentProps) => (
-  <ApolloReactComponents.Mutation<LogoutMutation, LogoutMutationVariables> mutation={LogoutDocument} {...props} />
+  <ApolloReactComponents.Mutation<LogoutMutation, LogoutMutationVariables>
+    mutation={LogoutDocument}
+    {...props}
+  />
 );
 
 export type LogoutProps<TChildProps = {}> =
@@ -183,13 +226,15 @@ export function withLogout<TProps, TChildProps = {}>(
     LogoutProps<TChildProps>
   >,
 ) {
-  return ApolloReactHoc.withMutation<TProps, LogoutMutation, LogoutMutationVariables, LogoutProps<TChildProps>>(
-    LogoutDocument,
-    {
-      alias: 'logout',
-      ...operationOptions,
-    },
-  );
+  return ApolloReactHoc.withMutation<
+    TProps,
+    LogoutMutation,
+    LogoutMutationVariables,
+    LogoutProps<TChildProps>
+  >(LogoutDocument, {
+    alias: 'logout',
+    ...operationOptions,
+  });
 }
 
 /**
@@ -209,13 +254,24 @@ export function withLogout<TProps, TChildProps = {}>(
  * });
  */
 export function useLogoutMutation(
-  baseOptions?: ApolloReactHooks.MutationHookOptions<LogoutMutation, LogoutMutationVariables>,
+  baseOptions?: ApolloReactHooks.MutationHookOptions<
+    LogoutMutation,
+    LogoutMutationVariables
+  >,
 ) {
-  return ApolloReactHooks.useMutation<LogoutMutation, LogoutMutationVariables>(LogoutDocument, baseOptions);
+  return ApolloReactHooks.useMutation<LogoutMutation, LogoutMutationVariables>(
+    LogoutDocument,
+    baseOptions,
+  );
 }
 export type LogoutMutationHookResult = ReturnType<typeof useLogoutMutation>;
-export type LogoutMutationResult = ApolloReactCommon.MutationResult<LogoutMutation>;
-export type LogoutMutationOptions = ApolloReactCommon.BaseMutationOptions<LogoutMutation, LogoutMutationVariables>;
+export type LogoutMutationResult = ApolloReactCommon.MutationResult<
+  LogoutMutation
+>;
+export type LogoutMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  LogoutMutation,
+  LogoutMutationVariables
+>;
 export const SignUpDocument = gql`
   mutation SignUp($input: AuthInput!) {
     register(input: $input) {
@@ -230,14 +286,23 @@ export const SignUpDocument = gql`
     }
   }
 `;
-export type SignUpMutationFn = ApolloReactCommon.MutationFunction<SignUpMutation, SignUpMutationVariables>;
+export type SignUpMutationFn = ApolloReactCommon.MutationFunction<
+  SignUpMutation,
+  SignUpMutationVariables
+>;
 export type SignUpComponentProps = Omit<
-  ApolloReactComponents.MutationComponentOptions<SignUpMutation, SignUpMutationVariables>,
+  ApolloReactComponents.MutationComponentOptions<
+    SignUpMutation,
+    SignUpMutationVariables
+  >,
   'mutation'
 >;
 
 export const SignUpComponent = (props: SignUpComponentProps) => (
-  <ApolloReactComponents.Mutation<SignUpMutation, SignUpMutationVariables> mutation={SignUpDocument} {...props} />
+  <ApolloReactComponents.Mutation<SignUpMutation, SignUpMutationVariables>
+    mutation={SignUpDocument}
+    {...props}
+  />
 );
 
 export type SignUpProps<TChildProps = {}> =
@@ -251,13 +316,15 @@ export function withSignUp<TProps, TChildProps = {}>(
     SignUpProps<TChildProps>
   >,
 ) {
-  return ApolloReactHoc.withMutation<TProps, SignUpMutation, SignUpMutationVariables, SignUpProps<TChildProps>>(
-    SignUpDocument,
-    {
-      alias: 'signUp',
-      ...operationOptions,
-    },
-  );
+  return ApolloReactHoc.withMutation<
+    TProps,
+    SignUpMutation,
+    SignUpMutationVariables,
+    SignUpProps<TChildProps>
+  >(SignUpDocument, {
+    alias: 'signUp',
+    ...operationOptions,
+  });
 }
 
 /**
@@ -278,13 +345,24 @@ export function withSignUp<TProps, TChildProps = {}>(
  * });
  */
 export function useSignUpMutation(
-  baseOptions?: ApolloReactHooks.MutationHookOptions<SignUpMutation, SignUpMutationVariables>,
+  baseOptions?: ApolloReactHooks.MutationHookOptions<
+    SignUpMutation,
+    SignUpMutationVariables
+  >,
 ) {
-  return ApolloReactHooks.useMutation<SignUpMutation, SignUpMutationVariables>(SignUpDocument, baseOptions);
+  return ApolloReactHooks.useMutation<SignUpMutation, SignUpMutationVariables>(
+    SignUpDocument,
+    baseOptions,
+  );
 }
 export type SignUpMutationHookResult = ReturnType<typeof useSignUpMutation>;
-export type SignUpMutationResult = ApolloReactCommon.MutationResult<SignUpMutation>;
-export type SignUpMutationOptions = ApolloReactCommon.BaseMutationOptions<SignUpMutation, SignUpMutationVariables>;
+export type SignUpMutationResult = ApolloReactCommon.MutationResult<
+  SignUpMutation
+>;
+export type SignUpMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  SignUpMutation,
+  SignUpMutationVariables
+>;
 export const MeDocument = gql`
   query Me {
     me {
@@ -293,17 +371,35 @@ export const MeDocument = gql`
     }
   }
 `;
-export type MeComponentProps = Omit<ApolloReactComponents.QueryComponentOptions<MeQuery, MeQueryVariables>, 'query'>;
+export type MeComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<MeQuery, MeQueryVariables>,
+  'query'
+>;
 
 export const MeComponent = (props: MeComponentProps) => (
-  <ApolloReactComponents.Query<MeQuery, MeQueryVariables> query={MeDocument} {...props} />
+  <ApolloReactComponents.Query<MeQuery, MeQueryVariables>
+    query={MeDocument}
+    {...props}
+  />
 );
 
-export type MeProps<TChildProps = {}> = ApolloReactHoc.DataProps<MeQuery, MeQueryVariables> | TChildProps;
+export type MeProps<TChildProps = {}> =
+  | ApolloReactHoc.DataProps<MeQuery, MeQueryVariables>
+  | TChildProps;
 export function withMe<TProps, TChildProps = {}>(
-  operationOptions?: ApolloReactHoc.OperationOption<TProps, MeQuery, MeQueryVariables, MeProps<TChildProps>>,
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    MeQuery,
+    MeQueryVariables,
+    MeProps<TChildProps>
+  >,
 ) {
-  return ApolloReactHoc.withQuery<TProps, MeQuery, MeQueryVariables, MeProps<TChildProps>>(MeDocument, {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    MeQuery,
+    MeQueryVariables,
+    MeProps<TChildProps>
+  >(MeDocument, {
     alias: 'me',
     ...operationOptions,
   });
@@ -324,12 +420,28 @@ export function withMe<TProps, TChildProps = {}>(
  *   },
  * });
  */
-export function useMeQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<MeQuery, MeQueryVariables>) {
-  return ApolloReactHooks.useQuery<MeQuery, MeQueryVariables>(MeDocument, baseOptions);
+export function useMeQuery(
+  baseOptions?: ApolloReactHooks.QueryHookOptions<MeQuery, MeQueryVariables>,
+) {
+  return ApolloReactHooks.useQuery<MeQuery, MeQueryVariables>(
+    MeDocument,
+    baseOptions,
+  );
 }
-export function useMeLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<MeQuery, MeQueryVariables>) {
-  return ApolloReactHooks.useLazyQuery<MeQuery, MeQueryVariables>(MeDocument, baseOptions);
+export function useMeLazyQuery(
+  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
+    MeQuery,
+    MeQueryVariables
+  >,
+) {
+  return ApolloReactHooks.useLazyQuery<MeQuery, MeQueryVariables>(
+    MeDocument,
+    baseOptions,
+  );
 }
 export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
 export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
-export type MeQueryResult = ApolloReactCommon.QueryResult<MeQuery, MeQueryVariables>;
+export type MeQueryResult = ApolloReactCommon.QueryResult<
+  MeQuery,
+  MeQueryVariables
+>;

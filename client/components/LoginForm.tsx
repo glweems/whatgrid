@@ -10,7 +10,7 @@ import { UserModel } from '../store/user';
 
 const LoginForm: React.FC = () => {
   const [login] = useLoginMutation();
-  const { setUser } = useStoreActions((actions) => actions.user);
+  const { setUser } = useStoreActions(actions => actions.user);
 
   const [msg] = useState('');
 
@@ -24,16 +24,28 @@ const LoginForm: React.FC = () => {
       password: '',
     },
     onSubmit: async ({ email, password }) => {
-      await login({ variables: { input: { email, password } } }).then(({ data }) => setUser(data?.login?.user));
+      await login({
+        variables: { input: { email, password } },
+      }).then(({ data }) => setUser(data?.login?.user));
     },
   });
 
   return (
     <Form columns={2} gap="1em" onSubmit={handleSubmit}>
       <p>{msg}</p>
-      <TextField label="Email Address" name="email" type="text" onChange={handleChange} />
+      <TextField
+        label="Email Address"
+        name="email"
+        type="text"
+        onChange={handleChange}
+      />
 
-      <TextField label="Password" name="password" type="password" onChange={handleChange} />
+      <TextField
+        label="Password"
+        name="password"
+        type="password"
+        onChange={handleChange}
+      />
 
       <Button type="submit">Submit</Button>
     </Form>

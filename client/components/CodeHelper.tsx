@@ -7,7 +7,9 @@ type Props = { code: any; show?: boolean };
 const CodeHelper: React.FC<Props> = ({ code, show: propsShow = false }) => {
   const [show, setShow] = useState<boolean>(propsShow);
 
-  const toggleCode: (event: SyntheticEvent<HTMLButtonElement, MouseEvent>) => void = () => setShow((state) => !state);
+  const toggleCode: (
+    event: SyntheticEvent<HTMLButtonElement, MouseEvent>,
+  ) => void = () => setShow(state => !state);
 
   return (
     <div>

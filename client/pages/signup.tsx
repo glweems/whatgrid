@@ -2,9 +2,7 @@ import React from 'react';
 import SignUpForm from '../components/SignUpForm';
 import Layout from '../components/Layout';
 
-interface Props {}
-
-const RegisterPage: React.FC<Props> = () => {
+const RegisterPage: React.FC = () => {
   return (
     <Layout>
       <SignUpForm />

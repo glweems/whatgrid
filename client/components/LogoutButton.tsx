@@ -7,7 +7,7 @@ interface Props {}
 
 const LogoutButton: React.FC<Props> = () => {
   const [logout] = useLogoutMutation();
-  const { clearUser } = useStoreActions((actions) => actions.user);
+  const { clearUser } = useStoreActions(actions => actions.user);
 
   const handleClick = () => {
     logout();

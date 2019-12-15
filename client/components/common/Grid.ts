@@ -14,7 +14,12 @@ import styled from 'styled-components/macro';
 
 import { Theme } from '../../utils/theme';
 
-interface Props extends SpaceProps, ColorProps, LayoutProps, BorderProps, GridProps {}
+interface Props
+  extends SpaceProps,
+    ColorProps,
+    LayoutProps,
+    BorderProps,
+    GridProps {}
 
 interface ThemeProps {
   theme?: Theme;

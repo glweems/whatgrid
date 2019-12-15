@@ -5,7 +5,11 @@ import { useEffect, useState } from 'react';
 import { getTheme, Mode, Theme } from '../utils/theme';
 
 type ToggleTheme = () => void;
-type UseThemeValues = { theme: Theme; toggleTheme: ToggleTheme; componentMounted: boolean };
+type UseThemeValues = {
+  theme: Theme;
+  toggleTheme: ToggleTheme;
+  componentMounted: boolean;
+};
 type UseTheme = () => UseThemeValues;
 
 const useTheme: UseTheme = () => {
@@ -26,8 +30,12 @@ const useTheme: UseTheme = () => {
   };
 
   useEffect(() => {
-    const localTheme: Mode | undefined = (window as any & { theme: Mode }).localStorage.getItem('theme');
-    window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches && !localTheme
+    const localTheme: Mode | undefined = (window as any & {
+      theme: Mode;
+    }).localStorage.getItem('theme');
+    window.matchMedia &&
+    window.matchMedia('(prefers-color-scheme: dark)').matches &&
+    !localTheme
       ? setMode('dark')
       : localTheme
       ? setTheme(localTheme)

@@ -55,7 +55,7 @@ const Wrapper = styled.div`
     height: 100%;
   }
 
-  ${(Grid as any)} {
+  ${Grid as any} {
     grid-area: css-grid;
   }
 `;

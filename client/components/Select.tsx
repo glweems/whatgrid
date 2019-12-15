@@ -8,7 +8,7 @@ interface Props extends React.SelectHTMLAttributes<HTMLSelectElement> {
 export default ({ options, ...props }: Props) => {
   return (
     <Select {...props}>
-      {options.map((o) => (
+      {options.map(o => (
         <option key={uuid()} value={o}>
           {o}
         </option>

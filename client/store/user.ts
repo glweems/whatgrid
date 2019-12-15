@@ -11,7 +11,12 @@ export interface UserModel {
 }
 
 const userModel: UserModel = {
-  setUser: action((state, payload) => ({ ...state, id: payload.id, email: payload.email, guest: false })),
+  setUser: action((state, payload) => ({
+    ...state,
+    id: payload.id,
+    email: payload.email,
+    guest: false,
+  })),
 
   setGuest: action(() => ({ guest: true })),
 

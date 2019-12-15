@@ -1,5 +1,14 @@
 import styled from 'styled-components/macro';
-import { space, color, layout, border, BorderProps, SpaceProps, ColorProps, LayoutProps } from 'styled-system';
+import {
+  space,
+  color,
+  layout,
+  border,
+  BorderProps,
+  SpaceProps,
+  ColorProps,
+  LayoutProps,
+} from 'styled-system';
 import { Theme } from '../../utils/theme';
 
 interface Props extends SpaceProps, ColorProps, LayoutProps, BorderProps {}

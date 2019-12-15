@@ -1,21 +1,25 @@
 import App from 'next/app';
-import ContextProvider from '../context';
-import { ApolloClient } from 'apollo-boost';
 import React from 'react';
+import ContextProvider from '../context';
 import { GlobalStyle } from '../utils/theme';
-import withApollo from '../apollo/withApollo';
-import { ApolloProvider } from 'react-apollo';
 
 class MyApp extends App<any> {
   render() {
     const { Component, pageProps } = this.props;
-    console.log('TCL: MyApp -> render -> this.props', this.props);
-    return (
-      <ContextProvider>
-        <GlobalStyle />
-        <Component {...pageProps} />
-      </ContextProvider>
-    );
+    try {
+      return (
+        <ContextProvider>
+          <GlobalStyle />
+          <Component {...pageProps} />
+        </ContextProvider>
+      );
+    } catch (e) {
+      return (
+        <pre>
+          <code>{JSON.stringify(e)}</code>
+        </pre>
+      );
+    }
   }
 }
 

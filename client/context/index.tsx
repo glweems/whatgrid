@@ -9,7 +9,10 @@ import withApollo from '../apollo/withApollo';
 import { ApolloProvider } from 'react-apollo';
 import { ApolloClient } from 'apollo-boost';
 
-const ProviderComposer: React.FC<{ contexts: React.ReactNode[] | any }> = ({ contexts, children }: any) =>
+const ProviderComposer: React.FC<{ contexts: React.ReactNode[] | any }> = ({
+  contexts,
+  children,
+}: any) =>
   contexts.reduceRight(
     (kids: any, parent: any) =>
       React.cloneElement(parent, {

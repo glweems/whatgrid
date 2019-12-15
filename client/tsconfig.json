@@ -26,11 +26,6 @@
     "pretty": true,
     "types": [
       "react"
-    ],
+    ]
   },
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx"
-  ]
 }

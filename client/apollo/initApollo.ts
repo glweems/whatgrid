@@ -1,6 +1,10 @@
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-named-as-default */
-import { ApolloClient, InMemoryCache, NormalizedCacheObject } from 'apollo-boost';
+import {
+  ApolloClient,
+  InMemoryCache,
+  NormalizedCacheObject,
+} from 'apollo-boost';
 import { setContext } from 'apollo-link-context';
 import { createHttpLink } from 'apollo-link-http';
 import fetch from 'isomorphic-unfetch';
