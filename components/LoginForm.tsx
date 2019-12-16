@@ -10,7 +10,7 @@ const LoginForm: React.FC = () => {
   const [login] = useLoginMutation();
   const { setUser } = useStoreActions(actions => actions.user);
 
-  const [msg] = useState('');
+  const [msg, setMsg] = useState('');
 
   const { handleChange, handleSubmit } = useFormik<AuthInput>({
     initialValues: {
@@ -20,7 +20,14 @@ const LoginForm: React.FC = () => {
     onSubmit: async ({ email, password }) => {
       await login({
         variables: { input: { email, password } },
-      }).then(({ data }) => setUser(data?.login?.user));
+      }).then(({ data }) => {
+        if (!data.login.errors) {
+          setUser(data.login.user);
+          setMsg(data.login.user.email);
+        } else {
+          setMsg(data.login.errors[0].path);
+        }
+      });
     },
   });
 

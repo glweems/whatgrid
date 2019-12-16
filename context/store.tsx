@@ -1,6 +1,7 @@
 import React, { createContext, useEffect } from 'react';
+import { StoreProvider } from 'easy-peasy';
 import { User, useMeQuery } from '../components/Graphql';
-import { useStoreActions } from '../store';
+import store, { useStoreActions } from '../store';
 
 type UserContextShape = null | User;
 
@@ -12,16 +13,13 @@ const UserProvider: React.FC = ({ children }) => {
 
   useEffect(() => {
     if (!loading) {
-      if (data?.me) setUser(data.me);
-      else setGuest();
+      console.log('TCL: UserProvider:React.FC -> errors', data);
     }
   });
 
   if (loading) return null;
 
-  return (
-    <UserContext.Provider value={data.me}>{children}</UserContext.Provider>
-  );
+  return <StoreProvider store={store}>{children}</StoreProvider>;
 };
 
 export default UserProvider;

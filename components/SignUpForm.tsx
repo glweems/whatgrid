@@ -18,8 +18,12 @@ const SignupForm = () => {
 
     onSubmit: ({ email, password }) => {
       signUp({ variables: { input: { email, password } } }).then(({ data }) => {
-        setUser(data.register.user);
-        setMsg('Success');
+        if (!data.register.errors) {
+          setUser(data.register.user);
+          setMsg(data.register.user.email);
+        } else {
+          setMsg(data.register.errors[0].message);
+        }
       });
     },
   });

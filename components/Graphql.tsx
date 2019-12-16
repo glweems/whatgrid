@@ -22,13 +22,17 @@ export type AuthInput = {
 };
 
 export type FieldError = {
-  __typename?: 'FieldError';
   path: Scalars['String'];
   message: Scalars['String'];
 };
 
+export type Grid = {
+  id: Scalars['Float'];
+  name: Scalars['String'];
+  author: User;
+};
+
 export type Mutation = {
-  __typename?: 'Mutation';
   register: UserResponse;
   login: UserResponse;
   logout: Scalars['Boolean'];
@@ -43,19 +47,22 @@ export type MutationLoginArgs = {
 };
 
 export type Query = {
-  __typename?: 'Query';
   me?: Maybe<User>;
-  book: Scalars['String'];
+  grid?: Maybe<Grid>;
+  grids: Array<Grid>;
+};
+
+export type QueryGridArgs = {
+  id: Scalars['Int'];
 };
 
 export type User = {
-  __typename?: 'User';
   id: Scalars['Float'];
   email: Scalars['String'];
+  nickname?: Maybe<Scalars['String']>;
 };
 
 export type UserResponse = {
-  __typename?: 'UserResponse';
   user?: Maybe<User>;
   errors?: Maybe<Array<FieldError>>;
 };
@@ -64,42 +71,31 @@ export type LoginMutationVariables = {
   input: AuthInput;
 };
 
-export type LoginMutation = { __typename?: 'Mutation' } & {
-  login: { __typename?: 'UserResponse' } & {
-    user: Maybe<{ __typename?: 'User' } & Pick<User, 'id' | 'email'>>;
-    errors: Maybe<
-      Array<{ __typename?: 'FieldError' } & Pick<FieldError, 'path'>>
-    >;
+export type LoginMutation = {
+  login: {
+    user: Maybe<Pick<User, 'id' | 'email'>>;
+    errors: Maybe<Array<Pick<FieldError, 'path'>>>;
   };
 };
 
 export type LogoutMutationVariables = {};
 
-export type LogoutMutation = { __typename?: 'Mutation' } & Pick<
-  Mutation,
-  'logout'
->;
+export type LogoutMutation = Pick<Mutation, 'logout'>;
 
 export type SignUpMutationVariables = {
   input: AuthInput;
 };
 
-export type SignUpMutation = { __typename?: 'Mutation' } & {
-  register: { __typename?: 'UserResponse' } & {
-    user: Maybe<{ __typename?: 'User' } & Pick<User, 'id' | 'email'>>;
-    errors: Maybe<
-      Array<
-        { __typename?: 'FieldError' } & Pick<FieldError, 'path' | 'message'>
-      >
-    >;
+export type SignUpMutation = {
+  register: {
+    user: Maybe<Pick<User, 'id' | 'email'>>;
+    errors: Maybe<Array<Pick<FieldError, 'path' | 'message'>>>;
   };
 };
 
 export type MeQueryVariables = {};
 
-export type MeQuery = { __typename?: 'Query' } & {
-  me: Maybe<{ __typename?: 'User' } & Pick<User, 'id' | 'email'>>;
-};
+export type MeQuery = { me: Maybe<Pick<User, 'id' | 'email' | 'nickname'>> };
 
 export const LoginDocument = gql`
   mutation Login($input: AuthInput!) {
@@ -368,6 +364,7 @@ export const MeDocument = gql`
     me {
       id
       email
+      nickname
     }
   }
 `;

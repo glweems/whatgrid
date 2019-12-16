@@ -6,7 +6,7 @@ import { ApolloProvider } from 'react-apollo';
 import { ApolloClient } from 'apollo-boost';
 import useTheme from '../hooks/useTheme';
 import store from '../store';
-import UserProvider from './user';
+import UserProvider from './store';
 import withApollo from '../apollo/withApollo';
 
 const ProviderComposer: React.FC<{ contexts: React.ReactNode[] | any }> = ({
