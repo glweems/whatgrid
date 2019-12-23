@@ -1,0 +1,35 @@
+scalar DateTime
+scalar Id
+
+type Mutation {
+  signup(email: String!, password: String): User
+  login(email: String!, password: String): User
+}
+
+type User {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  email: String!
+  name: String
+  password: String
+  firstName: String
+  lastName: String
+  username: String
+  phoneNumber: Int
+  grids: [Grid!]!
+  token: String
+}
+
+type Grid {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  published: Boolean!
+  name: String
+  rows: Int
+  columns: Int
+  gridTemplateColumns: String
+  gridTemplateRows: String
+  author: User!
+}
