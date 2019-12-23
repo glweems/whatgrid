@@ -1,16 +1,13 @@
 import { Action, action } from 'easy-peasy';
 import { User } from '../components/Graphql';
 
-export interface UserModel {
-  id?: number;
-  email?: string;
-  guest?: boolean;
+export type UserModel = {
   setUser: Action<UserModel, User>;
   setGuest: Action<UserModel>;
-  clearUser: Action<UserModel>;
-}
+  clearUser?: Action<UserModel>;
+};
 
-const userModel: UserModel = {
+const userModel: undefined | UserModel = {
   setUser: action((state, payload) => ({
     ...state,
     id: payload.id,

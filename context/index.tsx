@@ -6,10 +6,11 @@ import { ApolloProvider } from 'react-apollo';
 import { ApolloClient } from 'apollo-boost';
 import useTheme from '../hooks/useTheme';
 import store from '../store';
-import UserProvider from './store';
+import UserProvider from './user';
 import withApollo from '../apollo/withApollo';
+import { useMeLazyQuery } from '../components/Graphql';
 
-const ProviderComposer: React.FC<{ contexts: React.ReactNode[] | any }> = ({
+const ProviderComposer: React.FC<{ contexts: any }> = ({
   contexts,
   children,
 }: any) =>

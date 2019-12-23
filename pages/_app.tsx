@@ -6,10 +6,12 @@ import { GlobalStyle } from '../utils/theme';
 class MyApp extends App<any> {
   render() {
     const { Component, pageProps } = this.props;
+
     try {
       return (
         <ContextProvider>
           <GlobalStyle />
+
           <Component {...pageProps} />
         </ContextProvider>
       );

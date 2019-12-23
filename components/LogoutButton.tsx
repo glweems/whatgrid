@@ -5,11 +5,9 @@ import { useStoreActions } from '../store';
 
 const LogoutButton: React.FC = () => {
   const [logout] = useLogoutMutation();
-  const { clearUser } = useStoreActions(actions => actions.user);
 
   const handleClick = () => {
     logout();
-    clearUser();
   };
 
   return (
