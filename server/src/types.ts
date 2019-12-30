@@ -1,5 +1,8 @@
 import { Prisma } from "./generated/prisma-client";
 
+export interface AuthPayload {
+  token: string
+}
 
 export interface Context {
   db: {

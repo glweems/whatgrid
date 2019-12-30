@@ -441,7 +441,7 @@ export interface UserCreateWithoutGridsInput {
   id?: Maybe<ID_Input>;
   email: String;
   name?: Maybe<String>;
-  password?: Maybe<String>;
+  password: String;
   firstName?: Maybe<String>;
   lastName?: Maybe<String>;
   username?: Maybe<String>;
@@ -493,7 +493,7 @@ export interface UserCreateInput {
   id?: Maybe<ID_Input>;
   email: String;
   name?: Maybe<String>;
-  password?: Maybe<String>;
+  password: String;
   firstName?: Maybe<String>;
   lastName?: Maybe<String>;
   username?: Maybe<String>;
@@ -774,7 +774,7 @@ export interface User {
   updatedAt: DateTimeOutput;
   email: String;
   name?: String;
-  password?: String;
+  password: String;
   firstName?: String;
   lastName?: String;
   username?: String;
@@ -1094,7 +1094,7 @@ export interface UserPreviousValues {
   updatedAt: DateTimeOutput;
   email: String;
   name?: String;
-  password?: String;
+  password: String;
   firstName?: String;
   lastName?: String;
   username?: String;

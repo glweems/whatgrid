@@ -434,7 +434,7 @@ type User {
   updatedAt: DateTime!
   email: String!
   name: String
-  password: String
+  password: String!
   firstName: String
   lastName: String
   username: String
@@ -452,7 +452,7 @@ input UserCreateInput {
   id: ID
   email: String!
   name: String
-  password: String
+  password: String!
   firstName: String
   lastName: String
   username: String
@@ -469,7 +469,7 @@ input UserCreateWithoutGridsInput {
   id: ID
   email: String!
   name: String
-  password: String
+  password: String!
   firstName: String
   lastName: String
   username: String
@@ -510,7 +510,7 @@ type UserPreviousValues {
   updatedAt: DateTime!
   email: String!
   name: String
-  password: String
+  password: String!
   firstName: String
   lastName: String
   username: String

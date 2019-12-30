@@ -1,9 +1,21 @@
 scalar DateTime
 scalar Id
 
+type Query {
+  grids: [Grid!]!
+  grid(id: ID!): Grid
+  user(id: ID, email: String): User
+  users(searchString: String): [User!]!
+}
+
 type Mutation {
-  signup(email: String!, password: String): User
-  login(email: String!, password: String): User
+  signup(email: String!, password: String!, name: String): AuthPayload!
+  login(email: String!, password: String!): AuthPayload!
+}
+
+type AuthPayload {
+  token: String!
+  user: User!
 }
 
 type User {

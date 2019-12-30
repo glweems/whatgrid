@@ -1,53 +1,34 @@
 import './config'
 import 'colors'
 import { GraphQLServer } from "graphql-yoga";
-import { rule, shield, and, or, not } from 'graphql-shield'
-import resolvers from './resolvers'
-
-const isAuthenticated = rule({ cache: 'contextual' })(
-  async (_parent, _args, ctx, _info) => {
-    return ctx.user !== null
-  },
-)
-
-const isAdmin = rule({ cache: 'contextual' })(
-  async (_parent, _args, ctx, _info) => {
-    return ctx.user.role === 'admin'
-  },
-)
-
-const isEditor = rule({ cache: 'contextual' })(
-  async (_parent, _args, ctx, _info) => {
-    return ctx.user.role === 'editor'
-  },
-)
-
-const permissions = shield({
-  Query: {
-    user: and(isAuthenticated, or(isAdmin, isEditor)),
-  },
-  Mutation: {
-    signup: not(isAuthenticated),
-  },
-  User: isAuthenticated,
-})
-
-function getUser(req) {
-  if (!req.session.userId) {
-    return true
-  }
-}
+import { resolvers } from './resolvers'
+import { prisma } from './generated/prisma-client';
+import { permissions } from './permissions'
+console.log(process.env.GQL_ENDPOINT)
 
 
 const server = new GraphQLServer({
   typeDefs: "./src/schema.graphql",
-  resolvers,
+  resolvers: resolvers as any,
   middlewares: [permissions],
-  context: req => ({
-    ...req,
-    user: getUser(req),
-  }),
+  context: request => {
+    return {
+      ...request,
+      prisma,
+    }
+  },
 });
 
-server.start(() => console.log("Server is running on http://localhost:4000".blue));
+const options = {
+  // port: PORT,
+  endpoint: '/graphql',
+  playground: '/playground',
+}
+
+server.start(options, ({ port }) =>
+  console.log(
+    `Server started, listening on port ${port} for incoming requests.`.blue,
+  ),
+)
+
 

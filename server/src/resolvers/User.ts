@@ -1,13 +1,15 @@
+import { UserResolvers } from "../generated/graphqlgen"
+
 // This resolver file was scaffolded by github.com/prisma/graphqlgen, DO NOT EDIT.
 // Please do not import this file directly but copy & paste to your application code.
 
-import { UserResolvers } from '../graphqlgen'
+
 
 export const User: UserResolvers.Type = {
   ...UserResolvers.defaultResolvers,
 
-  grids: (parent, args, ctx) => {
-    throw new Error('Resolver not implemented')
+  grids: ({ id }, args, ctx) => {
+    return ctx.prisma.user({ id }).grids()
   },
   token: (parent, args, ctx) => {
     throw new Error('Resolver not implemented')
