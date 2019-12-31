@@ -1,12 +1,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable import/no-extraneous-dependencies */
-const { parsed: localEnv } = require('dotenv').config()
-const webpack = require('webpack')
 
 module.exports = {
-  webpack(config) {
-    config.plugins.push(new webpack.EnvironmentPlugin(localEnv))
-
-    return config
+  env: {
+    GRAPHQL_ENDPOINT: 'https://whatgrid-server.glweems.now.sh/graphql' // insert your GraphQL Yoga url here
   }
 }

@@ -17,10 +17,7 @@ interface Options {
 
 function create(initialState: any, fetchOptions: Options) {
   const httpLink = createHttpLink({
-    uri:
-      process.env.NODE_ENV === 'production'
-        ? process.env.BACKEND_URI
-        : 'http://localhost:4000/graphql',
+    uri: process.env.GRAPHQL_ENDPOINT,
     credentials: 'include',
     fetch,
     fetchOptions

@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "name": "whatgrid-server",
+  "builds": [
+    {
+      "src": "./dist/index.js",
+      "use": "@now/node"
+    }
+  ],
+  "env": {
+    "APP_SECRET": "@app_secret",
+    "GQL_ENDPOINT": "https://whatgrid-1562e982ca.herokuapp.com/whatgrid-server",
+    "PRODUCTION_FRONTEND_URL": "https://whatgrid.dev"
+  }
+}

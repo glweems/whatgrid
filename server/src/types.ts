@@ -2,7 +2,7 @@ import { ContextParameters } from 'graphql-yoga/dist/types'
 import { Context as PrismaContext } from 'prisma-client-lib/dist/types'
 import { Prisma } from './generated/prisma-client'
 
-export interface Context extends ContextParameters {
+export interface Context {
   db: {
     mutation: Prisma
   }

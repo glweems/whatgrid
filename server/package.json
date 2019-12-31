@@ -2,20 +2,20 @@
   "name": "graphql-boilerplate",
   "scripts": {
     "dev": "nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec NODE_ENV=developement ts-node src/index.ts",
-    "start": "ts-node src/index.ts",
+    "start": "node dist/index.js",
+    "build": "tsc",
     "generate": "graphqlgen",
     "lint": "eslint -c .eslintrc.js --ignore-path .gitignore \"**/*.{ts,tsx,js}\"",
     "lint:fix": "yarn lint --fix"
   },
   "dependencies": {
-    "apollo-server-core": "^2.9.14",
     "bcrypt": "^3.0.7",
     "colors": "^1.4.0",
     "cookie-parser": "^1.4.4",
     "dotenv": "^8.2.0",
     "graphql": "^14.5.8",
     "graphql-shield": "^7.0.5",
-    "graphql-yoga": "1.18.3",
+    "graphql-yoga": "^1.18.3",
     "jsonwebtoken": "^8.5.1",
     "prisma-client-lib": "1.34.10"
   },

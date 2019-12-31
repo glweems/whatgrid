@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import 'dotenv/config'
 import 'colors'
-import { GraphQLServer, Options } from 'graphql-yoga'
+import { GraphQLServer } from 'graphql-yoga'
 import { resolvers } from './resolvers'
 import { prisma } from './generated/prisma-client'
 import { permissions } from './permissions'
@@ -25,7 +25,7 @@ const corsOptions = {
   credentials: true
 }
 
-const options: Options = {
+const options = {
   cors: corsOptions,
   endpoint: '/graphql',
   playground: '/playground'

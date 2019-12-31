@@ -1,7 +1,6 @@
 import { verify } from 'jsonwebtoken'
-import { ContextParameters } from 'graphql-yoga/dist/types'
 
-export const getUserId = (ctx: ContextParameters) => {
+export const getUserId = (ctx: any) => {
   const auth = ctx.request.get('Authorization')
   if (auth) {
     const token = auth.replace('Bearer ', '')
@@ -11,7 +10,7 @@ export const getUserId = (ctx: ContextParameters) => {
   }
   return undefined
 }
-export const bakeCookie = (ctx: ContextParameters, token: string) =>
+export const bakeCookie = (ctx: any, token: string) =>
   ctx.response.cookie('token', token, {
     httpOnly: false,
     // secure: false,

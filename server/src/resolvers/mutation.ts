@@ -38,7 +38,7 @@ export const Mutation: MutationResolvers.Type = {
     }
   },
 
-  login: async (parent, { email, password }, ctx) => {
+  login: async (parent, { email, password }, ctx: any) => {
     const user: any = await ctx.prisma.user({ email })
     if (!user) {
       throw new Error(`No user found for email: ${email}`)
