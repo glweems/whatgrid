@@ -1,43 +1,50 @@
-import React, { useState, useEffect } from 'react';
-import { useFormik } from 'formik';
-import { useSignUpMutation, AuthInput, SignUpDocument } from './Graphql';
-import CodeHelper from './CodeHelper';
-import { useLoginMutation } from '../components/Graphql';
-const LoginForm: React.FC = () => {
-  const [login] = useLoginMutation();
-  const [msg, setMsg] = useState('');
+import React, { useState } from 'react'
+import { useFormik } from 'formik'
+import { Button } from 'rebass/styled-components'
+import { useLoginMutation, LoginMutationVariables } from './Graphql'
+import { Form } from './common/Form'
+import TextField from './TextField'
 
-  const formik = useFormik<AuthInput>({
+const LoginForm: React.FC = () => {
+  const [login] = useLoginMutation()
+
+  const [msg, setMsg] = useState('')
+
+  const { handleChange, handleSubmit } = useFormik<LoginMutationVariables>({
     initialValues: {
       email: '',
-      password: '',
+      password: ''
     },
-    onSubmit: ({ email, password }) => {
-      login({ variables: { input: { email, password } } });
-    },
-  });
+    onSubmit: async ({ email, password }) => {
+      await login({
+        variables: { email, password }
+      }).then(({ data }) => {
+        localStorage.setItem('token', data.login.token)
+        setMsg(data.login.user.email)
+      })
+    }
+  })
 
   return (
-    <form onSubmit={formik.handleSubmit}>
+    <Form columns={2} gap="1em" onSubmit={handleSubmit}>
       <p>{msg}</p>
-      <label htmlFor="email">
-        Email Address
-        <input id="email" name="email" type="email" onChange={formik.handleChange} value={formik.values.email} />
-      </label>
+      <TextField
+        label="Email Address"
+        name="email"
+        type="text"
+        onChange={handleChange}
+      />
 
-      <label htmlFor="password">
-        Last Name
-        <input
-          id="password"
-          name="password"
-          type="text"
-          onChange={formik.handleChange}
-          value={formik.values.password}
-        />
-      </label>
-      <button type="submit">Submit</button>
-    </form>
-  );
-};
+      <TextField
+        label="Password"
+        name="password"
+        type="password"
+        onChange={handleChange}
+      />
 
-export default LoginForm;
+      <Button type="submit">Submit</Button>
+    </Form>
+  )
+}
+
+export default LoginForm

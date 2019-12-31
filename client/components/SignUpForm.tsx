@@ -1,49 +1,56 @@
-import React, { useState, useEffect } from 'react';
-import { useFormik } from 'formik';
-import { useSignUpMutation, AuthInput, SignUpDocument } from './Graphql';
-import CodeHelper from './CodeHelper';
+import React, { useState } from 'react'
+import { useFormik } from 'formik'
+import { Label, Input } from '@rebass/forms'
+import { Button } from 'rebass/styled-components'
+import { useSignUpMutation, SignUpMutationVariables } from './Graphql'
 
 const SignupForm = () => {
-  const [signUp, options] = useSignUpMutation(SignUpDocument);
-  const [msg, setMsg] = useState('');
+  const [signup] = useSignUpMutation()
+  const [msg, setMsg] = useState('')
 
-  useEffect(() => {
-    if (!options.loading) {
-      setMsg('success');
-    }
-  }, []);
-
-  const formik = useFormik<AuthInput>({
+  const formik = useFormik<SignUpMutationVariables>({
     initialValues: {
       email: '',
-      password: '',
+      password: ''
     },
-    onSubmit: ({ email, password }) => {
-      signUp({ variables: { input: { email, password } } });
-    },
-  });
+
+    onSubmit: async ({ email, password }) => {
+      await signup({
+        variables: { email, password }
+      }).then(({ data }) => {
+        localStorage.setItem('token', data.signup.token)
+        setMsg(data.signup.user.email)
+      })
+    }
+  })
 
   return (
     <form onSubmit={formik.handleSubmit}>
       <p>{msg}</p>
-      <label htmlFor="email">
-        Email Address
-        <input id="email" name="email" type="email" onChange={formik.handleChange} value={formik.values.email} />
-      </label>
+      <Label htmlFor="email">
+        Email
+        <Input
+          id="email"
+          name="email"
+          type="email"
+          onChange={formik.handleChange}
+          value={formik.values.email}
+        />
+      </Label>
 
-      <label htmlFor="password">
-        Last Name
-        <input
+      <Label htmlFor="password">
+        Password
+        <Input
           id="password"
           name="password"
           type="text"
           onChange={formik.handleChange}
           value={formik.values.password}
         />
-      </label>
-      <button type="submit">Submit</button>
+      </Label>
+      <Button type="submit">Submit</Button>
     </form>
-  );
-};
+  )
+}
 
-export default SignupForm;
+export default SignupForm

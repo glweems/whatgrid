@@ -1,15 +1,13 @@
-import React from 'react';
-import LoginForm from '../components/LoginForm';
-import { withApollo } from '../utils/apollo';
+import React from 'react'
+import LoginForm from '../components/LoginForm'
+import Layout from '../components/Layout'
 
-interface Props {}
-
-const LoginPage: React.FC<Props> = () => {
+const LoginPage: React.FC = () => {
   return (
-    <div>
+    <Layout>
       <LoginForm />
-    </div>
-  );
-};
+    </Layout>
+  )
+}
 
-export default withApollo(LoginPage);
+export default LoginPage

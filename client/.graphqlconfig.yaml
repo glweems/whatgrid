@@ -1,0 +1,3 @@
+projects:
+  whatgrid:
+    schemaPath: ../server/src/schema.gql

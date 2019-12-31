@@ -1,0 +1,47 @@
+scalar DateTime
+scalar Id
+
+type Query {
+  grids: [Grid!]!
+  grid(id: ID!): Grid
+  user(id: ID, email: String): User
+  users(searchString: String): [User!]!
+  me: User
+}
+
+type Mutation {
+  signup(email: String!, password: String!): AuthPayload!
+  login(email: String!, password: String!): AuthPayload!
+}
+
+type AuthPayload {
+  token: String!
+  user: User!
+}
+
+type User {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  email: String!
+  name: String
+  password: String
+  firstName: String
+  lastName: String
+  username: String
+  phoneNumber: Int
+  grids: [Grid!]!
+}
+
+type Grid {
+  id: ID!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  published: Boolean!
+  name: String
+  rows: Int
+  columns: Int
+  gridTemplateColumns: String
+  gridTemplateRows: String
+  author: User!
+}

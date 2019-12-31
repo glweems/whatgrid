@@ -1,24 +1,28 @@
-import { default as Next, Container } from 'next/app';
-import ContextProvider from '../components/ContextProvider';
-import { ApolloClient } from 'apollo-boost';
-import React from 'react';
-import { withApollo } from '../utils/apollo';
-import { GlobalStyle } from '../utils/theme';
+import App from 'next/app'
+import React from 'react'
+import ContextProvider from '../context'
+import { GlobalStyle } from '../utils/theme'
 
-interface Props {
-  apollo: typeof ApolloClient;
-}
-
-class App extends Next<Props> {
+class MyApp extends App<any> {
   render() {
-    const { Component, pageProps } = this.props;
-    return (
-      <ContextProvider>
-        <GlobalStyle />
-        <Component {...pageProps} />
-      </ContextProvider>
-    );
+    const { Component, pageProps } = this.props
+
+    try {
+      return (
+        <ContextProvider>
+          <GlobalStyle />
+
+          <Component {...pageProps} />
+        </ContextProvider>
+      )
+    } catch (e) {
+      return (
+        <pre>
+          <code>{JSON.stringify(e)}</code>
+        </pre>
+      )
+    }
   }
 }
 
-export default withApollo(App);
+export default MyApp

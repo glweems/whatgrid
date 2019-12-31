@@ -1,10 +1,10 @@
-import styled, { StyledComponent } from 'styled-components/macro';
+import styled, { StyledComponent } from 'styled-components/macro'
 
 interface Props {
-  type?: 'button';
+  type?: 'button'
 }
 
-const Button: StyledComponent<'button', Props> = styled.button`
+export const Button: StyledComponent<'button', Props> = styled.button`
   position: relative;
   display: inline-block;
   box-sizing: border-box;
@@ -27,10 +27,8 @@ const Button: StyledComponent<'button', Props> = styled.button`
     display: block;
     margin: 0.4em auto;
   }
-`;
+`
 
 Button.defaultProps = {
-  type: 'button',
-};
-
-export default Button;
+  type: 'button'
+}

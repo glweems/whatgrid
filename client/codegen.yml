@@ -6,6 +6,7 @@ generates:
     hooks:
       afterOneFileWrite:
         - prettier --write
+        - eslint --fix
     plugins:
       - 'typescript'
       - 'typescript-operations'
@@ -15,3 +16,4 @@ generates:
       withMutationOptionsType: true
       withResultType: true
       withHooks: true
+      skipTypename: true

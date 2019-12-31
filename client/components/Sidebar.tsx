@@ -1,31 +1,29 @@
-import React, { useCallback, useContext } from 'react';
-import styled from 'styled-components/macro';
-import uuid from 'uuid/v4';
-import { ThemeContext } from './ContextProvider';
-import GridGapControl from './GridGapControls';
-import { useStoreActions, useStoreState } from '../store';
-import Button from './common/Button';
-import Control from './Control';
-import useTheme from '../hooks/useTheme';
+import React, { useCallback, useContext } from 'react'
+import styled, { ThemeContext } from 'styled-components'
+import uuid from 'uuid/v4'
+import { Text, Button } from 'rebass/styled-components'
+import GridGapControl from './GridGapControls'
+import { useStoreActions, useStoreState } from '../store'
+import Control from './Control'
 
 export const Sidebar: React.FC = () => {
-  const { toggleTheme } = useTheme();
-  const { rows, columns, gridGap } = useStoreState(({ grid }) => grid);
-  const { addGridItem } = useStoreActions(({ grid }) => grid);
+  const { toggleTheme } = useContext(ThemeContext)
+  const { rows, columns, gridGap } = useStoreState(({ grid }) => grid)
+  const { addGridItem } = useStoreActions(({ grid }) => grid)
 
   const addRow = useCallback(async () => {
-    addGridItem('row');
-  }, [addGridItem]);
+    addGridItem('row')
+  }, [addGridItem])
 
   const addColumn = useCallback(async () => {
-    addGridItem('column');
-  }, [addGridItem]);
+    addGridItem('column')
+  }, [addGridItem])
 
   return (
     <Wrapper className="Sidebar">
-      <div>
-        <Button onClick={toggleTheme}>toggleTheme</Button>
-      </div>
+      <Button variant="secondary" onClick={toggleTheme}>
+        toggleTheme
+      </Button>
 
       <SidebarSection>
         <h3>Rows</h3>
@@ -38,7 +36,7 @@ export const Sidebar: React.FC = () => {
       </SidebarSection>
 
       <SidebarSection>
-        <h3>Columns</h3>
+        <Text>Columns</Text>
         <div>
           {columns.map((column) => (
             <Control key={uuid()} type="column" item={column} />
@@ -53,19 +51,19 @@ export const Sidebar: React.FC = () => {
         ))}
       </SidebarSection>
     </Wrapper>
-  );
-};
+  )
+}
 
-export default Sidebar;
+export default Sidebar
 
-const Wrapper = styled.div`
+const Wrapper = styled.aside`
   position: sticky;
   top: 0;
   left: 0;
   display: flex;
   flex-direction: column;
   /* background-color: ${({ theme }) => theme.colors.text}; */
-`;
+`
 
 const SidebarSection = styled.div`
   display: flex;
@@ -73,4 +71,4 @@ const SidebarSection = styled.div`
   margin: 0.5em;
   padding: 1em;
   border-radius: 0.25em;
-`;
+`

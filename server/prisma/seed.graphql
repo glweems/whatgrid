@@ -1,0 +1,41 @@
+mutation {
+  createUser(
+    data: {
+      firstName: "Bobby"
+      lastName: "Bob"
+      username: "bigbob"
+      phoneNumber: 1234567890
+      email: "bob@bob.com"
+      password: "bob"
+      grids: {
+        create: [
+          {
+            name: "My First Grid"
+            rows: 3
+            columns: 3
+            gridTemplateColumns: "1fr 1fr 1fr"
+            gridTemplateRows: "1fr 1fr 1fr"
+          }
+          {
+            name: "My Second Grid"
+            rows: 2
+            columns: 2
+            gridTemplateColumns: "1fr 1fr"
+            gridTemplateRows: "2fr 1fr"
+          }
+        ]
+      }
+    }
+  ) {
+    id
+    firstName
+    lastName
+    username
+    phoneNumber
+    email
+    password
+    grids {
+      name
+    }
+  }
+}

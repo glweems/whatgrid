@@ -1,18 +1,31 @@
-import styled from 'styled-components/macro';
+import styled from 'styled-components/macro'
+import {
+  space,
+  color,
+  layout,
+  border,
+  BorderProps,
+  SpaceProps,
+  ColorProps,
+  LayoutProps
+} from 'styled-system'
+import { Theme } from '../../utils/theme'
 
-export default styled.div`
-  display: flex;
-  flex-direction: column;
-  align-content: center;
-  align-items: center;
-  justify-content: center;
-  justify-items: center;
-  width: 100%;
-  height: 100%;
-  min-height: 50px;
-  color: #56437c;
-  font-weight: 500;
-  text-align: center;
-  background: linear-gradient(90deg, rgba(126, 104, 168, 1) 0%, rgba(187, 170, 221, 1) 100%);
-  border-radius: 3px;
-`;
+type Props = SpaceProps & ColorProps & LayoutProps & BorderProps
+
+interface ThemeProps {
+  theme?: Theme
+}
+
+export const Box: React.ComponentType<Props & ThemeProps> = styled.div<Props>`
+  ${color};
+  ${border};
+  ${layout};
+  ${space};
+`
+
+Box.displayName = 'Box'
+
+Box.defaultProps = {
+  border: 1
+}

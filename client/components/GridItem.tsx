@@ -1,8 +1,8 @@
-import React from 'react';
-import Box from './common/Box';
+import React from 'react'
+import { Box } from './common/Box'
 
 const GridItem: React.FC = () => {
-  return <Box />;
-};
+  return <Box />
+}
 
-export default GridItem;
+export default GridItem

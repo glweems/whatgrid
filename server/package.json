@@ -1,31 +1,50 @@
 {
-  "name": "server",
-  "version": "0.0.1",
-  "devDependencies": {
-    "@types/bcryptjs": "^2.4.2",
-    "@types/express": "^4.17.2",
-    "@types/express-session": "^1.15.16",
-    "@types/node": "^12.12.8",
-    "nodemon": "^1.19.4",
-    "ts-node": "8.5.2",
-    "typescript": "3.7.2"
+  "name": "graphql-boilerplate",
+  "scripts": {
+    "dev": "nodemon --watch 'src/**/*.ts' --ignore 'src/**/*.spec.ts' --exec NODE_ENV=developement ts-node src/index.ts",
+    "start": "node dist/index.js",
+    "build": "tsc",
+    "generate": "graphqlgen",
+    "lint": "eslint -c .eslintrc.js --ignore-path .gitignore \"**/*.{ts,tsx,js}\"",
+    "lint:fix": "yarn lint --fix"
   },
   "dependencies": {
-    "apollo-server-express": "^2.9.9",
-    "bcryptjs": "^2.4.3",
-    "connect-sqlite3": "^0.9.11",
-    "cors": "^2.8.5",
-    "express": "^4.17.1",
-    "express-session": "^1.17.0",
+    "bcrypt": "^3.0.7",
+    "colors": "^1.4.0",
+    "cookie-parser": "^1.4.4",
+    "dotenv": "^8.2.0",
     "graphql": "^14.5.8",
-    "pg": "^7.13.0",
-    "reflect-metadata": "^0.1.10",
-    "sqlite3": "^4.1.0",
-    "type-graphql": "^0.17.5",
-    "typeorm": "0.2.20"
+    "graphql-shield": "^7.0.5",
+    "graphql-yoga": "^1.18.3",
+    "jsonwebtoken": "^8.5.1",
+    "prisma-client-lib": "1.34.10"
   },
-  "scripts": {
-    "start": "nodemon --exec ts-node --files src/app.ts",
-    "build": "tsc"
+  "devDependencies": {
+    "@types/bcrypt": "^3.0.0",
+    "@types/colors": "^1.2.1",
+    "@types/cookie-parser": "^1.4.2",
+    "@types/dotenv": "^8.2.0",
+    "@types/graphql": "^14.5.0",
+    "@types/jsonwebtoken": "^8.3.5",
+    "@typescript-eslint/eslint-plugin": "^2.12.0",
+    "@typescript-eslint/parser": "^2.12.0",
+    "eslint": "^6.7.2",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-prettier": "^6.7.0",
+    "eslint-plugin-import": "^2.19.1",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-react": "^7.17.0",
+    "graphql-faker": "^2.0.0-rc.13",
+    "graphqlgen": "^0.6.0-rc9",
+    "nodemon": "^2.0.2",
+    "prettier": "^1.19.1",
+    "prisma": "1.34.10",
+    "ts-node": "8.5.4",
+    "typescript": "3.7.3"
+  },
+  "resolutions": {
+    "graphql": "^14.5.8"
   }
 }

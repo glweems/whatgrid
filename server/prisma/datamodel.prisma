@@ -1,0 +1,31 @@
+type User {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  email: String! @unique
+  name: String
+  password: String!
+  firstName: String
+  lastName: String
+  username: String
+  phoneNumber: Int
+  grids: [Grid!]!
+}
+
+type Grid {
+  id: ID! @id
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+  published: Boolean! @default(value: false)
+  name: String
+  rows: Int
+  columns: Int
+  gridTemplateColumns: String
+  gridTemplateRows: String
+  author: User!
+}
+
+enum Role {
+  USER
+  ADMIN
+}

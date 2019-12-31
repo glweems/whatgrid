@@ -1,13 +1,15 @@
-import React, { useState, SyntheticEvent } from 'react';
-import Button from './common/Button';
-import styled from 'styled-components/macro';
+import React, { useState, SyntheticEvent } from 'react'
+import styled from 'styled-components/macro'
+import { Button } from './common/Button'
 
-type Props = { code: any; show?: boolean };
+type Props = { code: any; show?: boolean }
 
 const CodeHelper: React.FC<Props> = ({ code, show: propsShow = false }) => {
-  const [show, setShow] = useState<boolean>(propsShow);
+  const [show, setShow] = useState<boolean>(propsShow)
 
-  const toggleCode: (event: SyntheticEvent<HTMLButtonElement, MouseEvent>) => void = () => setShow((state) => !state);
+  const toggleCode: (
+    event: SyntheticEvent<HTMLButtonElement, MouseEvent>
+  ) => void = () => setShow((state) => !state)
 
   return (
     <div>
@@ -18,10 +20,10 @@ const CodeHelper: React.FC<Props> = ({ code, show: propsShow = false }) => {
         </CodeWrapper>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default CodeHelper;
+export default CodeHelper
 
 const CodeWrapper = styled.div`
   position: fixed;
@@ -29,4 +31,4 @@ const CodeWrapper = styled.div`
   left: 0;
   width: 100vw;
   height: 50vh;
-`;
+`

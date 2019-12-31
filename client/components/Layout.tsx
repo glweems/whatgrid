@@ -1,32 +1,59 @@
-import React, { ReactNode } from 'react';
-import styled, { StyledComponent, ThemeProvider } from 'styled-components/macro';
-import { printCode } from '../utils/helpers';
-import ContextProvider, { wrapRootElement, withProviders } from './ContextProvider';
-import { StoreProvider } from 'easy-peasy';
-import store, { useStoreState } from '../store';
-import { GlobalStyle } from '../utils/theme';
-import useTheme from '../hooks/useTheme';
-import { withApollo } from '../utils/apollo';
-const DefaultMain = styled.main``;
-
-// const withStore = (Component: React.ReactNode) => <StoreProvider></StoreProvider>;
+import React, { ReactNode } from 'react'
+import styled, { StyledComponent } from 'styled-components/macro'
+import useTheme from '../hooks/useTheme'
+import Navbar from './Navbar'
+import { GlobalStyle } from '../utils/theme'
+import Sidebar from './Sidebar'
+import { Grid } from './common/Grid'
 
 interface Props {
-  children?: ReactNode;
-  Main?: StyledComponent<'main', React.ReactElement, {}, never>;
-  Component?: ReactNode;
+  children?: ReactNode
+  Main?: StyledComponent<'main', React.ReactElement, {}, never>
+  Component?: ReactNode
 }
 
-const Layout: React.FC<Props> = ({ children, Main = DefaultMain, ...props }) => {
-  const { theme, componentMounted } = useTheme();
-  if (!componentMounted) return <div />;
-  return (
-    // <header>TODO</header>
-    // {printCode(props)}
-    // <GlobalStyle />
-    <Main>{children}</Main>
-    //{/* <footer>TODO</footer> */}
-  );
-};
+const Layout: React.FC<any> = ({ children, Main = styled.main`` }) => {
+  const { componentMounted } = useTheme()
+  if (!componentMounted) return <div />
 
-export default withApollo(Layout);
+  return (
+    <Wrapper>
+      <Navbar />
+      <Sidebar />
+      <Main>{children}</Main>
+      <GlobalStyle />
+    </Wrapper>
+  )
+}
+
+const Wrapper = styled.div`
+  position: relative;
+  display: grid;
+  grid-template-areas:
+    'navbar navbar'
+    'sidebar css-grid';
+  grid-template-rows: auto 1fr;
+  grid-template-columns: 300px 1fr;
+  height: 100%;
+  height: 100vh;
+  overflow-y: auto;
+
+  header {
+    grid-area: navbar;
+  }
+
+  .title {
+    grid-area: title;
+  }
+
+  .Sidebar {
+    grid-area: sidebar;
+    height: 100%;
+  }
+
+  ${Grid as any} {
+    grid-area: css-grid;
+  }
+`
+
+export default Layout

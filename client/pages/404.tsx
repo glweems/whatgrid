@@ -1,9 +1,7 @@
-import React from 'react';
+import React from 'react'
 
-interface Props {}
+const PageNotFound: React.FC = () => {
+  return <div>404 Error</div>
+}
 
-const PageNotFound: React.FC<Props> = () => {
-  return <div>404 Error</div>;
-};
-
-export default PageNotFound;
+export default PageNotFound
