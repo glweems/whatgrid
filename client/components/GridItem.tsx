@@ -1,5 +1,5 @@
 import React from 'react'
-import Box from './common/Box'
+import { Box } from './common/Box'
 
 const GridItem: React.FC = () => {
   return <Box />

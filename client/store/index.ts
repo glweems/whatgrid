@@ -1,40 +1,35 @@
-import {
-  createStore,
-  createTypedHooks,
-  StoreProvider as EasyStoreProvider,
-  EasyPeasyConfig
-} from 'easy-peasy'
+import { createStore, createTypedHooks, EasyPeasyConfig } from 'easy-peasy'
 import gridModel, { GridModel } from './grid'
+import meModel, { MeModel } from './me'
 import userModel, { UserModel } from './user'
-
-export const initialStore: EasyPeasyConfig = {
-  name: 'what grid',
-  initialState: {
-    grid: gridModel
-  }
-}
+import sessionModel, { SessionModel } from './session'
 
 export interface StoreModel extends EasyPeasyConfig {
   grid: GridModel
-  user?: UserModel
+  me: MeModel
+  user: UserModel
+  session: SessionModel
 }
 
-const storeModel = {
+const storeModel: StoreModel = {
   grid: gridModel,
-  user: userModel
+  user: userModel,
+  me: meModel,
+  session: sessionModel
 }
 
 const store = createStore(storeModel)
 
-// /* Wrapping dev only code like this normally gets stripped out by bundlers
-// such as Webpack when creating a production build. */
-// if (process.env.NODE_ENV === 'development') {
-//   if ((module as any).hot) {
-//     (module as any).hot.accept(storeModel, () => {
-//       store.reconfigure(storeModel) // 👈 Here is the magic
-//     })
-//   }
-// }
+// Wrapping dev only code like this normally gets stripped out by bundlers
+// such as Webpack when creating a production build.
+if (process.env.NODE_ENV === 'development') {
+  const mod: NodeModule & any = module
+  if (mod.hot) {
+    mod.hot.accept('./model', () => {
+      store.reconfigure(storeModel) // 👈 Here is the magic
+    })
+  }
+}
 
 export default store
 

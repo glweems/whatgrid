@@ -4,7 +4,7 @@ interface Props {
   type?: 'button'
 }
 
-const Button: StyledComponent<'button', Props> = styled.button`
+export const Button: StyledComponent<'button', Props> = styled.button`
   position: relative;
   display: inline-block;
   box-sizing: border-box;
@@ -32,5 +32,3 @@ const Button: StyledComponent<'button', Props> = styled.button`
 Button.defaultProps = {
   type: 'button'
 }
-
-export default Button

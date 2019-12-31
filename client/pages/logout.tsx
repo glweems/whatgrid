@@ -1,7 +1,6 @@
 import redirect from '../apollo/redirect'
 
 const Logout = () => {
-  localStorage.removeItem('token')
   return null
 }
 

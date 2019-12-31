@@ -1,0 +1,22 @@
+fragment userFields on User {
+  id
+  createdAt
+  updatedAt
+  email
+  name
+  firstName
+  lastName
+  username
+  phoneNumber
+  grids {
+    id
+    createdAt
+    updatedAt
+    published
+    name
+    rows
+    columns
+    gridTemplateColumns
+    gridTemplateRows
+  }
+}

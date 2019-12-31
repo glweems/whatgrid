@@ -5,35 +5,32 @@ import {
 } from 'apollo-boost'
 import { setContext } from 'apollo-link-context'
 import { createHttpLink } from 'apollo-link-http'
+import Cookies from 'js-cookie'
 import fetch from 'isomorphic-unfetch'
 import isBrowser from './isBrowser'
 
 let apolloClient: ApolloClient<NormalizedCacheObject> | null = null
 
 interface Options {
-  token: string
+  getToken: () => string
 }
 
-function create(initialState: any, options: Options) {
+function create(initialState: any, fetchOptions: Options) {
   const httpLink = createHttpLink({
-    uri: process.env.GRAPHQL_API,
-    credentials: 'include'
+    uri:
+      process.env.NODE_ENV === 'production'
+        ? process.env.BACKEND_URI
+        : 'http://localhost:4000/graphql',
+    credentials: 'include',
+    fetch,
+    fetchOptions
   })
-
   const authLink = setContext((_, { headers }) => {
-    const token = localStorage.getItem('token')
-
-    if (token)
-      return {
-        headers: {
-          ...headers,
-          Authorization: `Bearer ${token}`
-        }
-      }
-
+    const token = Cookies.get('token')
     return {
       headers: {
-        ...headers
+        ...headers,
+        authorization: token ? `Bearer ${token}` : ''
       }
     }
   })
@@ -47,17 +44,27 @@ function create(initialState: any, options: Options) {
   })
 }
 
-export default function initApollo(initialState: any, options: Options) {
+export default function initApollo(initialState, options) {
   // Make sure to create a new client for every server-side request so that data
   // isn't shared between connections (which would be bad)
-  if (!isBrowser) {
-    return create(initialState, options)
+  if (typeof window === 'undefined') {
+    let fetchOptions = {}
+    // If you are using a https_proxy, add fetchOptions with 'https-proxy-agent' agent instance
+    // 'https-proxy-agent' is required here because it's a sever-side only module
+    if (process.env.https_proxy) {
+      fetchOptions = {
+        // eslint-disable-next-line global-require
+        agent: new (require('https-proxy-agent'))(process.env.https_proxy)
+      }
+    }
+    return create(initialState, {
+      ...options,
+      fetchOptions
+    })
   }
-
   // Reuse client on the client-side
   if (!apolloClient) {
     apolloClient = create(initialState, options)
   }
-
   return apolloClient
 }

@@ -104,14 +104,102 @@ export type SignUpMutation = {
   signup: Pick<AuthPayload, 'token'> & { user: Pick<User, 'id' | 'email'> }
 }
 
+export type UserFieldsFragment = Pick<
+  User,
+  | 'id'
+  | 'createdAt'
+  | 'updatedAt'
+  | 'email'
+  | 'name'
+  | 'firstName'
+  | 'lastName'
+  | 'username'
+  | 'phoneNumber'
+> & {
+  grids: Array<
+    Pick<
+      Grid,
+      | 'id'
+      | 'createdAt'
+      | 'updatedAt'
+      | 'published'
+      | 'name'
+      | 'rows'
+      | 'columns'
+      | 'gridTemplateColumns'
+      | 'gridTemplateRows'
+    >
+  >
+}
+
 export type MeQueryVariables = {}
 
-export type MeQuery = { me: Maybe<Pick<User, 'id'>> }
+export type MeQuery = { me: Maybe<UserFieldsFragment> }
 
-export type UserQueryVariables = {}
+export type UserQueryVariables = {
+  id: Scalars['ID']
+}
 
-export type UserQuery = { user: Maybe<Pick<User, 'id' | 'email'>> }
+export type UserQuery = {
+  user: Maybe<
+    Pick<
+      User,
+      | 'id'
+      | 'createdAt'
+      | 'updatedAt'
+      | 'email'
+      | 'name'
+      | 'firstName'
+      | 'lastName'
+      | 'username'
+      | 'phoneNumber'
+    > & {
+      grids: Array<
+        Pick<
+          Grid,
+          | 'id'
+          | 'createdAt'
+          | 'updatedAt'
+          | 'published'
+          | 'name'
+          | 'rows'
+          | 'columns'
+          | 'gridTemplateColumns'
+          | 'gridTemplateRows'
+        >
+      >
+    }
+  >
+}
 
+export type UsersQueryVariables = {}
+
+export type UsersQuery = { users: Array<Pick<User, 'id' | 'email'>> }
+
+export const UserFieldsFragmentDoc = gql`
+  fragment userFields on User {
+    id
+    createdAt
+    updatedAt
+    email
+    name
+    firstName
+    lastName
+    username
+    phoneNumber
+    grids {
+      id
+      createdAt
+      updatedAt
+      published
+      name
+      rows
+      columns
+      gridTemplateColumns
+      gridTemplateRows
+    }
+  }
+`
 export const LoginDocument = gql`
   mutation Login($email: String!, $password: String!) {
     login(email: $email, password: $password) {
@@ -293,9 +381,10 @@ export type SignUpMutationOptions = ApolloReactCommon.BaseMutationOptions<
 export const MeDocument = gql`
   query Me {
     me {
-      id
+      ...userFields
     }
   }
+  ${UserFieldsFragmentDoc}
 `
 export type MeComponentProps = Omit<
   ApolloReactComponents.QueryComponentOptions<MeQuery, MeQueryVariables>,
@@ -369,17 +458,36 @@ export type MeQueryResult = ApolloReactCommon.QueryResult<
   MeQueryVariables
 >
 export const UserDocument = gql`
-  query User {
-    user {
+  query User($id: ID!) {
+    user(id: $id) {
       id
+      createdAt
+      updatedAt
       email
+      name
+      firstName
+      lastName
+      username
+      phoneNumber
+      grids {
+        id
+        createdAt
+        updatedAt
+        published
+        name
+        rows
+        columns
+        gridTemplateColumns
+        gridTemplateRows
+      }
     }
   }
 `
 export type UserComponentProps = Omit<
   ApolloReactComponents.QueryComponentOptions<UserQuery, UserQueryVariables>,
   'query'
->
+> &
+  ({ variables: UserQueryVariables; skip?: boolean } | { skip: boolean })
 
 export const UserComponent = (props: UserComponentProps) => (
   <ApolloReactComponents.Query<UserQuery, UserQueryVariables>
@@ -422,6 +530,7 @@ export function withUser<TProps, TChildProps = {}>(
  * @example
  * const { data, loading, error } = useUserQuery({
  *   variables: {
+ *      id: // value for 'id'
  *   },
  * });
  */
@@ -449,4 +558,89 @@ export type UserLazyQueryHookResult = ReturnType<typeof useUserLazyQuery>
 export type UserQueryResult = ApolloReactCommon.QueryResult<
   UserQuery,
   UserQueryVariables
+>
+export const UsersDocument = gql`
+  query Users {
+    users {
+      id
+      email
+    }
+  }
+`
+export type UsersComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<UsersQuery, UsersQueryVariables>,
+  'query'
+>
+
+export const UsersComponent = (props: UsersComponentProps) => (
+  <ApolloReactComponents.Query<UsersQuery, UsersQueryVariables>
+    query={UsersDocument}
+    {...props}
+  />
+)
+
+export type UsersProps<TChildProps = {}> =
+  | ApolloReactHoc.DataProps<UsersQuery, UsersQueryVariables>
+  | TChildProps
+export function withUsers<TProps, TChildProps = {}>(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    UsersQuery,
+    UsersQueryVariables,
+    UsersProps<TChildProps>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    UsersQuery,
+    UsersQueryVariables,
+    UsersProps<TChildProps>
+  >(UsersDocument, {
+    alias: 'users',
+    ...operationOptions
+  })
+}
+
+/**
+ * __useUsersQuery__
+ *
+ * To run a query within a React component, call `useUsersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUsersQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUsersQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useUsersQuery(
+  baseOptions?: ApolloReactHooks.QueryHookOptions<
+    UsersQuery,
+    UsersQueryVariables
+  >
+) {
+  return ApolloReactHooks.useQuery<UsersQuery, UsersQueryVariables>(
+    UsersDocument,
+    baseOptions
+  )
+}
+export function useUsersLazyQuery(
+  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
+    UsersQuery,
+    UsersQueryVariables
+  >
+) {
+  return ApolloReactHooks.useLazyQuery<UsersQuery, UsersQueryVariables>(
+    UsersDocument,
+    baseOptions
+  )
+}
+export type UsersQueryHookResult = ReturnType<typeof useUsersQuery>
+export type UsersLazyQueryHookResult = ReturnType<typeof useUsersLazyQuery>
+export type UsersQueryResult = ApolloReactCommon.QueryResult<
+  UsersQuery,
+  UsersQueryVariables
 >

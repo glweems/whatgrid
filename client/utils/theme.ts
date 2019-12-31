@@ -115,6 +115,10 @@ export type GetTheme = (mode: Mode) => Theme
  */
 export type Theme = { colors: Colors } & ThemeRoot
 
+export interface ThemeProps {
+  theme?: Theme
+}
+
 export const baseTheme: ThemeRoot = {
   breakpoints: [32, 48, 64],
   space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
@@ -172,6 +176,13 @@ export const getTheme: GetTheme = (mode) => ({
 })
 
 export const GlobalStyle = createGlobalStyle`
+:root {
+  align-content: center;
+  align-items: center;
+  justify-content: center;
+  justify-items: center;
+}
+
   html, body {
     margin: 0;
     padding: 0;

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Label as RebassLabel } from '@rebass/forms'
 import styled from 'styled-components/macro'
-import Input from './common/Input'
+import { Input } from './common/Input'
 
 const defaultProps = {
   type: 'text'

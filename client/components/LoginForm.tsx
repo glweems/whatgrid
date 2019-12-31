@@ -2,13 +2,11 @@ import React, { useState } from 'react'
 import { useFormik } from 'formik'
 import { Button } from 'rebass/styled-components'
 import { useLoginMutation, LoginMutationVariables } from './Graphql'
-import { useStoreActions } from '../store'
-import Form from './common/Form'
+import { Form } from './common/Form'
 import TextField from './TextField'
 
 const LoginForm: React.FC = () => {
   const [login] = useLoginMutation()
-  const { setUser } = useStoreActions((actions) => actions.user)
 
   const [msg, setMsg] = useState('')
 

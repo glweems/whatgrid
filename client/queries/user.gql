@@ -1,6 +1,24 @@
-query User {
-  user {
+query User($id: ID!) {
+  user(id: $id) {
     id
+    createdAt
+    updatedAt
     email
+    name
+    firstName
+    lastName
+    username
+    phoneNumber
+    grids {
+      id
+      createdAt
+      updatedAt
+      published
+      name
+      rows
+      columns
+      gridTemplateColumns
+      gridTemplateRows
+    }
   }
 }

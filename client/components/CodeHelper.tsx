@@ -1,6 +1,6 @@
 import React, { useState, SyntheticEvent } from 'react'
 import styled from 'styled-components/macro'
-import Button from './common/Button'
+import { Button } from './common/Button'
 
 type Props = { code: any; show?: boolean }
 

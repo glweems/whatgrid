@@ -4,7 +4,7 @@ import useTheme from '../hooks/useTheme'
 import Navbar from './Navbar'
 import { GlobalStyle } from '../utils/theme'
 import Sidebar from './Sidebar'
-import Grid from './common/Grid'
+import { Grid } from './common/Grid'
 
 interface Props {
   children?: ReactNode

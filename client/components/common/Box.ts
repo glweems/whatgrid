@@ -11,7 +11,7 @@ import {
 } from 'styled-system'
 import { Theme } from '../../utils/theme'
 
-interface Props extends SpaceProps, ColorProps, LayoutProps, BorderProps {}
+type Props = SpaceProps & ColorProps & LayoutProps & BorderProps
 
 interface ThemeProps {
   theme?: Theme
@@ -29,5 +29,3 @@ Box.displayName = 'Box'
 Box.defaultProps = {
   border: 1
 }
-
-export default Box

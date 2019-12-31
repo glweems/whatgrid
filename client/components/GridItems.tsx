@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import uuid from 'uuid/v4'
 import { useStoreState } from '../store'
-import Box from './common/Box'
+import { Box } from './common/Box'
 
 export const GridItems: React.FC = () => {
   const { rows, columns } = useStoreState((state) => state.grid)

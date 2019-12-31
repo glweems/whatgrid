@@ -3,8 +3,8 @@
     "next/babel"
   ],
   "plugins": [
-    "babel-plugin-macros",
-    "import-graphql",
-    "@babel/plugin-proposal-optional-chaining"
+    "macros",
+    "styled-components",
+    "import-graphql"
   ]
 }

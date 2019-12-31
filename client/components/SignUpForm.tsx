@@ -2,16 +2,10 @@ import React, { useState } from 'react'
 import { useFormik } from 'formik'
 import { Label, Input } from '@rebass/forms'
 import { Button } from 'rebass/styled-components'
-import {
-  useSignUpMutation,
-  SignUpDocument,
-  SignUpMutationVariables
-} from './Graphql'
-import { useStoreActions } from '../store'
+import { useSignUpMutation, SignUpMutationVariables } from './Graphql'
 
 const SignupForm = () => {
   const [signup] = useSignUpMutation()
-  const { setUser } = useStoreActions((actions) => actions.user)
   const [msg, setMsg] = useState('')
 
   const formik = useFormik<SignUpMutationVariables>({
