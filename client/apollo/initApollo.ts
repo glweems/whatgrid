@@ -19,7 +19,8 @@ function create(initialState: any, fetchOptions: Options) {
   const httpLink = createHttpLink({
     uri: process.env.GRAPHQL_ENDPOINT,
     credentials: 'include',
-    fetchOptions
+    fetchOptions,
+    fetch
   })
   const authLink = setContext((_, { headers }) => {
     const token = Cookies.get('token')
