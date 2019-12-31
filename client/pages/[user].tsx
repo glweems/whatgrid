@@ -18,7 +18,7 @@ const UserPage: StatelessPage<Props> = ({ userId: profileId }) => {
   const user = useStoreState((state) => state.user?.selected)
 
   useEffect(() => {
-    if (!loading && !user?.id) setSelectedUser(data.user)
+    if (!loading && !user?.id) setSelectedUser(data?.user)
     return () => {
       if (user?.id) killUser()
     }

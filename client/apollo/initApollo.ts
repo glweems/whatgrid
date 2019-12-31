@@ -19,7 +19,6 @@ function create(initialState: any, fetchOptions: Options) {
   const httpLink = createHttpLink({
     uri: process.env.GRAPHQL_ENDPOINT,
     credentials: 'include',
-    fetch,
     fetchOptions
   })
   const authLink = setContext((_, { headers }) => {
