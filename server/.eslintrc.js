@@ -3,34 +3,47 @@ module.exports = {
     es6: true,
     node: true
   },
-  extends: [
-    'airbnb-base',
-    // Uses eslint-config-prettier to disable ESLint rules from @typescript-eslint/eslint-plugin that would conflict with prettier
-    'plugin:import/errors',
-    'plugin:import/warnings',
-    'plugin:import/typescript',
-    'prettier/@typescript-eslint',
-    'plugin:prettier/recommended'
-    // Enables eslint-plugin-prettier and eslint-config-prettier. This will display prettier errors as ESLint errors. Make sure this is always the last configuration in the extends array.
-  ],
-  globals: {
-    Atomics: 'readonly',
-    SharedArrayBuffer: 'readonly'
-  },
   parser: '@typescript-eslint/parser',
+  extends: [
+    'airbnb',
+    'plugin:@typescript-eslint/recommended',
+    'plugin:import/typescript',
+    'plugin:prettier/recommended',
+    'prettier/@typescript-eslint'
+  ],
   parserOptions: {
     ecmaVersion: 2018,
     sourceType: 'module'
   },
-  plugins: ['@typescript-eslint'],
   rules: {
+    'react/prop-types': 'off',
+    'jsx-a11y/anchor-is-valid': 'off',
+    'import/no-named-as-default': 'off',
+    'react/jsx-filename-extension': [1, { extensions: ['.tsx'] }],
     'import/extensions': [
       'error',
-      'never',
-      { graphql: 'always' },
-      'error',
-      'never',
-      { ts: 'always' }
+      {
+        '.ts': 'never'
+      }
+    ],
+    '@typescript-eslint/no-unused-vars': 'off',
+    '@typescript-eslint/no-empty-interface': 'off',
+    '@typescript-eslint/ban-ts-ignore': 'off',
+    '@typescript-eslint/no-namespace': 'off',
+    'react/no-array-index-key': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
+    'react/jsx-props-no-spreading': 'off',
+    'react/prefer-stateless-function': 'off',
+    'prefer-arrow-callback': 'warn',
+    '@typescript-eslint/camelcase': 'off',
+    'import/prefer-default-export': 'off',
+    '@typescript-eslint/explicit-function-return-type': 'off',
+    'max-len': [
+      'off',
+      {
+        code: 140,
+        ignoreUrls: true
+      }
     ]
   },
   settings: {}

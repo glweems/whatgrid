@@ -1,20 +1,19 @@
 import { verify } from 'jsonwebtoken'
 import { ContextParameters } from 'graphql-yoga/dist/types'
 
-class AuthError extends Error {
-  constructor() {
-    super('Not authorized')
-  }
-}
-
 export const getUserId = (ctx: ContextParameters) => {
   const auth = ctx.request.get('Authorization')
-  console.log("TCL: getUserId -> auth", auth)
   if (auth) {
     const token = auth.replace('Bearer ', '')
     const verifiedToken: any = verify(token, process.env.APP_SECRET)
+    // eslint-disable-next-line no-underscore-dangle
     return verifiedToken && verifiedToken._id
-  } else {
-    return undefined
   }
+  return undefined
 }
+export const bakeCookie = (ctx: ContextParameters, token: string) =>
+  ctx.response.cookie('token', token, {
+    httpOnly: false,
+    // secure: false,
+    maxAge: 1000 * 60 * 60 * 24 * 365 // 1 year cookie
+  })

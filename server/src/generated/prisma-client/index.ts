@@ -1190,6 +1190,6 @@ export const models: Model[] = [
 export const Prisma = makePrismaClientClass<ClientConstructor<Prisma>>({
   typeDefs,
   models,
-  endpoint: `https://whatgrid-1562e982ca.herokuapp.com/whatgrid-server`
+  endpoint: `https://whatgrid-1562e982ca.herokuapp.com/whatgrid-server/dev`
 });
 export const prisma = new Prisma();

@@ -2,38 +2,44 @@
 // Please do not import this file directly but copy & paste to your application code.
 import * as bcrypt from 'bcrypt'
 import * as jwt from 'jsonwebtoken'
-import { Context as PrismaContext } from "prisma-client-lib/dist/types"
-import { Context, AuthPayload, User } from "../types"
+
+import { User } from '../types'
 import { MutationResolvers } from '../generated/graphqlgen'
 import { UserCreateInput } from '../generated/prisma-client'
-
+import { bakeCookie } from '../utils'
 
 function tokenGenerator(user: User): any {
-  return jwt.sign({
-    _id: user.id,
-    username: user.username,
-    name: user.name
-  }, process.env.APP_SECRET);
+  return jwt.sign(
+    {
+      _id: user.id,
+      username: user.username,
+      name: user.name
+    },
+    process.env.APP_SECRET
+  )
 }
-
 
 export const Mutation: MutationResolvers.Type = {
   ...MutationResolvers.defaultResolvers,
-  signup: async (_parent, args: UserCreateInput, ctx: PrismaContext) => {
+  signup: async (_parent, args: UserCreateInput, ctx) => {
     const password = await bcrypt.hash(args.password, 10)
     const user = await ctx.prisma.createUser({
-      ...args, password
+      ...args,
+      password
     })
 
+    const token = await tokenGenerator(user)
+
+    bakeCookie(ctx, token)
+
     return {
-      token: await tokenGenerator(user),
-      user,
+      token,
+      user
     }
   },
 
-
-  login: async (parent, { email, password }, context) => {
-    const user: any = await context.prisma.user({ email })
+  login: async (parent, { email, password }, ctx) => {
+    const user: any = await ctx.prisma.user({ email })
     if (!user) {
       throw new Error(`No user found for email: ${email}`)
     }
@@ -42,10 +48,13 @@ export const Mutation: MutationResolvers.Type = {
       throw new Error('Invalid password')
     }
 
+    const token = await tokenGenerator(user)
+
+    bakeCookie(ctx, token)
 
     return {
-      token: await tokenGenerator(user),
-      user,
+      token,
+      user
     }
-  },
+  }
 }

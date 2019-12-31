@@ -1120,5 +1120,5 @@ export interface Resolvers {
 
 // @ts-ignore
 declare module 'graphql-tools' {
-  interface IResolvers extends Resolvers {}
+  type IResolvers = Resolvers
 }

@@ -1,8 +1,0 @@
-projects:
-  prisma:
-    schemaPath: generated/prisma.graphql
-    extensions:
-      prisma: prisma.yml
-      prepare-binding:
-        output: generated/prisma.ts
-        generator: prisma-ts
