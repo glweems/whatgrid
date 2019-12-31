@@ -1,14 +1,11 @@
 import { Prisma } from "./generated/prisma-client";
 
-export interface AuthPayload {
-  token: string
-}
-
 export interface Context {
   db: {
     mutation: Prisma
   };
   prisma: Prisma;
+  userId?: string;
 }
 
 export interface User {
@@ -23,6 +20,7 @@ export interface User {
   username: string | null
   phoneNumber: number | null
 }
+
 export interface Grid {
   id: string
   createdAt: string
@@ -33,4 +31,9 @@ export interface Grid {
   columns: number | null
   gridTemplateColumns: string | null
   gridTemplateRows: string | null
+}
+
+export interface AuthPayload {
+  token: string
+  user: User
 }

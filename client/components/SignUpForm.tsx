@@ -2,28 +2,30 @@ import React, { useState } from 'react'
 import { useFormik } from 'formik'
 import { Label, Input } from '@rebass/forms'
 import { Button } from 'rebass/styled-components'
-import { useSignUpMutation, AuthInput, SignUpDocument } from './Graphql'
+import {
+  useSignUpMutation,
+  SignUpDocument,
+  SignUpMutationVariables
+} from './Graphql'
 import { useStoreActions } from '../store'
 
 const SignupForm = () => {
-  const [signUp] = useSignUpMutation(SignUpDocument)
+  const [signup] = useSignUpMutation()
   const { setUser } = useStoreActions((actions) => actions.user)
   const [msg, setMsg] = useState('')
 
-  const formik = useFormik<AuthInput>({
+  const formik = useFormik<SignUpMutationVariables>({
     initialValues: {
       email: '',
       password: ''
     },
 
-    onSubmit: ({ email, password }) => {
-      signUp({ variables: { input: { email, password } } }).then(({ data }) => {
-        if (!data.register.errors) {
-          setUser(data.register.user)
-          setMsg(data.register.user.email)
-        } else {
-          setMsg(data.register.errors[0].message)
-        }
+    onSubmit: async ({ email, password }) => {
+      await signup({
+        variables: { email, password }
+      }).then(({ data }) => {
+        localStorage.setItem('token', data.signup.token)
+        setMsg(data.signup.user.email)
       })
     }
   })

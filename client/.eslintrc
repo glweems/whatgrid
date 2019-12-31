@@ -1,4 +1,8 @@
 {
+  "env": {
+    "es6": true,
+    "browser": true
+  },
   "parser": "@typescript-eslint/parser",
   "extends": [
     "airbnb",

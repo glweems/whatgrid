@@ -6,10 +6,11 @@ type Query {
   grid(id: ID!): Grid
   user(id: ID, email: String): User
   users(searchString: String): [User!]!
+  me: User
 }
 
 type Mutation {
-  signup(email: String!, password: String!, name: String): AuthPayload!
+  signup(email: String!, password: String!): AuthPayload!
   login(email: String!, password: String!): AuthPayload!
 }
 
@@ -30,7 +31,6 @@ type User {
   username: String
   phoneNumber: Int
   grids: [Grid!]!
-  token: String
 }
 
 type Grid {

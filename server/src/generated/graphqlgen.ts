@@ -88,6 +88,23 @@ export namespace QueryResolvers {
         ) => User[] | Promise<User[]>
       }
 
+  export type MeResolver =
+    | ((
+        parent: undefined,
+        args: {},
+        ctx: Context,
+        info: GraphQLResolveInfo
+      ) => User | null | Promise<User | null>)
+    | {
+        fragment: string
+        resolve: (
+          parent: undefined,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo
+        ) => User | null | Promise<User | null>
+      }
+
   export interface Type {
     grids:
       | ((
@@ -155,6 +172,23 @@ export namespace QueryResolvers {
             ctx: Context,
             info: GraphQLResolveInfo
           ) => User[] | Promise<User[]>
+        }
+
+    me:
+      | ((
+          parent: undefined,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo
+        ) => User | null | Promise<User | null>)
+      | {
+          fragment: string
+          resolve: (
+            parent: undefined,
+            args: {},
+            ctx: Context,
+            info: GraphQLResolveInfo
+          ) => User | null | Promise<User | null>
         }
   }
 }
@@ -725,23 +759,6 @@ export namespace UserResolvers {
         ) => Grid[] | Promise<Grid[]>
       }
 
-  export type TokenResolver =
-    | ((
-        parent: User,
-        args: {},
-        ctx: Context,
-        info: GraphQLResolveInfo
-      ) => string | null | Promise<string | null>)
-    | {
-        fragment: string
-        resolve: (
-          parent: User,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo
-        ) => string | null | Promise<string | null>
-      }
-
   export interface Type {
     id:
       | ((
@@ -929,23 +946,6 @@ export namespace UserResolvers {
             info: GraphQLResolveInfo
           ) => Grid[] | Promise<Grid[]>
         }
-
-    token:
-      | ((
-          parent: User,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo
-        ) => string | null | Promise<string | null>)
-      | {
-          fragment: string
-          resolve: (
-            parent: User,
-            args: {},
-            ctx: Context,
-            info: GraphQLResolveInfo
-          ) => string | null | Promise<string | null>
-        }
   }
 }
 
@@ -955,7 +955,6 @@ export namespace MutationResolvers {
   export interface ArgsSignup {
     email: string
     password: string
-    name?: string | null
   }
 
   export interface ArgsLogin {
@@ -1036,7 +1035,8 @@ export namespace MutationResolvers {
 
 export namespace AuthPayloadResolvers {
   export const defaultResolvers = {
-    token: (parent: AuthPayload) => parent.token
+    token: (parent: AuthPayload) => parent.token,
+    user: (parent: AuthPayload) => parent.user
   }
 
   export type TokenResolver =

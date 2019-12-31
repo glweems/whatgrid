@@ -8,8 +8,5 @@ export const User: UserResolvers.Type = {
 
   grids: (parent, args, ctx) => {
     throw new Error('Resolver not implemented')
-  },
-  token: (parent, args, ctx) => {
-    throw new Error('Resolver not implemented')
   }
 }

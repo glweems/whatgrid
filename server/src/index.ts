@@ -1,33 +1,40 @@
-import './config'
+import 'dotenv/config'
 import 'colors'
-import { GraphQLServer } from "graphql-yoga";
+import { GraphQLServer, Options } from "graphql-yoga";
 import { resolvers } from './resolvers'
 import { prisma } from './generated/prisma-client';
 import { permissions } from './permissions'
-console.log(process.env.GQL_ENDPOINT)
-
+import { getUserId } from './utils';
 
 const server = new GraphQLServer({
   typeDefs: "./src/schema.graphql",
   resolvers: resolvers as any,
   middlewares: [permissions],
-  context: request => {
+  context: req => {
     return {
-      ...request,
+      ...req,
       prisma,
-    }
+      userId: getUserId(req)
+    };
   },
 });
 
-const options = {
-  // port: PORT,
+const corsOptions = {
+  origin: 'http://localhost:3000',
+  credentials: true
+}
+
+const options: Options = {
+  cors: corsOptions,
   endpoint: '/graphql',
   playground: '/playground',
 }
 
 server.start(options, ({ port }) =>
   console.log(
-    `Server started, listening on port ${port} for incoming requests.`.blue,
+    `Server started`.yellow,
+    `
+    listening on port http://localhost:${port}/playground for incoming requests.`.blue,
   ),
 )
 

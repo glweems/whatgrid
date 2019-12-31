@@ -1,19 +1,10 @@
 import { ApolloClient, NormalizedCacheObject } from 'apollo-boost'
-import cookie from 'cookie'
 import Head from 'next/head'
 import React from 'react'
 import { getDataFromTree } from 'react-apollo'
 import initApollo from './initApollo'
 import { isBrowser } from './isBrowser'
 import redirect from './redirect'
-
-function parseCookies(req?: any, options = {}) {
-  return cookie.parse(
-    // eslint-disable-next-line no-undef
-    req ? req.headers.cookie || '' : document.cookie,
-    options
-  )
-}
 
 export default (App: any) => {
   return class WithData extends React.Component {
@@ -26,7 +17,7 @@ export default (App: any) => {
       const apollo = initApollo(
         {},
         {
-          getToken: () => parseCookies(req).qid
+          token: 'nu'
         }
       )
 
@@ -88,9 +79,7 @@ export default (App: any) => {
       // `getDataFromTree` renders the component first, the client is passed off as a property.
       // After that rendering is done using Next's normal rendering pipeline
       this.apolloClient = initApollo(props.apolloState, {
-        getToken: () => {
-          return parseCookies().token
-        }
+        token: 'nul'
       })
     }
 

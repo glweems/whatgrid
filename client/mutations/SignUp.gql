@@ -1,12 +1,9 @@
-mutation SignUp($input: AuthInput!) {
-  register(input: $input) {
+mutation SignUp($email: String!, $password: String!) {
+  signup(email: $email, password: $password) {
+    token
     user {
       id
       email
-    }
-    errors {
-      path
-      message
     }
   }
 }

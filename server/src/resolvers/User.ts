@@ -11,7 +11,5 @@ export const User: UserResolvers.Type = {
   grids: ({ id }, args, ctx) => {
     return ctx.prisma.user({ id }).grids()
   },
-  token: (parent, args, ctx) => {
-    throw new Error('Resolver not implemented')
-  }
+
 }

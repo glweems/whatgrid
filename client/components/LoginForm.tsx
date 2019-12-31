@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useFormik } from 'formik'
 import { Button } from 'rebass/styled-components'
-import { AuthInput, useLoginMutation } from './Graphql'
+import { useLoginMutation, LoginMutationVariables } from './Graphql'
 import { useStoreActions } from '../store'
 import Form from './common/Form'
 import TextField from './TextField'
@@ -12,21 +12,17 @@ const LoginForm: React.FC = () => {
 
   const [msg, setMsg] = useState('')
 
-  const { handleChange, handleSubmit } = useFormik<AuthInput>({
+  const { handleChange, handleSubmit } = useFormik<LoginMutationVariables>({
     initialValues: {
       email: '',
       password: ''
     },
     onSubmit: async ({ email, password }) => {
       await login({
-        variables: { input: { email, password } }
+        variables: { email, password }
       }).then(({ data }) => {
-        if (!data.login.errors) {
-          setUser(data.login.user)
-          setMsg(data.login.user.email)
-        } else {
-          setMsg(data.login.errors[0].path)
-        }
+        localStorage.setItem('token', data.login.token)
+        setMsg(data.login.user.email)
       })
     }
   })

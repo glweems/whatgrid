@@ -1,5 +1,3 @@
-/* eslint-disable import/extensions */
-/* eslint-disable import/no-named-as-default */
 import {
   ApolloClient,
   InMemoryCache,
@@ -12,27 +10,30 @@ import isBrowser from './isBrowser'
 
 let apolloClient: ApolloClient<NormalizedCacheObject> | null = null
 
-// Polyfill fetch() on the server (used by apollo-client)
-if (!isBrowser) {
-  ;(global as any).fetch = fetch
-}
-
 interface Options {
-  getToken: () => string
+  token: string
 }
 
-function create(initialState: any, { getToken }: Options) {
+function create(initialState: any, options: Options) {
   const httpLink = createHttpLink({
     uri: process.env.GRAPHQL_API,
     credentials: 'include'
   })
 
   const authLink = setContext((_, { headers }) => {
-    const token = getToken()
+    const token = localStorage.getItem('token')
+
+    if (token)
+      return {
+        headers: {
+          ...headers,
+          Authorization: `Bearer ${token}`
+        }
+      }
+
     return {
       headers: {
-        ...headers,
-        cookie: token ? `qid=${token}` : ''
+        ...headers
       }
     }
   })

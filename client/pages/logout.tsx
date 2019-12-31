@@ -1,9 +1,7 @@
 import redirect from '../apollo/redirect'
-import { useLogoutMutation } from '../components/Graphql'
 
 const Logout = () => {
-  const [logout] = useLogoutMutation()
-  logout()
+  localStorage.removeItem('token')
   return null
 }
 

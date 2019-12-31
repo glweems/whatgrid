@@ -1,6 +1,5 @@
-import './config'
 import { verify } from 'jsonwebtoken'
-import { APP_SECRET } from './config'
+import { ContextParameters } from 'graphql-yoga/dist/types'
 
 class AuthError extends Error {
   constructor() {
@@ -8,11 +7,14 @@ class AuthError extends Error {
   }
 }
 
-export const getUserId = (context) => {
-  const Authorization = context.request.get('Authorization')
-  if (Authorization) {
-    const token = Authorization.replace('Bearer ', '')
-    const verifiedToken: any = verify(token, APP_SECRET)
-    return verifiedToken && verifiedToken.userId
+export const getUserId = (ctx: ContextParameters) => {
+  const auth = ctx.request.get('Authorization')
+  console.log("TCL: getUserId -> auth", auth)
+  if (auth) {
+    const token = auth.replace('Bearer ', '')
+    const verifiedToken: any = verify(token, process.env.APP_SECRET)
+    return verifiedToken && verifiedToken._id
+  } else {
+    return undefined
   }
 }
