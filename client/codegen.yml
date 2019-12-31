@@ -1,5 +1,5 @@
 overwrite: true
-schema: 'http://localhost:4000/graphql'
+schema: 'https://5e0ba95f8f8744e771006a3f--whatgrid.netlify.com/graphql'
 documents: '**/*.gql'
 generates:
   components/Graphql.tsx:
