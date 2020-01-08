@@ -1,14 +1,15 @@
 import React from 'react'
-import { Button } from 'rebass/styled-components'
+import Button from './Button'
+import { useLogoutMutation } from './Graphql'
 
 const LogoutButton: React.FC = () => {
-  const handleClick = () => null
+  const [logout] = useLogoutMutation()
 
-  return (
-    <Button variant="outline" onClick={handleClick}>
-      Log out
-    </Button>
-  )
+  const handleLogout = () => {
+    logout()
+  }
+
+  return <Button onClick={handleLogout}>Log out</Button>
 }
 
 export default LogoutButton

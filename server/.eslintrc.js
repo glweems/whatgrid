@@ -16,6 +16,7 @@ module.exports = {
     sourceType: 'module'
   },
   rules: {
+    'no-console': 'off',
     'react/prop-types': 'off',
     'jsx-a11y/anchor-is-valid': 'off',
     'import/no-named-as-default': 'off',

@@ -1,9 +1,9 @@
 import React, { FC, ChangeEvent, KeyboardEvent } from 'react'
 import styled from 'styled-components/macro'
-import { Input } from '@rebass/forms'
 import { useStoreActions } from '../store'
 import { availableGridGapUnits, GridGap } from '../store/grid'
 import Select from './Select'
+import { Input } from './common/Input'
 
 const GridGapControl: FC<GridGap> = ({ type, amount, unit }) => {
   const { updateGridGap } = useStoreActions((actions) => actions.grid)
@@ -54,11 +54,8 @@ const GridGapControl: FC<GridGap> = ({ type, amount, unit }) => {
 export default GridGapControl
 
 const Wrapper = styled.div`
-  input {
-    max-width: 50%;
-  }
-  display: flex;
+  /* display: flex;
   align-content: center;
   align-items: center;
-  justify-content: stretch;
+  justify-content: stretch; */
 `

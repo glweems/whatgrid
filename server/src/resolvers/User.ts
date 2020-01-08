@@ -1,11 +1,17 @@
 import { UserResolvers } from '../generated/graphqlgen'
-
-// This resolver file was scaffolded by github.com/prisma/graphqlgen, DO NOT EDIT.
-// Please do not import this file directly but copy & paste to your application code.
+import { getUserId } from '../utils'
+import { Context } from '../types'
 
 export const User: UserResolvers.Type = {
   ...UserResolvers.defaultResolvers,
+  permissions: async ({ id }, args, { prisma, request, userId }: Context) => {
+    const me = await prisma.user({ id })
 
+    return {
+      edit: false,
+      owner: me.id === id
+    }
+  },
   grids: ({ id }, args, ctx) => {
     return ctx.prisma.user({ id }).grids()
   }

@@ -1,23 +1,10 @@
-// This resolver file was scaffolded by github.com/prisma/graphqlgen, DO NOT EDIT.
-// Please do not import this file directly but copy & paste to your application code.
 import * as bcrypt from 'bcrypt'
 import * as jwt from 'jsonwebtoken'
 
 import { User } from '../types'
 import { MutationResolvers } from '../generated/graphqlgen'
 import { UserCreateInput } from '../generated/prisma-client'
-import { bakeCookie } from '../utils'
-
-function tokenGenerator(user: User): any {
-  return jwt.sign(
-    {
-      _id: user.id,
-      username: user.username,
-      name: user.name
-    },
-    process.env.APP_SECRET
-  )
-}
+import { bakeCookie, tokenGenerator } from '../utils'
 
 export const Mutation: MutationResolvers.Type = {
   ...MutationResolvers.defaultResolvers,
@@ -32,6 +19,8 @@ export const Mutation: MutationResolvers.Type = {
 
     bakeCookie(ctx, token)
 
+    ctx.request.session.user = user
+
     return {
       token,
       user
@@ -44,9 +33,12 @@ export const Mutation: MutationResolvers.Type = {
       throw new Error(`No user found for email: ${email}`)
     }
     const passwordValid = await bcrypt.compare(password, user.password)
+
     if (!passwordValid) {
       throw new Error('Invalid password')
     }
+
+    ctx.request.session.user = user
 
     const token = await tokenGenerator(user)
 
@@ -56,5 +48,10 @@ export const Mutation: MutationResolvers.Type = {
       token,
       user
     }
+  },
+
+  logout: async (parent, args, ctx: any) => {
+    await ctx.response.clearCookie('token')
+    return { message: 'Goodbye!' }
   }
 }

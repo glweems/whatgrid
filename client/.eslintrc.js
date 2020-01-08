@@ -26,6 +26,7 @@ module.exports = {
     }
   },
   rules: {
+    '@typescript-eslint/no-use-before-define': 'off',
     'react/prop-types': 'off',
     'jsx-a11y/anchor-is-valid': 'off',
     'import/no-named-as-default': 'off',

@@ -6,6 +6,9 @@ import { UserResolvers } from '../graphqlgen'
 export const User: UserResolvers.Type = {
   ...UserResolvers.defaultResolvers,
 
+  permissions: (parent, args, ctx) => {
+    throw new Error('Resolver not implemented')
+  },
   grids: (parent, args, ctx) => {
     throw new Error('Resolver not implemented')
   }

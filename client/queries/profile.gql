@@ -1,0 +1,31 @@
+query Profile($id: ID!) {
+  profile: user(id: $id) {
+    id
+    createdAt
+    updatedAt
+    email
+    name
+    firstName
+    lastName
+    username
+    phoneNumber
+    permissions {
+      owner
+    }
+    grids {
+      id
+      createdAt
+      updatedAt
+      published
+      name
+      rows
+      columns
+      gridTemplateColumns
+      gridTemplateRows
+    }
+  }
+
+  me {
+    id
+  }
+}

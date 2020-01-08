@@ -1,21 +1,21 @@
 import { createStore, createTypedHooks, EasyPeasyConfig } from 'easy-peasy'
-import gridModel, { GridModel } from './grid'
-import meModel, { MeModel } from './me'
-import userModel, { UserModel } from './user'
-import sessionModel, { SessionModel } from './session'
+import user, { UserModel } from './user'
+import grid, { GridModel } from './grid'
+import session, { SessionModel } from './session'
+import layout, { LayoutModel } from './layout'
 
 export interface StoreModel extends EasyPeasyConfig {
   grid: GridModel
-  me: MeModel
   user: UserModel
   session: SessionModel
+  layout: LayoutModel
 }
 
 const storeModel: StoreModel = {
-  grid: gridModel,
-  user: userModel,
-  me: meModel,
-  session: sessionModel
+  grid,
+  user,
+  session,
+  layout
 }
 
 const store = createStore(storeModel)

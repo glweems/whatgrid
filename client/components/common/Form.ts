@@ -1,14 +1,16 @@
 import styled from 'styled-components'
+import { grid, GridProps, padding, SpaceProps } from 'styled-system'
 
-interface Props {
-  columns?: number
-  gap?: number | string
-}
+type Props = GridProps & SpaceProps
 
 export const Form = styled.form<Props>`
-  display: grid;
-  grid-template-columns: ${({ columns }) => `repeat(${columns}, 1fr);`};
-  gap: ${({ gap }) => gap};
+  ${grid};
+  ${padding};
 `
+
+Form.defaultProps = {
+  gridGap: '1em',
+  padding: 1
+}
 
 Form.displayName = 'WhatForm'

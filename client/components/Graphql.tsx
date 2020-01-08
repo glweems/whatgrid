@@ -39,6 +39,7 @@ export type Grid = {
 export type Mutation = {
   signup: AuthPayload
   login: AuthPayload
+  logout?: Maybe<SuccessMessage>
 }
 
 export type MutationSignupArgs = {
@@ -49,6 +50,11 @@ export type MutationSignupArgs = {
 export type MutationLoginArgs = {
   email: Scalars['String']
   password: Scalars['String']
+}
+
+export type Permissions = {
+  authenticated: Scalars['Boolean']
+  user?: Maybe<User>
 }
 
 export type Query = {
@@ -72,8 +78,13 @@ export type QueryUsersArgs = {
   searchString?: Maybe<Scalars['String']>
 }
 
+export type SuccessMessage = {
+  message?: Maybe<Scalars['String']>
+}
+
 export type User = {
   id: Scalars['ID']
+  permissions: UserPermissions
   createdAt: Scalars['DateTime']
   updatedAt: Scalars['DateTime']
   email: Scalars['String']
@@ -86,14 +97,23 @@ export type User = {
   grids: Array<Grid>
 }
 
+export type UserPermissions = {
+  owner: Scalars['Boolean']
+  edit: Scalars['Boolean']
+}
+
 export type LoginMutationVariables = {
   email: Scalars['String']
   password: Scalars['String']
 }
 
 export type LoginMutation = {
-  login: Pick<AuthPayload, 'token'> & { user: Pick<User, 'id' | 'email'> }
+  login: Pick<AuthPayload, 'token'> & { user: UserFieldsFragment }
 }
+
+export type LogoutMutationVariables = {}
+
+export type LogoutMutation = { logout: Maybe<Pick<SuccessMessage, 'message'>> }
 
 export type SignUpMutationVariables = {
   email: Scalars['String']
@@ -134,7 +154,44 @@ export type UserFieldsFragment = Pick<
 
 export type MeQueryVariables = {}
 
-export type MeQuery = { me: Maybe<UserFieldsFragment> }
+export type MeQuery = { me: Maybe<Pick<User, 'id' | 'email' | 'username'>> }
+
+export type ProfileQueryVariables = {
+  id: Scalars['ID']
+}
+
+export type ProfileQuery = {
+  profile: Maybe<
+    Pick<
+      User,
+      | 'id'
+      | 'createdAt'
+      | 'updatedAt'
+      | 'email'
+      | 'name'
+      | 'firstName'
+      | 'lastName'
+      | 'username'
+      | 'phoneNumber'
+    > & {
+      permissions: Pick<UserPermissions, 'owner'>
+      grids: Array<
+        Pick<
+          Grid,
+          | 'id'
+          | 'createdAt'
+          | 'updatedAt'
+          | 'published'
+          | 'name'
+          | 'rows'
+          | 'columns'
+          | 'gridTemplateColumns'
+          | 'gridTemplateRows'
+        >
+      >
+    }
+  >
+}
 
 export type UserQueryVariables = {
   id: Scalars['ID']
@@ -205,11 +262,11 @@ export const LoginDocument = gql`
     login(email: $email, password: $password) {
       token
       user {
-        id
-        email
+        ...userFields
       }
     }
   }
+  ${UserFieldsFragmentDoc}
 `
 export type LoginMutationFn = ApolloReactCommon.MutationFunction<
   LoginMutation,
@@ -288,6 +345,89 @@ export type LoginMutationResult = ApolloReactCommon.MutationResult<
 export type LoginMutationOptions = ApolloReactCommon.BaseMutationOptions<
   LoginMutation,
   LoginMutationVariables
+>
+export const LogoutDocument = gql`
+  mutation Logout {
+    logout {
+      message
+    }
+  }
+`
+export type LogoutMutationFn = ApolloReactCommon.MutationFunction<
+  LogoutMutation,
+  LogoutMutationVariables
+>
+export type LogoutComponentProps = Omit<
+  ApolloReactComponents.MutationComponentOptions<
+    LogoutMutation,
+    LogoutMutationVariables
+  >,
+  'mutation'
+>
+
+export const LogoutComponent = (props: LogoutComponentProps) => (
+  <ApolloReactComponents.Mutation<LogoutMutation, LogoutMutationVariables>
+    mutation={LogoutDocument}
+    {...props}
+  />
+)
+
+export type LogoutProps<TChildProps = {}> =
+  | ApolloReactHoc.MutateProps<LogoutMutation, LogoutMutationVariables>
+  | TChildProps
+export function withLogout<TProps, TChildProps = {}>(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    LogoutMutation,
+    LogoutMutationVariables,
+    LogoutProps<TChildProps>
+  >
+) {
+  return ApolloReactHoc.withMutation<
+    TProps,
+    LogoutMutation,
+    LogoutMutationVariables,
+    LogoutProps<TChildProps>
+  >(LogoutDocument, {
+    alias: 'logout',
+    ...operationOptions
+  })
+}
+
+/**
+ * __useLogoutMutation__
+ *
+ * To run a mutation, you first call `useLogoutMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useLogoutMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [logoutMutation, { data, loading, error }] = useLogoutMutation({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useLogoutMutation(
+  baseOptions?: ApolloReactHooks.MutationHookOptions<
+    LogoutMutation,
+    LogoutMutationVariables
+  >
+) {
+  return ApolloReactHooks.useMutation<LogoutMutation, LogoutMutationVariables>(
+    LogoutDocument,
+    baseOptions
+  )
+}
+export type LogoutMutationHookResult = ReturnType<typeof useLogoutMutation>
+export type LogoutMutationResult = ApolloReactCommon.MutationResult<
+  LogoutMutation
+>
+export type LogoutMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  LogoutMutation,
+  LogoutMutationVariables
 >
 export const SignUpDocument = gql`
   mutation SignUp($email: String!, $password: String!) {
@@ -381,10 +521,11 @@ export type SignUpMutationOptions = ApolloReactCommon.BaseMutationOptions<
 export const MeDocument = gql`
   query Me {
     me {
-      ...userFields
+      id
+      email
+      username
     }
   }
-  ${UserFieldsFragmentDoc}
 `
 export type MeComponentProps = Omit<
   ApolloReactComponents.QueryComponentOptions<MeQuery, MeQueryVariables>,
@@ -456,6 +597,117 @@ export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>
 export type MeQueryResult = ApolloReactCommon.QueryResult<
   MeQuery,
   MeQueryVariables
+>
+export const ProfileDocument = gql`
+  query Profile($id: ID!) {
+    profile: user(id: $id) {
+      id
+      createdAt
+      updatedAt
+      email
+      name
+      firstName
+      lastName
+      username
+      phoneNumber
+      permissions {
+        owner
+      }
+      grids {
+        id
+        createdAt
+        updatedAt
+        published
+        name
+        rows
+        columns
+        gridTemplateColumns
+        gridTemplateRows
+      }
+    }
+  }
+`
+export type ProfileComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<
+    ProfileQuery,
+    ProfileQueryVariables
+  >,
+  'query'
+> &
+  ({ variables: ProfileQueryVariables; skip?: boolean } | { skip: boolean })
+
+export const ProfileComponent = (props: ProfileComponentProps) => (
+  <ApolloReactComponents.Query<ProfileQuery, ProfileQueryVariables>
+    query={ProfileDocument}
+    {...props}
+  />
+)
+
+export type ProfileProps<TChildProps = {}> =
+  | ApolloReactHoc.DataProps<ProfileQuery, ProfileQueryVariables>
+  | TChildProps
+export function withProfile<TProps, TChildProps = {}>(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    ProfileQuery,
+    ProfileQueryVariables,
+    ProfileProps<TChildProps>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    ProfileQuery,
+    ProfileQueryVariables,
+    ProfileProps<TChildProps>
+  >(ProfileDocument, {
+    alias: 'profile',
+    ...operationOptions
+  })
+}
+
+/**
+ * __useProfileQuery__
+ *
+ * To run a query within a React component, call `useProfileQuery` and pass it any options that fit your needs.
+ * When your component renders, `useProfileQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useProfileQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useProfileQuery(
+  baseOptions?: ApolloReactHooks.QueryHookOptions<
+    ProfileQuery,
+    ProfileQueryVariables
+  >
+) {
+  return ApolloReactHooks.useQuery<ProfileQuery, ProfileQueryVariables>(
+    ProfileDocument,
+    baseOptions
+  )
+}
+export function useProfileLazyQuery(
+  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
+    ProfileQuery,
+    ProfileQueryVariables
+  >
+) {
+  return ApolloReactHooks.useLazyQuery<ProfileQuery, ProfileQueryVariables>(
+    ProfileDocument,
+    baseOptions
+  )
+}
+export type ProfileQueryHookResult = ReturnType<typeof useProfileQuery>
+export type ProfileLazyQueryHookResult = ReturnType<typeof useProfileLazyQuery>
+export type ProfileQueryResult = ApolloReactCommon.QueryResult<
+  ProfileQuery,
+  ProfileQueryVariables
 >
 export const UserDocument = gql`
   query User($id: ID!) {

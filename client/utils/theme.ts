@@ -1,8 +1,24 @@
-import { createGlobalStyle } from 'styled-components'
+import { createGlobalStyle } from 'styled-components/macro'
 import { darken } from 'polished'
+import {
+  ResponsiveValue,
+  TLengthStyledSystem,
+  BorderWidthProps,
+  BorderStyleProps,
+  BorderColorProps,
+  BorderRadiusProps,
+  BorderTopProps,
+  BorderRightProps,
+  BorderBottomProps,
+  BorderLeftProps
+} from 'styled-system'
+import * as CSS from 'csstype'
+
+export type ValuesOf<T extends any[]> = T[number]
 
 export const colors = {
   primary: '#4e67eb',
+  blues: ['#4e67eb', darken(0.1, '#4e67eb')],
   primaryDark: darken(0.1, '#4e67eb'),
   blacks: [
     'rgba(0,0,0,.0125)',
@@ -30,23 +46,28 @@ export const colors = {
     'rgba(255,255,255,.6)',
     'rgba(255,255,255,.7)',
     'rgba(255,255,255,.8)',
-    'rgba(255,255,255,.9)'
+    'rgba(255,255,255,.9)',
+    'rgba(255,255,255)'
   ]
 }
 
 const colorModes: Modes = {
   light: {
-    name: 'light',
     text: '#131217',
     bg: '#fff',
     secondary: '#47444e'
   },
   dark: {
-    name: 'dark',
     text: '#dcdcdc',
     bg: '#131217',
     secondary: '#47444e'
   }
+}
+
+export type ColorProps = {
+  color?: ResponsiveValue<keyof ColorMode> | CSS.ColorProperty
+  bg?: ResponsiveValue<keyof ColorMode> | CSS.ColorProperty
+  opacity?: ResponsiveValue<CSS.GlobalsNumber>
 }
 
 export const modes = [
@@ -55,52 +76,15 @@ export const modes = [
   // more than two modes can follow...
 ]
 
-export interface ThemeRoot {
-  breakpoints: number[]
-  space: number[]
-  fontSizes: number[]
-  fontWeights: number[]
-  lineHeights: LineHeights
-  letterSpacings: LetterSpacings
-  fonts: Fonts
-  borders: (number | string)[]
-  radii: (number | string)[]
-  width: number[]
-  heights: number[]
-  maxWidths: number[]
-  modes: Modes
-}
-
 export interface Modes {
   light: ColorMode
   dark: ColorMode
 }
 
-interface ColorMode {
-  name: string
+export type ColorMode = {
   text: string
   bg: string
   secondary: string
-}
-
-interface Fonts {
-  serif: string
-  sansSerif: string
-}
-/**
- * Letter spacings
- */
-interface LetterSpacings {
-  normal: string
-  tracked: string
-  tight: string
-  mega: string
-}
-
-interface LineHeights {
-  solid: number
-  title: number
-  copy: number
 }
 
 export type Mode = keyof Modes
@@ -113,16 +97,58 @@ export type GetTheme = (mode: Mode) => Theme
  * breakpoints: number[];
  *
  */
-export type Theme = { colors: Colors } & ThemeRoot
+// eslint-disable-next-line @typescript-eslint/no-use-before-define
+
+export interface Theme {
+  colors: ColorMode
+}
 
 export interface ThemeProps {
   theme?: Theme
 }
+export const layout = {
+  navbarHeight: 35,
+  sidebarWidth: 300
+}
+const breakpoints = [32, 48, 64]
+const space = [0, 4, 8, 16, 32, 64, 128, 256, 512]
+const fontSizes = [12, 14, 16, 20, 24, 36, 48, 80, 96]
+const borders = [
+  0,
+  '1px solid',
+  '2px solid',
+  '4px solid',
+  '8px solid',
+  '16px solid',
+  '32px solid'
+]
 
-export const baseTheme: ThemeRoot = {
-  breakpoints: [32, 48, 64],
-  space: [0, 4, 8, 16, 32, 64, 128, 256, 512],
-  fontSizes: [12, 14, 16, 20, 24, 36, 48, 80, 96],
+export type Borders = ValuesOf<typeof borders>
+
+/**
+ * The border CSS property sets an element's border. It's a shorthand for border-width, border-style,
+ * and border-color.
+ *
+ * [MDN reference](https://developer.mozilla.org/en-US/docs/Web/CSS/border)
+ */
+export type BorderProps<TLength = TLengthStyledSystem> = BorderWidthProps &
+  BorderStyleProps &
+  BorderColorProps &
+  BorderRadiusProps &
+  BorderTopProps &
+  BorderRightProps &
+  BorderBottomProps &
+  BorderLeftProps & {
+    border?: Borders & ResponsiveValue<CSS.BorderProperty<TLength>>
+    borderX?: Borders & ResponsiveValue<CSS.BorderProperty<TLength>>
+    borderY?: Borders & ResponsiveValue<CSS.BorderProperty<TLength>>
+  }
+
+export const baseTheme = {
+  layout,
+  breakpoints,
+  space,
+  fontSizes,
   fontWeights: [100, 200, 300, 400, 500, 600, 700, 800, 900],
   lineHeights: {
     solid: 1,
@@ -140,28 +166,18 @@ export const baseTheme: ThemeRoot = {
     sansSerif:
       '-apple-system, "Noto Sans", BlinkMacSystemFont, "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, "segoe ui", arial, sans-serif'
   },
-  borders: [
-    0,
-    '1px solid',
-    '2px solid',
-    '4px solid',
-    '8px solid',
-    '16px solid',
-    '32px solid'
-  ],
+  borders,
   radii: [0, 2, 4, 16, 9999, '100%'],
   width: [16, 32, 64, 128, 256],
   heights: [16, 32, 64, 128, 256],
   maxWidths: [16, 32, 64, 128, 256, 512, 768, 1024, 1536],
   modes: {
     light: {
-      name: 'light',
       text: '#131217',
       bg: '#fff',
       secondary: '#47444e'
     },
     dark: {
-      name: 'dark',
       text: '#dcdcdc',
       bg: '#131217',
       secondary: '#47444e'
@@ -172,17 +188,11 @@ export const baseTheme: ThemeRoot = {
 const getColors: GetColors = (mode) => ({ ...colors, ...colorModes[mode] })
 export const getTheme: GetTheme = (mode) => ({
   ...baseTheme,
+  mode,
   colors: getColors(mode)
 })
 
 export const GlobalStyle = createGlobalStyle`
-:root {
-  align-content: center;
-  align-items: center;
-  justify-content: center;
-  justify-items: center;
-}
-
   html, body {
     margin: 0;
     padding: 0;

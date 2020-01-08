@@ -9,7 +9,7 @@ import Cookies from 'js-cookie'
 import fetch from 'isomorphic-unfetch'
 import isBrowser from './isBrowser'
 
-let apolloClient: ApolloClient<NormalizedCacheObject> | null = null
+let client: ApolloClient<NormalizedCacheObject> | null = null
 
 interface Options {
   getToken: () => string
@@ -60,8 +60,8 @@ export default function initApollo(initialState, options) {
     })
   }
   // Reuse client on the client-side
-  if (!apolloClient) {
-    apolloClient = create(initialState, options)
+  if (!client) {
+    client = create(initialState, options)
   }
-  return apolloClient
+  return client
 }

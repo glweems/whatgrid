@@ -1,5 +1,6 @@
 scalar DateTime
 scalar Id
+scalar Boolean
 
 type Query {
   grids: [Grid!]!
@@ -12,6 +13,21 @@ type Query {
 type Mutation {
   signup(email: String!, password: String!): AuthPayload!
   login(email: String!, password: String!): AuthPayload!
+  logout: SuccessMessage
+}
+
+type Permissions {
+  authenticated: Boolean!
+  user: User
+}
+
+type UserPermissions {
+  owner: Boolean!
+  edit: Boolean!
+}
+
+type SuccessMessage {
+  message: String
 }
 
 type AuthPayload {
@@ -21,6 +37,7 @@ type AuthPayload {
 
 type User {
   id: ID!
+  permissions: UserPermissions!
   createdAt: DateTime!
   updatedAt: DateTime!
   email: String!

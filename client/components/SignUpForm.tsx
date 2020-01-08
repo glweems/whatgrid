@@ -1,14 +1,15 @@
 import React, { useState } from 'react'
 import { useFormik } from 'formik'
-import { Label, Input } from '@rebass/forms'
-import { Button } from 'rebass/styled-components'
 import { useSignUpMutation, SignUpMutationVariables } from './Graphql'
+import Button from './Button'
+import { Form } from './common'
+import TextField from './TextField'
 
 const SignupForm = () => {
   const [signup] = useSignUpMutation()
   const [msg, setMsg] = useState('')
 
-  const formik = useFormik<SignUpMutationVariables>({
+  const { handleChange, handleSubmit } = useFormik<SignUpMutationVariables>({
     initialValues: {
       email: '',
       password: ''
@@ -25,31 +26,27 @@ const SignupForm = () => {
   })
 
   return (
-    <form onSubmit={formik.handleSubmit}>
+    <Form onSubmit={handleSubmit}>
       <p>{msg}</p>
-      <Label htmlFor="email">
-        Email
-        <Input
-          id="email"
-          name="email"
-          type="email"
-          onChange={formik.handleChange}
-          value={formik.values.email}
-        />
-      </Label>
+      <TextField
+        label="Email Address"
+        name="email"
+        type="text"
+        onChange={handleChange}
+        errors={{}}
+      />
 
-      <Label htmlFor="password">
-        Password
-        <Input
-          id="password"
-          name="password"
-          type="text"
-          onChange={formik.handleChange}
-          value={formik.values.password}
-        />
-      </Label>
-      <Button type="submit">Submit</Button>
-    </form>
+      <TextField
+        label="Password"
+        name="password"
+        type="password"
+        onChange={handleChange}
+        errors={{}}
+      />
+      <Button type="submit" variant="primary">
+        Submit
+      </Button>
+    </Form>
   )
 }
 

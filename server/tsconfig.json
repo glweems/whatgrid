@@ -3,6 +3,7 @@
     "pretty": true,
     "target": "es5",
     "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
     "module": "commonjs",
     "sourceMap": true,
     "rootDir": "src",

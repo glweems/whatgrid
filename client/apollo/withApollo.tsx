@@ -1,15 +1,19 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable no-console */
 import Head from 'next/head'
 import React from 'react'
-import { getDataFromTree } from 'react-apollo'
+import { getDataFromTree, ApolloProvider } from 'react-apollo'
 import cookie from 'cookie'
+import { StoreProvider } from 'easy-peasy'
 import initApollo from './initApollo'
+import ContextProvider from '../context'
+import store from '../store'
 
 const parseCookies = (req?: any, options?: any) => {
   return cookie.parse(req ? req.headers.cookie || '' : document.cookie, options)
 }
 
-export default (App: any) => {
+export default function<T>(App: React.ComponentType<T> & any) {
   return class WithData extends React.Component {
     static async getInitialProps(ctx) {
       const {
@@ -23,7 +27,7 @@ export default (App: any) => {
           getToken: () => parseCookies(req).token
         }
       )
-      ctx.ctx.apolloClient = apollo
+      ctx.ctx.client = apollo
       let appProps = {}
       if (App.getInitialProps) {
         appProps = await App.getInitialProps(ctx)
@@ -43,7 +47,7 @@ export default (App: any) => {
               {...appProps}
               Component={Component}
               router={router}
-              apolloClient={apollo}
+              client={apollo}
             />
           )
         } catch (error) {
@@ -67,7 +71,7 @@ export default (App: any) => {
     constructor(props) {
       super(props) // `getDataFromTree` renders the component first, the client is passed off as a property.
       // After that rendering is done using Next's normal rendering pipeline
-      ;(this as any).apolloClient = initApollo(props.apolloState, {
+      ;(this as any).client = initApollo(props.apolloState, {
         getToken: () => {
           return parseCookies().token
         }
@@ -75,7 +79,7 @@ export default (App: any) => {
     }
 
     render() {
-      return <App {...this.props} apolloClient={(this as any).apolloClient} />
+      return <App {...this.props} client={(this as any).client} />
     }
   }
 }

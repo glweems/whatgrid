@@ -13,12 +13,17 @@ const defaultProps = {
 type Props = {
   label: string
   name: string
+  errors: {
+    [key: string]: string
+  }
 } & React.HtmlHTMLAttributes<HTMLInputElement> &
   typeof defaultProps
 
-const TextField: React.FC<Props> = ({ label, name, ...props }) => (
+const TextField: React.FC<Props> = ({ label, name, errors, ...props }) => (
   <Label htmlFor={name}>
     <span>{label}</span>
+    <ErrorMsg>{errors[name]}</ErrorMsg>
+
     <Input id={name} name={name} {...props} />
   </Label>
 )
@@ -26,6 +31,11 @@ const TextField: React.FC<Props> = ({ label, name, ...props }) => (
 const Label = styled(RebassLabel)`
   display: flex;
   flex-direction: column;
+`
+
+const ErrorMsg = styled.span`
+  height: 2em;
+  color: red;
 `
 
 export default TextField

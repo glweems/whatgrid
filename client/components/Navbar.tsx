@@ -1,45 +1,53 @@
-import React from 'react'
-import styled from 'styled-components/macro'
+import React, { useContext } from 'react'
+import styled, { ThemeContext } from 'styled-components/macro'
 import { Text, FlexProps } from 'rebass/styled-components'
 import {
   space,
   color,
   layout,
   border,
-  BorderProps,
   SpaceProps,
   ColorProps,
   LayoutProps,
   flex
 } from 'styled-system'
 import { Link } from './common/Link'
-import { useStoreState } from '../store'
-import { SessionModel } from '../store/session'
+import { useStoreState, useStoreActions } from '../store'
 import { Theme } from '../utils/theme'
+import Button from './Button'
 
-const Navbar: React.FC = () => {
-  const { loading, user } = useStoreState((state) => state.session)
+interface Props {
+  showSidebarToggle: boolean
+}
 
+const Navbar: React.FC<Props> = ({ showSidebarToggle }) => {
+  const { sidebar } = useStoreActions((store) => store.layout)
+
+  const { toggleTheme } = useContext(ThemeContext)
+  const toggleSidebar = () => {
+    sidebar.toggle()
+  }
   return (
     <Header px={2} py={1} bg="text">
+      {showSidebarToggle && <Button onClick={toggleSidebar}>=</Button>}
       <Link to="/">
         <Text fontSize={[3, 4, 5]} fontWeight="bold" color="primary">
           Home
         </Text>
       </Link>
-      <nav>
-        <NavLinks loading={loading} user={user} />
-      </nav>
+      <Nav>
+        <NavLinks />
+      </Nav>
+      <Button onClick={toggleTheme}>Theme</Button>
     </Header>
   )
 }
 
-const NavLinks: React.FC<{ loading: boolean; user: SessionModel['user'] }> = ({
-  loading,
-  user
-}) => {
-  if (loading) return null
-  if (user) return <Link to={user.id} text="Profile" />
+const NavLinks: React.FC = () => {
+  const { loading } = useStoreState((state) => state.session)
+
+  if (!loading) return <Link to="/dashboard" text="Dashboard" />
+
   return (
     <>
       <Link to="/signup" text="Sign Up" />
@@ -48,25 +56,29 @@ const NavLinks: React.FC<{ loading: boolean; user: SessionModel['user'] }> = ({
   )
 }
 
-interface Props
-  extends SpaceProps,
-    ColorProps,
-    FlexProps,
-    BorderProps,
-    LayoutProps {}
+type HeaderProps = SpaceProps & ColorProps & FlexProps & LayoutProps & {}
 
 interface ThemeProps {
   theme?: Theme
 }
 
-const Header: React.ComponentType<Props & ThemeProps> = styled.header<Props>`
-  display: flex;
-  justify-content: space-between;
+const Header: React.ComponentType<HeaderProps & ThemeProps> = styled.header`
   ${color};
   ${border};
   ${flex};
   ${layout};
   ${space};
+  display: flex;
+  align-content: center;
+  align-items: center;
+`
+
+const Nav = styled.nav`
+  display: flex;
+  align-content: center;
+  align-items: center;
+  justify-content: flex-end;
+  justify-items: flex-end;
 `
 
 Header.displayName = 'StyledHeader'

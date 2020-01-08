@@ -1,5 +1,7 @@
 query Me {
   me {
-    ...userFields
+    id
+    email
+    username
   }
 }

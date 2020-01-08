@@ -1,13 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import * as React from 'react'
-import { ThemeProvider as StyledThemeProvider } from 'styled-components'
-import { StoreProvider } from 'easy-peasy'
-import { ApolloProvider } from 'react-apollo'
+import React, { FC, useEffect } from 'react'
+import { ThemeProvider as StyledThemeProvider } from 'styled-components/macro'
 import { ApolloClient } from 'apollo-boost'
 import useTheme from '../hooks/useTheme'
-import store from '../store'
-import UserProvider from './user'
-import withApollo from '../apollo/withApollo'
+import { useStoreActions, useStoreState } from '../store'
+import { GlobalStyle } from '../utils/theme'
+import { useMeQuery } from '../components/Graphql'
 
 const ProviderComposer: React.FC<{ contexts: any }> = ({
   contexts,
@@ -21,26 +19,31 @@ const ProviderComposer: React.FC<{ contexts: any }> = ({
     children
   )
 
-type Props = { apolloClient: typeof ApolloClient }
+type Props = { client?: typeof ApolloClient; session?: any }
 
-const ContextProvider: React.FC<Props> = ({ children, apolloClient }) => {
+const ContextProvider: FC<Props> = ({ children, session }) => {
   const { theme, componentMounted, toggleTheme } = useTheme()
+  const { data, loading, error } = useMeQuery()
 
-  if (!componentMounted && !apolloClient) return <div />
+  const { user } = useStoreState((state) => state.session)
+  const { setUser, setLoading, clearSession } = useStoreActions(
+    (actions) => actions.session
+  )
+
+  useEffect(() => {
+    if (session.user?.id) setUser(session.user)
+  }, [session.user, setUser])
+
+  if (!componentMounted && session.loading) return <div />
 
   return (
-    <ApolloProvider client={apolloClient}>
-      <ProviderComposer
-        contexts={[
-          <StoreProvider store={store} />,
-          <StyledThemeProvider theme={{ ...theme, toggleTheme }} />,
-          <UserProvider />
-        ]}
-      >
-        {children}
-      </ProviderComposer>
-    </ApolloProvider>
+    <ProviderComposer
+      contexts={[<StyledThemeProvider theme={{ ...theme, toggleTheme }} />]}
+    >
+      {children}
+      <GlobalStyle />
+    </ProviderComposer>
   )
 }
 
-export default withApollo(ContextProvider)
+export default ContextProvider
