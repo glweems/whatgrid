@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import {
   ApolloClient,
   InMemoryCache,
@@ -7,6 +8,7 @@ import { setContext } from 'apollo-link-context'
 import { createHttpLink } from 'apollo-link-http'
 import Cookies from 'js-cookie'
 import fetch from 'isomorphic-unfetch'
+import { onError } from 'apollo-link-error'
 import isBrowser from './isBrowser'
 
 let client: ApolloClient<NormalizedCacheObject> | null = null
@@ -15,6 +17,18 @@ interface Options {
   getToken: () => string
 }
 
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+  if (graphQLErrors)
+    graphQLErrors.map(({ message, locations, path }) =>
+      console.log(
+        `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
+      )
+    )
+
+  // eslint-disable-next-line no-console
+  if (networkError) console.log(`[Network error]: ${networkError}`)
+})
+
 function create(initialState: any, fetchOptions: Options) {
   const httpLink = createHttpLink({
     uri: process.env.GRAPHQL_ENDPOINT,
@@ -22,8 +36,10 @@ function create(initialState: any, fetchOptions: Options) {
     fetchOptions,
     fetch
   })
+
   const authLink = setContext((_, { headers }) => {
     const token = Cookies.get('token')
+
     return {
       headers: {
         ...headers,
@@ -36,7 +52,7 @@ function create(initialState: any, fetchOptions: Options) {
   return new ApolloClient({
     connectToDevTools: isBrowser,
     ssrMode: !isBrowser, // Disables forceFetch on the server (so queries are only run once)
-    link: authLink.concat(httpLink),
+    link: errorLink.concat(authLink.concat(httpLink)),
     cache: new InMemoryCache().restore(initialState || {})
   })
 }

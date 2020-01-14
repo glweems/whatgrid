@@ -1,25 +1,21 @@
 import { Action, action } from 'easy-peasy'
-import { UserFieldsFragment } from '../components/Graphql'
 
-export type SessionModel = {
-  loading: boolean
-  user?: UserFieldsFragment
-  setUser: Action<SessionModel, UserFieldsFragment>
-  setLoading: Action<SessionModel, boolean>
-  clearSession: Action<SessionModel>
+type SessionUser = {
+  id?: string
+  username?: string
+  email?: string
 }
 
+export type SessionModel = {
+  setSession: Action<SessionModel, SessionUser & { isLoggedIn: boolean } & any>
+  clearSession: Action<SessionModel>
+} & SessionUser
+
 const sessionModel: SessionModel = {
-  loading: true,
-
-  setUser: action((state, payload) => ({
+  setSession: action((state, payload) => ({
     ...state,
-    loading: false,
-    user: payload
+    ...payload
   })),
-
-  setLoading: action((state, payload) => ({ ...state, loading: payload })),
-
   clearSession: action((state) => ({
     ...state,
     user: null

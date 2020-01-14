@@ -3,7 +3,6 @@ import React, { useContext } from 'react'
 import styled, { ThemeContext } from 'styled-components/macro'
 import { animated, useSpring, useTransition } from 'react-spring'
 import { useStoreState } from '../store'
-import Button from './Button'
 import { layout as settings } from '../utils/theme'
 
 export const Sidebar: React.FC = ({ children }) => {
@@ -22,19 +21,21 @@ export const Sidebar: React.FC = ({ children }) => {
   })
 
   return (
-    <Wrapper className="Sidebar" style={animation}>
+    <aside className="Sidebar">
       {transitions.map(
         ({ item, key, props }) =>
           item && (
-            <animated.div key={key} style={props}>
-              {children}
+            <animated.div style={animation}>
+              <animated.div key={key} style={props}>
+                {children}
+              </animated.div>
             </animated.div>
           )
       )}
-    </Wrapper>
+    </aside>
   )
 }
 
 export default Sidebar
 
-const Wrapper = styled(animated.aside)``
+const Wrapper = animated(styled.aside<{ open: boolean }>``)

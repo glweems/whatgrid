@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useMeQuery } from '../components/Graphql'
+import { useMeQuery } from '../utils/generated'
 import { useStoreActions } from '../store'
 
 const UserProvider: React.FC<any> = ({ children }) => {

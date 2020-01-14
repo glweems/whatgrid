@@ -1,6 +1,6 @@
 import React from 'react'
 import Button from './Button'
-import { useLogoutMutation } from './Graphql'
+import { useLogoutMutation } from '../utils/generated'
 
 const LogoutButton: React.FC = () => {
   const [logout] = useLogoutMutation()

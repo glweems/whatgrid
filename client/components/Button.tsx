@@ -9,13 +9,15 @@ import {
   BorderProps,
   BorderRadiusProps
 } from 'styled-system'
+import { DefaultVariants } from '../utils/theme'
+import * as LoadingSpinner from './LoadingSpinner'
 
 type ButtonProps = React.HTMLProps<HTMLButtonElement>
 
 type Props = ButtonProps &
   ColorProps & {
     loading?: boolean
-    variant?: 'default' | 'primary' | 'secondary'
+    variant?: DefaultVariants
   }
 
 const Button: React.FC<Props> = ({
@@ -23,7 +25,8 @@ const Button: React.FC<Props> = ({
   type,
   onClick,
   variant,
-  loading
+  loading,
+  ...rest
 }) => {
   return (
     <StyledButton
@@ -31,8 +34,9 @@ const Button: React.FC<Props> = ({
       onClick={onClick}
       variant={variant}
       disabled={loading}
+      {...rest}
     >
-      {children}
+      {loading ? <LoadingSpinner.Ripple /> : children}
     </StyledButton>
   )
 }
@@ -51,9 +55,14 @@ const StyledButton: React.ComponentType<StyledButtonProps> = styled(
   ${border};
   ${borderRadius};
 
+  cursor: pointer;
+
+  :disabled {
+    cursor: not-allowed;
+  }
+
   :hover {
     opacity: 0.9;
-    cursor: pointer;
   }
 
   :focus {
@@ -76,7 +85,10 @@ const StyledButton: React.ComponentType<StyledButtonProps> = styled(
         primary: {
           color: whites[11],
           bg: primary,
-          border: 0
+          border: 0,
+          ':disabled': {
+            bg: whites[2]
+          }
         },
 
         secondary: {

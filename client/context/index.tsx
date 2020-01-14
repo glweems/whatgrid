@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { FC, useEffect } from 'react'
+import React, { FC, useEffect, useRef } from 'react'
 import { ThemeProvider as StyledThemeProvider } from 'styled-components/macro'
-import { ApolloClient } from 'apollo-boost'
 import useTheme from '../hooks/useTheme'
-import { useStoreActions, useStoreState } from '../store'
+import { Store, useStoreActions } from '../store'
 import { GlobalStyle } from '../utils/theme'
-import { useMeQuery } from '../components/Graphql'
+import { useMeQuery, MeDocument } from '../utils/generated'
+import { Client } from '../types'
 
-const ProviderComposer: React.FC<{ contexts: any }> = ({
+export const ProviderComposer: React.FC<{ contexts: any }> = ({
   contexts,
   children
 }: any) =>
@@ -19,22 +19,22 @@ const ProviderComposer: React.FC<{ contexts: any }> = ({
     children
   )
 
-type Props = { client?: typeof ApolloClient; session?: any }
+type Props = { apolloClient: Client; store: Store }
 
-const ContextProvider: FC<Props> = ({ children, session }) => {
+export const ContextProvider: FC<Props> = ({ children, apolloClient }) => {
+  const { data, loading } = useMeQuery()
+  // const [me, setMe] = useState(null)
   const { theme, componentMounted, toggleTheme } = useTheme()
-  const { data, loading, error } = useMeQuery()
-
-  const { user } = useStoreState((state) => state.session)
-  const { setUser, setLoading, clearSession } = useStoreActions(
-    (actions) => actions.session
-  )
+  const { setSession } = useStoreActions((state) => state.session)
+  const firstUpdate = useRef(true)
 
   useEffect(() => {
-    if (session.user?.id) setUser(session.user)
-  }, [session.user, setUser])
+    if (firstUpdate.current && !loading) {
+      setSession(data)
+    }
+  })
 
-  if (!componentMounted && session.loading) return <div />
+  if (!componentMounted && loading) return <div />
 
   return (
     <ProviderComposer

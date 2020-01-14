@@ -1,0 +1,83 @@
+{
+  "items": [
+    {
+      "id": "7ced01ba-3bfb-4014-b757-acd4cf8e4b20",
+      "type": "row",
+      "amount": 1,
+      "unit": "fr",
+      "inputProps": {
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "disabled": false,
+        "type": "number"
+      }
+    },
+    {
+      "id": "31132c7e-26e9-4e86-b17e-da0871b61b14",
+      "type": "row",
+      "amount": 1,
+      "unit": "fr",
+      "inputProps": {
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "disabled": false,
+        "type": "number"
+      }
+    },
+    {
+      "id": "462a4808-3440-4ba9-aee1-bde9baa8484a",
+      "type": "row",
+      "amount": 1,
+      "unit": "fr",
+      "inputProps": {
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "disabled": false,
+        "type": "number"
+      }
+    },
+    {
+      "id": "d25429d9-91bd-4cba-9778-f573af9b1ec2",
+      "type": "column",
+      "amount": 1,
+      "unit": "fr",
+      "inputProps": {
+        "min": 0,
+        "max": 100,
+        "step": 1,
+        "disabled": false,
+        "type": "number"
+      }
+    }
+  ],
+  "rowCount": 3,
+  "columnCount": 3,
+  "gridTemplateRows": "1fr 1fr 1fr",
+  "gridTemplateColumns": "1fr 1fr 1fr",
+  "verticalGap": {
+    "type": "vertical",
+    "amount": 1,
+    "unit": "em"
+  },
+  "horizontalGap": {
+    "type": "horizontal",
+    "amount": 1,
+    "unit": "em"
+  },
+  "gridGap": [
+    {
+      "type": "vertical",
+      "amount": 1,
+      "unit": "em"
+    },
+    {
+      "type": "horizontal",
+      "amount": 1,
+      "unit": "em"
+    }
+  ],
+  "gridGapCss": "1em 1em"
+}

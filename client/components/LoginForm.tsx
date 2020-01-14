@@ -3,7 +3,7 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { withRouter } from 'next/router'
 import { WithRouterProps } from 'next/dist/client/with-router'
-import { useLoginMutation, LoginMutationVariables } from './Graphql'
+import { useLoginMutation, LoginMutationVariables } from '../utils/generated'
 import { Form } from './common/Form'
 import TextField from './TextField'
 import Button from './Button'
@@ -19,7 +19,7 @@ const loginValidationSchema = Yup.object().shape({
 })
 
 const LoginForm: React.FC<WithRouterProps> = ({ router }) => {
-  const { setUser } = useStoreActions((store) => store.session)
+  const { setSession } = useStoreActions((store) => store.session)
   const [login] = useLoginMutation()
 
   const [msg, setMsg] = useState('')
@@ -38,21 +38,18 @@ const LoginForm: React.FC<WithRouterProps> = ({ router }) => {
         variables: { email, password }
       }).then(({ data }) => {
         setMsg(data.login.user.email)
-        setUser(data.login.user)
+        setSession(data.login.user)
       })
     }
   })
 
   return (
-    <Form gridTemplateColumns={2} onSubmit={handleSubmit}>
-      <p>{msg}</p>
-
+    <Form onSubmit={handleSubmit}>
       <TextField
         label="Email Address"
         name="email"
         type="text"
         onChange={handleChange}
-        errors={errors}
       />
 
       <TextField
@@ -60,15 +57,11 @@ const LoginForm: React.FC<WithRouterProps> = ({ router }) => {
         name="password"
         type="password"
         onChange={handleChange}
-        errors={errors}
       />
 
-      <Button type="submit" loading={isSubmitting} variant="primary">
+      <Button type="submit" variant="primary">
         Submit
       </Button>
-      <pre>
-        <code>{JSON.stringify(errors, null, 2)}</code>
-      </pre>
     </Form>
   )
 }

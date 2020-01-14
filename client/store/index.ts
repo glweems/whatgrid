@@ -1,25 +1,47 @@
-import { createStore, createTypedHooks, EasyPeasyConfig } from 'easy-peasy'
-import user, { UserModel } from './user'
+import {
+  createStore as createEasyStore,
+  createTypedHooks,
+  EasyPeasyConfig,
+  Store as EasyStore
+} from 'easy-peasy'
 import grid, { GridModel } from './grid'
 import session, { SessionModel } from './session'
 import layout, { LayoutModel } from './layout'
+import { Client } from '../types'
 
-export interface StoreModel extends EasyPeasyConfig {
+export interface StoreModel {
   grid: GridModel
-  user: UserModel
-  session: SessionModel
+  session?: SessionModel
   layout: LayoutModel
+  apolloClient?: Client
 }
 
-const storeModel: StoreModel = {
+interface InitialState {
+  isLoggedIn: boolean
+}
+
+export const storeOptions: EasyPeasyConfig = {
+  name: 'what grid'
+}
+
+export const storeModel: StoreModel = {
   grid,
-  user,
-  session,
-  layout
+  layout,
+  session
 }
 
-const store = createStore(storeModel)
+export type Store = EasyStore<StoreModel, typeof storeOptions>
 
+const store: Store = createEasyStore(storeModel, storeOptions)
+
+export const createStore = (init): Store => {
+  return createEasyStore(storeModel, {
+    ...storeOptions,
+    initialState: { ...init }
+  })
+}
+
+export default store
 // Wrapping dev only code like this normally gets stripped out by bundlers
 // such as Webpack when creating a production build.
 if (process.env.NODE_ENV === 'development') {
@@ -30,8 +52,6 @@ if (process.env.NODE_ENV === 'development') {
     })
   }
 }
-
-export default store
 
 const typedHooks = createTypedHooks<StoreModel>()
 

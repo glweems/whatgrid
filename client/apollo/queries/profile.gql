@@ -1,5 +1,5 @@
-query User($id: ID!) {
-  user(id: $id) {
+query Profile($id: ID!) {
+  profile: user(id: $id) {
     id
     createdAt
     updatedAt
@@ -20,5 +20,9 @@ query User($id: ID!) {
       gridTemplateColumns
       gridTemplateRows
     }
+  }
+
+  me {
+    id
   }
 }

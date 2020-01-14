@@ -1,15 +1,17 @@
 import React, { useState } from 'react'
 import { useFormik } from 'formik'
-import { useSignUpMutation, SignUpMutationVariables } from './Graphql'
 import Button from './Button'
-import { Form } from './common'
 import TextField from './TextField'
+import { Form } from './common'
+import * as Gen from '../utils/generated'
 
 const SignupForm = () => {
-  const [signup] = useSignUpMutation()
+  const [signup] = Gen.useSignupMutation()
   const [msg, setMsg] = useState('')
 
-  const { handleChange, handleSubmit } = useFormik<SignUpMutationVariables>({
+  const { handleChange, handleSubmit, isSubmitting } = useFormik<
+    Gen.SignupMutationVariables
+  >({
     initialValues: {
       email: '',
       password: ''
@@ -19,7 +21,6 @@ const SignupForm = () => {
       await signup({
         variables: { email, password }
       }).then(({ data }) => {
-        localStorage.setItem('token', data.signup.token)
         setMsg(data.signup.user.email)
       })
     }
@@ -27,25 +28,33 @@ const SignupForm = () => {
 
   return (
     <Form onSubmit={handleSubmit}>
-      <p>{msg}</p>
       <TextField
         label="Email Address"
         name="email"
         type="text"
         onChange={handleChange}
-        errors={{}}
+      />
+
+      <TextField
+        label="Username"
+        name="username"
+        type="text"
+        onChange={handleChange}
       />
 
       <TextField
         label="Password"
         name="password"
         type="password"
+        autoCorrect="current-password"
         onChange={handleChange}
-        errors={{}}
       />
-      <Button type="submit" variant="primary">
-        Submit
-      </Button>
+
+      <div>
+        <Button type="submit" variant="primary" loading={isSubmitting}>
+          Submit
+        </Button>
+      </div>
     </Form>
   )
 }

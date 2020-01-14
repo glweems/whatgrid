@@ -1,5 +1,5 @@
-query Profile($id: ID!) {
-  profile: user(id: $id) {
+query User($id: ID) {
+  user(id: $id) {
     id
     createdAt
     updatedAt
@@ -9,9 +9,6 @@ query Profile($id: ID!) {
     lastName
     username
     phoneNumber
-    permissions {
-      owner
-    }
     grids {
       id
       createdAt
@@ -23,9 +20,5 @@ query Profile($id: ID!) {
       gridTemplateColumns
       gridTemplateRows
     }
-  }
-
-  me {
-    id
   }
 }

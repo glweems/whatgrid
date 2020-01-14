@@ -44,7 +44,8 @@ const Navbar: React.FC<Props> = ({ showSidebarToggle }) => {
 }
 
 const NavLinks: React.FC = () => {
-  const { loading } = useStoreState((state) => state.session)
+  // const { loading } = useStoreState((state) => state.session)
+  const loading = true
 
   if (!loading) return <Link to="/dashboard" text="Dashboard" />
 

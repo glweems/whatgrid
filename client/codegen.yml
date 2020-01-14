@@ -1,8 +1,8 @@
 overwrite: true
-schema: 'http://localhost:4000/graphql'
+schema: './../server/src/schema.graphql'
 documents: '**/*.gql'
 generates:
-  components/Graphql.tsx:
+  utils/generated.tsx:
     hooks:
       afterOneFileWrite:
         - prettier --write

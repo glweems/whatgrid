@@ -10,6 +10,6 @@ interface Session {
   }
 }
 
-export interface FC<P = {}> extends React.SFC<P & SessionProps> {
+export interface FC<Props = {}> extends React.SFC<Props & SessionProps> {
   getInitialProps?: (ctx: any) => Promise<P>
 }

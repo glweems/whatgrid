@@ -45,16 +45,12 @@ export type Mutation = {
 export type MutationSignupArgs = {
   email: Scalars['String']
   password: Scalars['String']
+  username?: Maybe<Scalars['String']>
 }
 
 export type MutationLoginArgs = {
   email: Scalars['String']
   password: Scalars['String']
-}
-
-export type Permissions = {
-  authenticated: Scalars['Boolean']
-  user?: Maybe<User>
 }
 
 export type Query = {
@@ -84,22 +80,16 @@ export type SuccessMessage = {
 
 export type User = {
   id: Scalars['ID']
-  permissions: UserPermissions
-  createdAt: Scalars['DateTime']
-  updatedAt: Scalars['DateTime']
   email: Scalars['String']
   name?: Maybe<Scalars['String']>
-  password?: Maybe<Scalars['String']>
   firstName?: Maybe<Scalars['String']>
   lastName?: Maybe<Scalars['String']>
   username?: Maybe<Scalars['String']>
   phoneNumber?: Maybe<Scalars['Int']>
   grids: Array<Grid>
-}
-
-export type UserPermissions = {
-  owner: Scalars['Boolean']
-  edit: Scalars['Boolean']
+  createdAt: Scalars['DateTime']
+  updatedAt: Scalars['DateTime']
+  password?: Maybe<Scalars['String']>
 }
 
 export type LoginMutationVariables = {
@@ -115,13 +105,14 @@ export type LogoutMutationVariables = {}
 
 export type LogoutMutation = { logout: Maybe<Pick<SuccessMessage, 'message'>> }
 
-export type SignUpMutationVariables = {
+export type SignupMutationVariables = {
   email: Scalars['String']
   password: Scalars['String']
+  username?: Maybe<Scalars['String']>
 }
 
-export type SignUpMutation = {
-  signup: Pick<AuthPayload, 'token'> & { user: Pick<User, 'id' | 'email'> }
+export type SignupMutation = {
+  signup: Pick<AuthPayload, 'token'> & { user: UserFieldsFragment }
 }
 
 export type UserFieldsFragment = Pick<
@@ -174,7 +165,6 @@ export type ProfileQuery = {
       | 'username'
       | 'phoneNumber'
     > & {
-      permissions: Pick<UserPermissions, 'owner'>
       grids: Array<
         Pick<
           Grid,
@@ -191,10 +181,11 @@ export type ProfileQuery = {
       >
     }
   >
+  me: Maybe<Pick<User, 'id'>>
 }
 
 export type UserQueryVariables = {
-  id: Scalars['ID']
+  id?: Maybe<Scalars['ID']>
 }
 
 export type UserQuery = {
@@ -429,94 +420,95 @@ export type LogoutMutationOptions = ApolloReactCommon.BaseMutationOptions<
   LogoutMutation,
   LogoutMutationVariables
 >
-export const SignUpDocument = gql`
-  mutation SignUp($email: String!, $password: String!) {
-    signup(email: $email, password: $password) {
+export const SignupDocument = gql`
+  mutation Signup($email: String!, $password: String!, $username: String) {
+    signup(email: $email, password: $password, username: $username) {
       token
       user {
-        id
-        email
+        ...userFields
       }
     }
   }
+  ${UserFieldsFragmentDoc}
 `
-export type SignUpMutationFn = ApolloReactCommon.MutationFunction<
-  SignUpMutation,
-  SignUpMutationVariables
+export type SignupMutationFn = ApolloReactCommon.MutationFunction<
+  SignupMutation,
+  SignupMutationVariables
 >
-export type SignUpComponentProps = Omit<
+export type SignupComponentProps = Omit<
   ApolloReactComponents.MutationComponentOptions<
-    SignUpMutation,
-    SignUpMutationVariables
+    SignupMutation,
+    SignupMutationVariables
   >,
   'mutation'
 >
 
-export const SignUpComponent = (props: SignUpComponentProps) => (
-  <ApolloReactComponents.Mutation<SignUpMutation, SignUpMutationVariables>
-    mutation={SignUpDocument}
+export const SignupComponent = (props: SignupComponentProps) => (
+  <ApolloReactComponents.Mutation<SignupMutation, SignupMutationVariables>
+    mutation={SignupDocument}
     {...props}
   />
 )
 
-export type SignUpProps<TChildProps = {}> =
-  | ApolloReactHoc.MutateProps<SignUpMutation, SignUpMutationVariables>
+export type SignupProps<TChildProps = {}> =
+  | ApolloReactHoc.MutateProps<SignupMutation, SignupMutationVariables>
   | TChildProps
-export function withSignUp<TProps, TChildProps = {}>(
+export function withSignup<TProps, TChildProps = {}>(
   operationOptions?: ApolloReactHoc.OperationOption<
     TProps,
-    SignUpMutation,
-    SignUpMutationVariables,
-    SignUpProps<TChildProps>
+    SignupMutation,
+    SignupMutationVariables,
+    SignupProps<TChildProps>
   >
 ) {
   return ApolloReactHoc.withMutation<
     TProps,
-    SignUpMutation,
-    SignUpMutationVariables,
-    SignUpProps<TChildProps>
-  >(SignUpDocument, {
-    alias: 'signUp',
+    SignupMutation,
+    SignupMutationVariables,
+    SignupProps<TChildProps>
+  >(SignupDocument, {
+    alias: 'signup',
     ...operationOptions
   })
 }
 
 /**
- * __useSignUpMutation__
+ * __useSignupMutation__
  *
- * To run a mutation, you first call `useSignUpMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useSignUpMutation` returns a tuple that includes:
+ * To run a mutation, you first call `useSignupMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSignupMutation` returns a tuple that includes:
  * - A mutate function that you can call at any time to execute the mutation
  * - An object with fields that represent the current status of the mutation's execution
  *
  * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
  *
  * @example
- * const [signUpMutation, { data, loading, error }] = useSignUpMutation({
+ * const [signupMutation, { data, loading, error }] = useSignupMutation({
  *   variables: {
  *      email: // value for 'email'
  *      password: // value for 'password'
+ *      username: // value for 'username'
  *   },
  * });
  */
-export function useSignUpMutation(
+export function useSignupMutation(
   baseOptions?: ApolloReactHooks.MutationHookOptions<
-    SignUpMutation,
-    SignUpMutationVariables
+    SignupMutation,
+    SignupMutationVariables
   >
 ) {
-  return ApolloReactHooks.useMutation<SignUpMutation, SignUpMutationVariables>(
-    SignUpDocument,
+  return ApolloReactHooks.useMutation<SignupMutation, SignupMutationVariables>(
+    SignupDocument,
     baseOptions
   )
 }
-export type SignUpMutationHookResult = ReturnType<typeof useSignUpMutation>
-export type SignUpMutationResult = ApolloReactCommon.MutationResult<
-  SignUpMutation
+export type SignupMutationHookResult = ReturnType<typeof useSignupMutation>
+export type SignupMutationResult = ApolloReactCommon.MutationResult<
+  SignupMutation
 >
-export type SignUpMutationOptions = ApolloReactCommon.BaseMutationOptions<
-  SignUpMutation,
-  SignUpMutationVariables
+export type SignupMutationOptions = ApolloReactCommon.BaseMutationOptions<
+  SignupMutation,
+  SignupMutationVariables
 >
 export const MeDocument = gql`
   query Me {
@@ -610,9 +602,6 @@ export const ProfileDocument = gql`
       lastName
       username
       phoneNumber
-      permissions {
-        owner
-      }
       grids {
         id
         createdAt
@@ -624,6 +613,9 @@ export const ProfileDocument = gql`
         gridTemplateColumns
         gridTemplateRows
       }
+    }
+    me {
+      id
     }
   }
 `
@@ -710,7 +702,7 @@ export type ProfileQueryResult = ApolloReactCommon.QueryResult<
   ProfileQueryVariables
 >
 export const UserDocument = gql`
-  query User($id: ID!) {
+  query User($id: ID) {
     user(id: $id) {
       id
       createdAt
@@ -738,8 +730,7 @@ export const UserDocument = gql`
 export type UserComponentProps = Omit<
   ApolloReactComponents.QueryComponentOptions<UserQuery, UserQueryVariables>,
   'query'
-> &
-  ({ variables: UserQueryVariables; skip?: boolean } | { skip: boolean })
+>
 
 export const UserComponent = (props: UserComponentProps) => (
   <ApolloReactComponents.Query<UserQuery, UserQueryVariables>

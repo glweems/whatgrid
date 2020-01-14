@@ -64,6 +64,8 @@ const colorModes: Modes = {
   }
 }
 
+export type DefaultVariants = 'default' | 'primary' | 'secondary'
+
 export type ColorProps = {
   color?: ResponsiveValue<keyof ColorMode> | CSS.ColorProperty
   bg?: ResponsiveValue<keyof ColorMode> | CSS.ColorProperty

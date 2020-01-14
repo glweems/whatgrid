@@ -1,6 +1,10 @@
 import React from 'react'
 import { Label as RebassLabel } from '@rebass/forms'
-import styled from 'styled-components/macro'
+import styled, {
+  StyledFunction,
+  StyledComponent
+} from 'styled-components/macro'
+import { fontSize } from 'styled-system'
 import { Input } from './common/Input'
 
 const defaultProps = {
@@ -13,25 +17,27 @@ const defaultProps = {
 type Props = {
   label: string
   name: string
-  errors: {
-    [key: string]: string
-  }
 } & React.HtmlHTMLAttributes<HTMLInputElement> &
   typeof defaultProps
 
-const TextField: React.FC<Props> = ({ label, name, errors, ...props }) => (
+const TextField: React.FC<Props> = ({ label, name, ...props }) => (
   <Label htmlFor={name}>
-    <span>{label}</span>
-    <ErrorMsg>{errors[name]}</ErrorMsg>
-
+    {label}
     <Input id={name} name={name} {...props} />
   </Label>
 )
+type LabelProps = React.HTMLProps<HTMLLabelElement>
 
-const Label = styled(RebassLabel)`
+const Label: StyledComponent<typeof RebassLabel, LabelProps> = styled(
+  RebassLabel
+)`
+  ${fontSize}
   display: flex;
   flex-direction: column;
 `
+Label.defaultProps = {
+  fontSize: 3
+}
 
 const ErrorMsg = styled.span`
   height: 2em;
