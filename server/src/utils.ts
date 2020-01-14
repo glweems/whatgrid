@@ -1,8 +1,9 @@
 import { verify, sign } from 'jsonwebtoken'
+import { GraphQLError } from 'graphql'
 import { User } from './types'
 
-export const getUserId = (ctx: any) => {
-  const Authorization = ctx.request.get('Authorization')
+export const getUserId = (req: any) => {
+  const Authorization = req.request.get('Authorization')
   if (Authorization) {
     const token = Authorization.replace('Bearer ', '')
     const { userId }: any = verify(token, process.env.APP_SECRET)
@@ -14,7 +15,7 @@ export const getUserId = (ctx: any) => {
 export const bakeCookie = (ctx: any, token: string) =>
   ctx.response.cookie('token', token, {
     httpOnly: false,
-    // secure: false,
+    secure: process.env.NODE_ENV === 'production',
     maxAge: 1000 * 60 * 60 * 24 * 365 // 1 year cookie
   })
 
@@ -26,9 +27,9 @@ export const tokenGenerator = async (user: User): Promise<string> => {
     process.env.APP_SECRET
   )
 
-  verify(token, process.env.APP_SECRET, (err, data) =>
+  verify(token, process.env.APP_SECRET, (err, data) => {
     console.log('token verified'.blue)
-  )
+  })
 
   return token
 }
@@ -41,7 +42,7 @@ export function generateJwt(user) {
     subject: user.id.toString()
   })
 
-  verify(token, process.env.APP_SECRET, (err, data) => { })
+  // verify(token, process.env.APP_SECRET, (err, data) => { })
 
   return token
 }
@@ -53,3 +54,17 @@ export const cookieExtractor = (req) => {
   }
   return token
 }
+
+export type GraphQLFormattedError = {
+  message: string
+  // locations: GraphQLErrorLocation[]
+}
+
+export type GraphQLErrorLocation = {
+  line: number
+  column: number
+}
+export const formatError = ({
+  message,
+  locations
+}: GraphQLError): GraphQLFormattedError => ({ message })

@@ -8,8 +8,6 @@ import { User } from './User'
 import { Mutation } from './Mutation'
 import { AuthPayload } from './AuthPayload'
 import { SuccessMessage } from './SuccessMessage'
-import { UserPermissions } from './UserPermissions'
-import { Permissions } from './Permissions'
 
 export const resolvers: Resolvers = {
   Query,
@@ -17,7 +15,5 @@ export const resolvers: Resolvers = {
   User,
   AuthPayload,
   Mutation,
-  SuccessMessage,
-  UserPermissions,
-  Permissions
+  SuccessMessage
 }

@@ -2,138 +2,138 @@
 // Please don't change this file manually but run `prisma generate` to update it.
 // For more information, please read the docs: https://www.prisma.io/docs/prisma-client/
 
-import { DocumentNode } from 'graphql'
+import { DocumentNode } from "graphql";
 import {
   makePrismaClientClass,
   BaseClientOptions,
   Model
-} from 'prisma-client-lib'
-import { typeDefs } from './prisma-schema'
+} from "prisma-client-lib";
+import { typeDefs } from "./prisma-schema";
 
 export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
-  U[keyof U]
+  U[keyof U];
 
-export type Maybe<T> = T | undefined | null
+export type Maybe<T> = T | undefined | null;
 
 export interface Exists {
-  grid: (where?: GridWhereInput) => Promise<boolean>
-  user: (where?: UserWhereInput) => Promise<boolean>
+  grid: (where?: GridWhereInput) => Promise<boolean>;
+  user: (where?: UserWhereInput) => Promise<boolean>;
 }
 
 export interface Node {}
 
-export type FragmentableArray<T> = Promise<Array<T>> & Fragmentable
+export type FragmentableArray<T> = Promise<Array<T>> & Fragmentable;
 
 export interface Fragmentable {
-  $fragment<T>(fragment: string | DocumentNode): Promise<T>
+  $fragment<T>(fragment: string | DocumentNode): Promise<T>;
 }
 
 export interface Prisma {
-  $exists: Exists
+  $exists: Exists;
   $graphql: <T = any>(
     query: string,
     variables?: { [key: string]: any }
-  ) => Promise<T>
+  ) => Promise<T>;
 
   /**
    * Queries
    */
 
-  grid: (where: GridWhereUniqueInput) => GridNullablePromise
+  grid: (where: GridWhereUniqueInput) => GridNullablePromise;
   grids: (args?: {
-    where?: GridWhereInput
-    orderBy?: GridOrderByInput
-    skip?: Int
-    after?: string
-    before?: string
-    first?: Int
-    last?: Int
-  }) => FragmentableArray<Grid>
+    where?: GridWhereInput;
+    orderBy?: GridOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Grid>;
   gridsConnection: (args?: {
-    where?: GridWhereInput
-    orderBy?: GridOrderByInput
-    skip?: Int
-    after?: string
-    before?: string
-    first?: Int
-    last?: Int
-  }) => GridConnectionPromise
-  user: (where: UserWhereUniqueInput) => UserNullablePromise
+    where?: GridWhereInput;
+    orderBy?: GridOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => GridConnectionPromise;
+  user: (where: UserWhereUniqueInput) => UserNullablePromise;
   users: (args?: {
-    where?: UserWhereInput
-    orderBy?: UserOrderByInput
-    skip?: Int
-    after?: string
-    before?: string
-    first?: Int
-    last?: Int
-  }) => FragmentableArray<User>
+    where?: UserWhereInput;
+    orderBy?: UserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<User>;
   usersConnection: (args?: {
-    where?: UserWhereInput
-    orderBy?: UserOrderByInput
-    skip?: Int
-    after?: string
-    before?: string
-    first?: Int
-    last?: Int
-  }) => UserConnectionPromise
-  node: (args: { id: ID_Output }) => Node
+    where?: UserWhereInput;
+    orderBy?: UserOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => UserConnectionPromise;
+  node: (args: { id: ID_Output }) => Node;
 
   /**
    * Mutations
    */
 
-  createGrid: (data: GridCreateInput) => GridPromise
+  createGrid: (data: GridCreateInput) => GridPromise;
   updateGrid: (args: {
-    data: GridUpdateInput
-    where: GridWhereUniqueInput
-  }) => GridPromise
+    data: GridUpdateInput;
+    where: GridWhereUniqueInput;
+  }) => GridPromise;
   updateManyGrids: (args: {
-    data: GridUpdateManyMutationInput
-    where?: GridWhereInput
-  }) => BatchPayloadPromise
+    data: GridUpdateManyMutationInput;
+    where?: GridWhereInput;
+  }) => BatchPayloadPromise;
   upsertGrid: (args: {
-    where: GridWhereUniqueInput
-    create: GridCreateInput
-    update: GridUpdateInput
-  }) => GridPromise
-  deleteGrid: (where: GridWhereUniqueInput) => GridPromise
-  deleteManyGrids: (where?: GridWhereInput) => BatchPayloadPromise
-  createUser: (data: UserCreateInput) => UserPromise
+    where: GridWhereUniqueInput;
+    create: GridCreateInput;
+    update: GridUpdateInput;
+  }) => GridPromise;
+  deleteGrid: (where: GridWhereUniqueInput) => GridPromise;
+  deleteManyGrids: (where?: GridWhereInput) => BatchPayloadPromise;
+  createUser: (data: UserCreateInput) => UserPromise;
   updateUser: (args: {
-    data: UserUpdateInput
-    where: UserWhereUniqueInput
-  }) => UserPromise
+    data: UserUpdateInput;
+    where: UserWhereUniqueInput;
+  }) => UserPromise;
   updateManyUsers: (args: {
-    data: UserUpdateManyMutationInput
-    where?: UserWhereInput
-  }) => BatchPayloadPromise
+    data: UserUpdateManyMutationInput;
+    where?: UserWhereInput;
+  }) => BatchPayloadPromise;
   upsertUser: (args: {
-    where: UserWhereUniqueInput
-    create: UserCreateInput
-    update: UserUpdateInput
-  }) => UserPromise
-  deleteUser: (where: UserWhereUniqueInput) => UserPromise
-  deleteManyUsers: (where?: UserWhereInput) => BatchPayloadPromise
+    where: UserWhereUniqueInput;
+    create: UserCreateInput;
+    update: UserUpdateInput;
+  }) => UserPromise;
+  deleteUser: (where: UserWhereUniqueInput) => UserPromise;
+  deleteManyUsers: (where?: UserWhereInput) => BatchPayloadPromise;
 
   /**
    * Subscriptions
    */
 
-  $subscribe: Subscription
+  $subscribe: Subscription;
 }
 
 export interface Subscription {
   grid: (
     where?: GridSubscriptionWhereInput
-  ) => GridSubscriptionPayloadSubscription
+  ) => GridSubscriptionPayloadSubscription;
   user: (
     where?: UserSubscriptionWhereInput
-  ) => UserSubscriptionPayloadSubscription
+  ) => UserSubscriptionPayloadSubscription;
 }
 
 export interface ClientConstructor<T> {
-  new (options?: BaseClientOptions): T
+  new (options?: BaseClientOptions): T;
 }
 
 /**
@@ -141,1028 +141,1028 @@ export interface ClientConstructor<T> {
  */
 
 export type GridOrderByInput =
-  | 'id_ASC'
-  | 'id_DESC'
-  | 'createdAt_ASC'
-  | 'createdAt_DESC'
-  | 'updatedAt_ASC'
-  | 'updatedAt_DESC'
-  | 'published_ASC'
-  | 'published_DESC'
-  | 'name_ASC'
-  | 'name_DESC'
-  | 'rows_ASC'
-  | 'rows_DESC'
-  | 'columns_ASC'
-  | 'columns_DESC'
-  | 'gridTemplateColumns_ASC'
-  | 'gridTemplateColumns_DESC'
-  | 'gridTemplateRows_ASC'
-  | 'gridTemplateRows_DESC'
+  | "id_ASC"
+  | "id_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC"
+  | "published_ASC"
+  | "published_DESC"
+  | "name_ASC"
+  | "name_DESC"
+  | "rows_ASC"
+  | "rows_DESC"
+  | "columns_ASC"
+  | "columns_DESC"
+  | "gridTemplateColumns_ASC"
+  | "gridTemplateColumns_DESC"
+  | "gridTemplateRows_ASC"
+  | "gridTemplateRows_DESC";
 
 export type UserOrderByInput =
-  | 'id_ASC'
-  | 'id_DESC'
-  | 'createdAt_ASC'
-  | 'createdAt_DESC'
-  | 'updatedAt_ASC'
-  | 'updatedAt_DESC'
-  | 'email_ASC'
-  | 'email_DESC'
-  | 'name_ASC'
-  | 'name_DESC'
-  | 'password_ASC'
-  | 'password_DESC'
-  | 'firstName_ASC'
-  | 'firstName_DESC'
-  | 'lastName_ASC'
-  | 'lastName_DESC'
-  | 'username_ASC'
-  | 'username_DESC'
-  | 'phoneNumber_ASC'
-  | 'phoneNumber_DESC'
+  | "id_ASC"
+  | "id_DESC"
+  | "createdAt_ASC"
+  | "createdAt_DESC"
+  | "updatedAt_ASC"
+  | "updatedAt_DESC"
+  | "email_ASC"
+  | "email_DESC"
+  | "name_ASC"
+  | "name_DESC"
+  | "password_ASC"
+  | "password_DESC"
+  | "firstName_ASC"
+  | "firstName_DESC"
+  | "lastName_ASC"
+  | "lastName_DESC"
+  | "username_ASC"
+  | "username_DESC"
+  | "phoneNumber_ASC"
+  | "phoneNumber_DESC";
 
-export type MutationType = 'CREATED' | 'UPDATED' | 'DELETED'
+export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
 export type GridWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>
-}>
+  id: Maybe<ID_Input>;
+}>;
 
 export interface GridWhereInput {
-  id?: Maybe<ID_Input>
-  id_not?: Maybe<ID_Input>
-  id_in?: Maybe<ID_Input[] | ID_Input>
-  id_not_in?: Maybe<ID_Input[] | ID_Input>
-  id_lt?: Maybe<ID_Input>
-  id_lte?: Maybe<ID_Input>
-  id_gt?: Maybe<ID_Input>
-  id_gte?: Maybe<ID_Input>
-  id_contains?: Maybe<ID_Input>
-  id_not_contains?: Maybe<ID_Input>
-  id_starts_with?: Maybe<ID_Input>
-  id_not_starts_with?: Maybe<ID_Input>
-  id_ends_with?: Maybe<ID_Input>
-  id_not_ends_with?: Maybe<ID_Input>
-  createdAt?: Maybe<DateTimeInput>
-  createdAt_not?: Maybe<DateTimeInput>
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>
-  createdAt_lt?: Maybe<DateTimeInput>
-  createdAt_lte?: Maybe<DateTimeInput>
-  createdAt_gt?: Maybe<DateTimeInput>
-  createdAt_gte?: Maybe<DateTimeInput>
-  updatedAt?: Maybe<DateTimeInput>
-  updatedAt_not?: Maybe<DateTimeInput>
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>
-  updatedAt_lt?: Maybe<DateTimeInput>
-  updatedAt_lte?: Maybe<DateTimeInput>
-  updatedAt_gt?: Maybe<DateTimeInput>
-  updatedAt_gte?: Maybe<DateTimeInput>
-  published?: Maybe<boolean>
-  published_not?: Maybe<boolean>
-  name?: Maybe<string>
-  name_not?: Maybe<string>
-  name_in?: Maybe<string[] | string>
-  name_not_in?: Maybe<string[] | string>
-  name_lt?: Maybe<string>
-  name_lte?: Maybe<string>
-  name_gt?: Maybe<string>
-  name_gte?: Maybe<string>
-  name_contains?: Maybe<string>
-  name_not_contains?: Maybe<string>
-  name_starts_with?: Maybe<string>
-  name_not_starts_with?: Maybe<string>
-  name_ends_with?: Maybe<string>
-  name_not_ends_with?: Maybe<string>
-  rows?: Maybe<Int>
-  rows_not?: Maybe<Int>
-  rows_in?: Maybe<Int[] | Int>
-  rows_not_in?: Maybe<Int[] | Int>
-  rows_lt?: Maybe<Int>
-  rows_lte?: Maybe<Int>
-  rows_gt?: Maybe<Int>
-  rows_gte?: Maybe<Int>
-  columns?: Maybe<Int>
-  columns_not?: Maybe<Int>
-  columns_in?: Maybe<Int[] | Int>
-  columns_not_in?: Maybe<Int[] | Int>
-  columns_lt?: Maybe<Int>
-  columns_lte?: Maybe<Int>
-  columns_gt?: Maybe<Int>
-  columns_gte?: Maybe<Int>
-  gridTemplateColumns?: Maybe<string>
-  gridTemplateColumns_not?: Maybe<string>
-  gridTemplateColumns_in?: Maybe<string[] | string>
-  gridTemplateColumns_not_in?: Maybe<string[] | string>
-  gridTemplateColumns_lt?: Maybe<string>
-  gridTemplateColumns_lte?: Maybe<string>
-  gridTemplateColumns_gt?: Maybe<string>
-  gridTemplateColumns_gte?: Maybe<string>
-  gridTemplateColumns_contains?: Maybe<string>
-  gridTemplateColumns_not_contains?: Maybe<string>
-  gridTemplateColumns_starts_with?: Maybe<string>
-  gridTemplateColumns_not_starts_with?: Maybe<string>
-  gridTemplateColumns_ends_with?: Maybe<string>
-  gridTemplateColumns_not_ends_with?: Maybe<string>
-  gridTemplateRows?: Maybe<string>
-  gridTemplateRows_not?: Maybe<string>
-  gridTemplateRows_in?: Maybe<string[] | string>
-  gridTemplateRows_not_in?: Maybe<string[] | string>
-  gridTemplateRows_lt?: Maybe<string>
-  gridTemplateRows_lte?: Maybe<string>
-  gridTemplateRows_gt?: Maybe<string>
-  gridTemplateRows_gte?: Maybe<string>
-  gridTemplateRows_contains?: Maybe<string>
-  gridTemplateRows_not_contains?: Maybe<string>
-  gridTemplateRows_starts_with?: Maybe<string>
-  gridTemplateRows_not_starts_with?: Maybe<string>
-  gridTemplateRows_ends_with?: Maybe<string>
-  gridTemplateRows_not_ends_with?: Maybe<string>
-  author?: Maybe<UserWhereInput>
-  AND?: Maybe<GridWhereInput[] | GridWhereInput>
-  OR?: Maybe<GridWhereInput[] | GridWhereInput>
-  NOT?: Maybe<GridWhereInput[] | GridWhereInput>
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  published?: Maybe<Boolean>;
+  published_not?: Maybe<Boolean>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  rows?: Maybe<Int>;
+  rows_not?: Maybe<Int>;
+  rows_in?: Maybe<Int[] | Int>;
+  rows_not_in?: Maybe<Int[] | Int>;
+  rows_lt?: Maybe<Int>;
+  rows_lte?: Maybe<Int>;
+  rows_gt?: Maybe<Int>;
+  rows_gte?: Maybe<Int>;
+  columns?: Maybe<Int>;
+  columns_not?: Maybe<Int>;
+  columns_in?: Maybe<Int[] | Int>;
+  columns_not_in?: Maybe<Int[] | Int>;
+  columns_lt?: Maybe<Int>;
+  columns_lte?: Maybe<Int>;
+  columns_gt?: Maybe<Int>;
+  columns_gte?: Maybe<Int>;
+  gridTemplateColumns?: Maybe<String>;
+  gridTemplateColumns_not?: Maybe<String>;
+  gridTemplateColumns_in?: Maybe<String[] | String>;
+  gridTemplateColumns_not_in?: Maybe<String[] | String>;
+  gridTemplateColumns_lt?: Maybe<String>;
+  gridTemplateColumns_lte?: Maybe<String>;
+  gridTemplateColumns_gt?: Maybe<String>;
+  gridTemplateColumns_gte?: Maybe<String>;
+  gridTemplateColumns_contains?: Maybe<String>;
+  gridTemplateColumns_not_contains?: Maybe<String>;
+  gridTemplateColumns_starts_with?: Maybe<String>;
+  gridTemplateColumns_not_starts_with?: Maybe<String>;
+  gridTemplateColumns_ends_with?: Maybe<String>;
+  gridTemplateColumns_not_ends_with?: Maybe<String>;
+  gridTemplateRows?: Maybe<String>;
+  gridTemplateRows_not?: Maybe<String>;
+  gridTemplateRows_in?: Maybe<String[] | String>;
+  gridTemplateRows_not_in?: Maybe<String[] | String>;
+  gridTemplateRows_lt?: Maybe<String>;
+  gridTemplateRows_lte?: Maybe<String>;
+  gridTemplateRows_gt?: Maybe<String>;
+  gridTemplateRows_gte?: Maybe<String>;
+  gridTemplateRows_contains?: Maybe<String>;
+  gridTemplateRows_not_contains?: Maybe<String>;
+  gridTemplateRows_starts_with?: Maybe<String>;
+  gridTemplateRows_not_starts_with?: Maybe<String>;
+  gridTemplateRows_ends_with?: Maybe<String>;
+  gridTemplateRows_not_ends_with?: Maybe<String>;
+  author?: Maybe<UserWhereInput>;
+  AND?: Maybe<GridWhereInput[] | GridWhereInput>;
+  OR?: Maybe<GridWhereInput[] | GridWhereInput>;
+  NOT?: Maybe<GridWhereInput[] | GridWhereInput>;
 }
 
 export interface UserWhereInput {
-  id?: Maybe<ID_Input>
-  id_not?: Maybe<ID_Input>
-  id_in?: Maybe<ID_Input[] | ID_Input>
-  id_not_in?: Maybe<ID_Input[] | ID_Input>
-  id_lt?: Maybe<ID_Input>
-  id_lte?: Maybe<ID_Input>
-  id_gt?: Maybe<ID_Input>
-  id_gte?: Maybe<ID_Input>
-  id_contains?: Maybe<ID_Input>
-  id_not_contains?: Maybe<ID_Input>
-  id_starts_with?: Maybe<ID_Input>
-  id_not_starts_with?: Maybe<ID_Input>
-  id_ends_with?: Maybe<ID_Input>
-  id_not_ends_with?: Maybe<ID_Input>
-  createdAt?: Maybe<DateTimeInput>
-  createdAt_not?: Maybe<DateTimeInput>
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>
-  createdAt_lt?: Maybe<DateTimeInput>
-  createdAt_lte?: Maybe<DateTimeInput>
-  createdAt_gt?: Maybe<DateTimeInput>
-  createdAt_gte?: Maybe<DateTimeInput>
-  updatedAt?: Maybe<DateTimeInput>
-  updatedAt_not?: Maybe<DateTimeInput>
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>
-  updatedAt_lt?: Maybe<DateTimeInput>
-  updatedAt_lte?: Maybe<DateTimeInput>
-  updatedAt_gt?: Maybe<DateTimeInput>
-  updatedAt_gte?: Maybe<DateTimeInput>
-  email?: Maybe<string>
-  email_not?: Maybe<string>
-  email_in?: Maybe<string[] | string>
-  email_not_in?: Maybe<string[] | string>
-  email_lt?: Maybe<string>
-  email_lte?: Maybe<string>
-  email_gt?: Maybe<string>
-  email_gte?: Maybe<string>
-  email_contains?: Maybe<string>
-  email_not_contains?: Maybe<string>
-  email_starts_with?: Maybe<string>
-  email_not_starts_with?: Maybe<string>
-  email_ends_with?: Maybe<string>
-  email_not_ends_with?: Maybe<string>
-  name?: Maybe<string>
-  name_not?: Maybe<string>
-  name_in?: Maybe<string[] | string>
-  name_not_in?: Maybe<string[] | string>
-  name_lt?: Maybe<string>
-  name_lte?: Maybe<string>
-  name_gt?: Maybe<string>
-  name_gte?: Maybe<string>
-  name_contains?: Maybe<string>
-  name_not_contains?: Maybe<string>
-  name_starts_with?: Maybe<string>
-  name_not_starts_with?: Maybe<string>
-  name_ends_with?: Maybe<string>
-  name_not_ends_with?: Maybe<string>
-  password?: Maybe<string>
-  password_not?: Maybe<string>
-  password_in?: Maybe<string[] | string>
-  password_not_in?: Maybe<string[] | string>
-  password_lt?: Maybe<string>
-  password_lte?: Maybe<string>
-  password_gt?: Maybe<string>
-  password_gte?: Maybe<string>
-  password_contains?: Maybe<string>
-  password_not_contains?: Maybe<string>
-  password_starts_with?: Maybe<string>
-  password_not_starts_with?: Maybe<string>
-  password_ends_with?: Maybe<string>
-  password_not_ends_with?: Maybe<string>
-  firstName?: Maybe<string>
-  firstName_not?: Maybe<string>
-  firstName_in?: Maybe<string[] | string>
-  firstName_not_in?: Maybe<string[] | string>
-  firstName_lt?: Maybe<string>
-  firstName_lte?: Maybe<string>
-  firstName_gt?: Maybe<string>
-  firstName_gte?: Maybe<string>
-  firstName_contains?: Maybe<string>
-  firstName_not_contains?: Maybe<string>
-  firstName_starts_with?: Maybe<string>
-  firstName_not_starts_with?: Maybe<string>
-  firstName_ends_with?: Maybe<string>
-  firstName_not_ends_with?: Maybe<string>
-  lastName?: Maybe<string>
-  lastName_not?: Maybe<string>
-  lastName_in?: Maybe<string[] | string>
-  lastName_not_in?: Maybe<string[] | string>
-  lastName_lt?: Maybe<string>
-  lastName_lte?: Maybe<string>
-  lastName_gt?: Maybe<string>
-  lastName_gte?: Maybe<string>
-  lastName_contains?: Maybe<string>
-  lastName_not_contains?: Maybe<string>
-  lastName_starts_with?: Maybe<string>
-  lastName_not_starts_with?: Maybe<string>
-  lastName_ends_with?: Maybe<string>
-  lastName_not_ends_with?: Maybe<string>
-  username?: Maybe<string>
-  username_not?: Maybe<string>
-  username_in?: Maybe<string[] | string>
-  username_not_in?: Maybe<string[] | string>
-  username_lt?: Maybe<string>
-  username_lte?: Maybe<string>
-  username_gt?: Maybe<string>
-  username_gte?: Maybe<string>
-  username_contains?: Maybe<string>
-  username_not_contains?: Maybe<string>
-  username_starts_with?: Maybe<string>
-  username_not_starts_with?: Maybe<string>
-  username_ends_with?: Maybe<string>
-  username_not_ends_with?: Maybe<string>
-  phoneNumber?: Maybe<Int>
-  phoneNumber_not?: Maybe<Int>
-  phoneNumber_in?: Maybe<Int[] | Int>
-  phoneNumber_not_in?: Maybe<Int[] | Int>
-  phoneNumber_lt?: Maybe<Int>
-  phoneNumber_lte?: Maybe<Int>
-  phoneNumber_gt?: Maybe<Int>
-  phoneNumber_gte?: Maybe<Int>
-  grids_every?: Maybe<GridWhereInput>
-  grids_some?: Maybe<GridWhereInput>
-  grids_none?: Maybe<GridWhereInput>
-  AND?: Maybe<UserWhereInput[] | UserWhereInput>
-  OR?: Maybe<UserWhereInput[] | UserWhereInput>
-  NOT?: Maybe<UserWhereInput[] | UserWhereInput>
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  email?: Maybe<String>;
+  email_not?: Maybe<String>;
+  email_in?: Maybe<String[] | String>;
+  email_not_in?: Maybe<String[] | String>;
+  email_lt?: Maybe<String>;
+  email_lte?: Maybe<String>;
+  email_gt?: Maybe<String>;
+  email_gte?: Maybe<String>;
+  email_contains?: Maybe<String>;
+  email_not_contains?: Maybe<String>;
+  email_starts_with?: Maybe<String>;
+  email_not_starts_with?: Maybe<String>;
+  email_ends_with?: Maybe<String>;
+  email_not_ends_with?: Maybe<String>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  password?: Maybe<String>;
+  password_not?: Maybe<String>;
+  password_in?: Maybe<String[] | String>;
+  password_not_in?: Maybe<String[] | String>;
+  password_lt?: Maybe<String>;
+  password_lte?: Maybe<String>;
+  password_gt?: Maybe<String>;
+  password_gte?: Maybe<String>;
+  password_contains?: Maybe<String>;
+  password_not_contains?: Maybe<String>;
+  password_starts_with?: Maybe<String>;
+  password_not_starts_with?: Maybe<String>;
+  password_ends_with?: Maybe<String>;
+  password_not_ends_with?: Maybe<String>;
+  firstName?: Maybe<String>;
+  firstName_not?: Maybe<String>;
+  firstName_in?: Maybe<String[] | String>;
+  firstName_not_in?: Maybe<String[] | String>;
+  firstName_lt?: Maybe<String>;
+  firstName_lte?: Maybe<String>;
+  firstName_gt?: Maybe<String>;
+  firstName_gte?: Maybe<String>;
+  firstName_contains?: Maybe<String>;
+  firstName_not_contains?: Maybe<String>;
+  firstName_starts_with?: Maybe<String>;
+  firstName_not_starts_with?: Maybe<String>;
+  firstName_ends_with?: Maybe<String>;
+  firstName_not_ends_with?: Maybe<String>;
+  lastName?: Maybe<String>;
+  lastName_not?: Maybe<String>;
+  lastName_in?: Maybe<String[] | String>;
+  lastName_not_in?: Maybe<String[] | String>;
+  lastName_lt?: Maybe<String>;
+  lastName_lte?: Maybe<String>;
+  lastName_gt?: Maybe<String>;
+  lastName_gte?: Maybe<String>;
+  lastName_contains?: Maybe<String>;
+  lastName_not_contains?: Maybe<String>;
+  lastName_starts_with?: Maybe<String>;
+  lastName_not_starts_with?: Maybe<String>;
+  lastName_ends_with?: Maybe<String>;
+  lastName_not_ends_with?: Maybe<String>;
+  username?: Maybe<String>;
+  username_not?: Maybe<String>;
+  username_in?: Maybe<String[] | String>;
+  username_not_in?: Maybe<String[] | String>;
+  username_lt?: Maybe<String>;
+  username_lte?: Maybe<String>;
+  username_gt?: Maybe<String>;
+  username_gte?: Maybe<String>;
+  username_contains?: Maybe<String>;
+  username_not_contains?: Maybe<String>;
+  username_starts_with?: Maybe<String>;
+  username_not_starts_with?: Maybe<String>;
+  username_ends_with?: Maybe<String>;
+  username_not_ends_with?: Maybe<String>;
+  phoneNumber?: Maybe<Int>;
+  phoneNumber_not?: Maybe<Int>;
+  phoneNumber_in?: Maybe<Int[] | Int>;
+  phoneNumber_not_in?: Maybe<Int[] | Int>;
+  phoneNumber_lt?: Maybe<Int>;
+  phoneNumber_lte?: Maybe<Int>;
+  phoneNumber_gt?: Maybe<Int>;
+  phoneNumber_gte?: Maybe<Int>;
+  grids_every?: Maybe<GridWhereInput>;
+  grids_some?: Maybe<GridWhereInput>;
+  grids_none?: Maybe<GridWhereInput>;
+  AND?: Maybe<UserWhereInput[] | UserWhereInput>;
+  OR?: Maybe<UserWhereInput[] | UserWhereInput>;
+  NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
 }
 
 export type UserWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>
-  email?: Maybe<string>
-}>
+  id: Maybe<ID_Input>;
+  email?: Maybe<String>;
+}>;
 
 export interface GridCreateInput {
-  id?: Maybe<ID_Input>
-  published?: Maybe<boolean>
-  name?: Maybe<string>
-  rows?: Maybe<Int>
-  columns?: Maybe<Int>
-  gridTemplateColumns?: Maybe<string>
-  gridTemplateRows?: Maybe<string>
-  author: UserCreateOneWithoutGridsInput
+  id?: Maybe<ID_Input>;
+  published?: Maybe<Boolean>;
+  name?: Maybe<String>;
+  rows?: Maybe<Int>;
+  columns?: Maybe<Int>;
+  gridTemplateColumns?: Maybe<String>;
+  gridTemplateRows?: Maybe<String>;
+  author: UserCreateOneWithoutGridsInput;
 }
 
 export interface UserCreateOneWithoutGridsInput {
-  create?: Maybe<UserCreateWithoutGridsInput>
-  connect?: Maybe<UserWhereUniqueInput>
+  create?: Maybe<UserCreateWithoutGridsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
 }
 
 export interface UserCreateWithoutGridsInput {
-  id?: Maybe<ID_Input>
-  email: string
-  name?: Maybe<string>
-  password: string
-  firstName?: Maybe<string>
-  lastName?: Maybe<string>
-  username?: Maybe<string>
-  phoneNumber?: Maybe<Int>
+  id?: Maybe<ID_Input>;
+  email: String;
+  name?: Maybe<String>;
+  password: String;
+  firstName?: Maybe<String>;
+  lastName?: Maybe<String>;
+  username?: Maybe<String>;
+  phoneNumber?: Maybe<Int>;
 }
 
 export interface GridUpdateInput {
-  published?: Maybe<boolean>
-  name?: Maybe<string>
-  rows?: Maybe<Int>
-  columns?: Maybe<Int>
-  gridTemplateColumns?: Maybe<string>
-  gridTemplateRows?: Maybe<string>
-  author?: Maybe<UserUpdateOneRequiredWithoutGridsInput>
+  published?: Maybe<Boolean>;
+  name?: Maybe<String>;
+  rows?: Maybe<Int>;
+  columns?: Maybe<Int>;
+  gridTemplateColumns?: Maybe<String>;
+  gridTemplateRows?: Maybe<String>;
+  author?: Maybe<UserUpdateOneRequiredWithoutGridsInput>;
 }
 
 export interface UserUpdateOneRequiredWithoutGridsInput {
-  create?: Maybe<UserCreateWithoutGridsInput>
-  update?: Maybe<UserUpdateWithoutGridsDataInput>
-  upsert?: Maybe<UserUpsertWithoutGridsInput>
-  connect?: Maybe<UserWhereUniqueInput>
+  create?: Maybe<UserCreateWithoutGridsInput>;
+  update?: Maybe<UserUpdateWithoutGridsDataInput>;
+  upsert?: Maybe<UserUpsertWithoutGridsInput>;
+  connect?: Maybe<UserWhereUniqueInput>;
 }
 
 export interface UserUpdateWithoutGridsDataInput {
-  email?: Maybe<string>
-  name?: Maybe<string>
-  password?: Maybe<string>
-  firstName?: Maybe<string>
-  lastName?: Maybe<string>
-  username?: Maybe<string>
-  phoneNumber?: Maybe<Int>
+  email?: Maybe<String>;
+  name?: Maybe<String>;
+  password?: Maybe<String>;
+  firstName?: Maybe<String>;
+  lastName?: Maybe<String>;
+  username?: Maybe<String>;
+  phoneNumber?: Maybe<Int>;
 }
 
 export interface UserUpsertWithoutGridsInput {
-  update: UserUpdateWithoutGridsDataInput
-  create: UserCreateWithoutGridsInput
+  update: UserUpdateWithoutGridsDataInput;
+  create: UserCreateWithoutGridsInput;
 }
 
 export interface GridUpdateManyMutationInput {
-  published?: Maybe<boolean>
-  name?: Maybe<string>
-  rows?: Maybe<Int>
-  columns?: Maybe<Int>
-  gridTemplateColumns?: Maybe<string>
-  gridTemplateRows?: Maybe<string>
+  published?: Maybe<Boolean>;
+  name?: Maybe<String>;
+  rows?: Maybe<Int>;
+  columns?: Maybe<Int>;
+  gridTemplateColumns?: Maybe<String>;
+  gridTemplateRows?: Maybe<String>;
 }
 
 export interface UserCreateInput {
-  id?: Maybe<ID_Input>
-  email: string
-  name?: Maybe<string>
-  password: string
-  firstName?: Maybe<string>
-  lastName?: Maybe<string>
-  username?: Maybe<string>
-  phoneNumber?: Maybe<Int>
-  grids?: Maybe<GridCreateManyWithoutAuthorInput>
+  id?: Maybe<ID_Input>;
+  email: String;
+  name?: Maybe<String>;
+  password: String;
+  firstName?: Maybe<String>;
+  lastName?: Maybe<String>;
+  username?: Maybe<String>;
+  phoneNumber?: Maybe<Int>;
+  grids?: Maybe<GridCreateManyWithoutAuthorInput>;
 }
 
 export interface GridCreateManyWithoutAuthorInput {
-  create?: Maybe<GridCreateWithoutAuthorInput[] | GridCreateWithoutAuthorInput>
-  connect?: Maybe<GridWhereUniqueInput[] | GridWhereUniqueInput>
+  create?: Maybe<GridCreateWithoutAuthorInput[] | GridCreateWithoutAuthorInput>;
+  connect?: Maybe<GridWhereUniqueInput[] | GridWhereUniqueInput>;
 }
 
 export interface GridCreateWithoutAuthorInput {
-  id?: Maybe<ID_Input>
-  published?: Maybe<boolean>
-  name?: Maybe<string>
-  rows?: Maybe<Int>
-  columns?: Maybe<Int>
-  gridTemplateColumns?: Maybe<string>
-  gridTemplateRows?: Maybe<string>
+  id?: Maybe<ID_Input>;
+  published?: Maybe<Boolean>;
+  name?: Maybe<String>;
+  rows?: Maybe<Int>;
+  columns?: Maybe<Int>;
+  gridTemplateColumns?: Maybe<String>;
+  gridTemplateRows?: Maybe<String>;
 }
 
 export interface UserUpdateInput {
-  email?: Maybe<string>
-  name?: Maybe<string>
-  password?: Maybe<string>
-  firstName?: Maybe<string>
-  lastName?: Maybe<string>
-  username?: Maybe<string>
-  phoneNumber?: Maybe<Int>
-  grids?: Maybe<GridUpdateManyWithoutAuthorInput>
+  email?: Maybe<String>;
+  name?: Maybe<String>;
+  password?: Maybe<String>;
+  firstName?: Maybe<String>;
+  lastName?: Maybe<String>;
+  username?: Maybe<String>;
+  phoneNumber?: Maybe<Int>;
+  grids?: Maybe<GridUpdateManyWithoutAuthorInput>;
 }
 
 export interface GridUpdateManyWithoutAuthorInput {
-  create?: Maybe<GridCreateWithoutAuthorInput[] | GridCreateWithoutAuthorInput>
-  delete?: Maybe<GridWhereUniqueInput[] | GridWhereUniqueInput>
-  connect?: Maybe<GridWhereUniqueInput[] | GridWhereUniqueInput>
-  set?: Maybe<GridWhereUniqueInput[] | GridWhereUniqueInput>
-  disconnect?: Maybe<GridWhereUniqueInput[] | GridWhereUniqueInput>
+  create?: Maybe<GridCreateWithoutAuthorInput[] | GridCreateWithoutAuthorInput>;
+  delete?: Maybe<GridWhereUniqueInput[] | GridWhereUniqueInput>;
+  connect?: Maybe<GridWhereUniqueInput[] | GridWhereUniqueInput>;
+  set?: Maybe<GridWhereUniqueInput[] | GridWhereUniqueInput>;
+  disconnect?: Maybe<GridWhereUniqueInput[] | GridWhereUniqueInput>;
   update?: Maybe<
     | GridUpdateWithWhereUniqueWithoutAuthorInput[]
     | GridUpdateWithWhereUniqueWithoutAuthorInput
-  >
+  >;
   upsert?: Maybe<
     | GridUpsertWithWhereUniqueWithoutAuthorInput[]
     | GridUpsertWithWhereUniqueWithoutAuthorInput
-  >
-  deleteMany?: Maybe<GridScalarWhereInput[] | GridScalarWhereInput>
+  >;
+  deleteMany?: Maybe<GridScalarWhereInput[] | GridScalarWhereInput>;
   updateMany?: Maybe<
     GridUpdateManyWithWhereNestedInput[] | GridUpdateManyWithWhereNestedInput
-  >
+  >;
 }
 
 export interface GridUpdateWithWhereUniqueWithoutAuthorInput {
-  where: GridWhereUniqueInput
-  data: GridUpdateWithoutAuthorDataInput
+  where: GridWhereUniqueInput;
+  data: GridUpdateWithoutAuthorDataInput;
 }
 
 export interface GridUpdateWithoutAuthorDataInput {
-  published?: Maybe<boolean>
-  name?: Maybe<string>
-  rows?: Maybe<Int>
-  columns?: Maybe<Int>
-  gridTemplateColumns?: Maybe<string>
-  gridTemplateRows?: Maybe<string>
+  published?: Maybe<Boolean>;
+  name?: Maybe<String>;
+  rows?: Maybe<Int>;
+  columns?: Maybe<Int>;
+  gridTemplateColumns?: Maybe<String>;
+  gridTemplateRows?: Maybe<String>;
 }
 
 export interface GridUpsertWithWhereUniqueWithoutAuthorInput {
-  where: GridWhereUniqueInput
-  update: GridUpdateWithoutAuthorDataInput
-  create: GridCreateWithoutAuthorInput
+  where: GridWhereUniqueInput;
+  update: GridUpdateWithoutAuthorDataInput;
+  create: GridCreateWithoutAuthorInput;
 }
 
 export interface GridScalarWhereInput {
-  id?: Maybe<ID_Input>
-  id_not?: Maybe<ID_Input>
-  id_in?: Maybe<ID_Input[] | ID_Input>
-  id_not_in?: Maybe<ID_Input[] | ID_Input>
-  id_lt?: Maybe<ID_Input>
-  id_lte?: Maybe<ID_Input>
-  id_gt?: Maybe<ID_Input>
-  id_gte?: Maybe<ID_Input>
-  id_contains?: Maybe<ID_Input>
-  id_not_contains?: Maybe<ID_Input>
-  id_starts_with?: Maybe<ID_Input>
-  id_not_starts_with?: Maybe<ID_Input>
-  id_ends_with?: Maybe<ID_Input>
-  id_not_ends_with?: Maybe<ID_Input>
-  createdAt?: Maybe<DateTimeInput>
-  createdAt_not?: Maybe<DateTimeInput>
-  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>
-  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>
-  createdAt_lt?: Maybe<DateTimeInput>
-  createdAt_lte?: Maybe<DateTimeInput>
-  createdAt_gt?: Maybe<DateTimeInput>
-  createdAt_gte?: Maybe<DateTimeInput>
-  updatedAt?: Maybe<DateTimeInput>
-  updatedAt_not?: Maybe<DateTimeInput>
-  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>
-  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>
-  updatedAt_lt?: Maybe<DateTimeInput>
-  updatedAt_lte?: Maybe<DateTimeInput>
-  updatedAt_gt?: Maybe<DateTimeInput>
-  updatedAt_gte?: Maybe<DateTimeInput>
-  published?: Maybe<boolean>
-  published_not?: Maybe<boolean>
-  name?: Maybe<string>
-  name_not?: Maybe<string>
-  name_in?: Maybe<string[] | string>
-  name_not_in?: Maybe<string[] | string>
-  name_lt?: Maybe<string>
-  name_lte?: Maybe<string>
-  name_gt?: Maybe<string>
-  name_gte?: Maybe<string>
-  name_contains?: Maybe<string>
-  name_not_contains?: Maybe<string>
-  name_starts_with?: Maybe<string>
-  name_not_starts_with?: Maybe<string>
-  name_ends_with?: Maybe<string>
-  name_not_ends_with?: Maybe<string>
-  rows?: Maybe<Int>
-  rows_not?: Maybe<Int>
-  rows_in?: Maybe<Int[] | Int>
-  rows_not_in?: Maybe<Int[] | Int>
-  rows_lt?: Maybe<Int>
-  rows_lte?: Maybe<Int>
-  rows_gt?: Maybe<Int>
-  rows_gte?: Maybe<Int>
-  columns?: Maybe<Int>
-  columns_not?: Maybe<Int>
-  columns_in?: Maybe<Int[] | Int>
-  columns_not_in?: Maybe<Int[] | Int>
-  columns_lt?: Maybe<Int>
-  columns_lte?: Maybe<Int>
-  columns_gt?: Maybe<Int>
-  columns_gte?: Maybe<Int>
-  gridTemplateColumns?: Maybe<string>
-  gridTemplateColumns_not?: Maybe<string>
-  gridTemplateColumns_in?: Maybe<string[] | string>
-  gridTemplateColumns_not_in?: Maybe<string[] | string>
-  gridTemplateColumns_lt?: Maybe<string>
-  gridTemplateColumns_lte?: Maybe<string>
-  gridTemplateColumns_gt?: Maybe<string>
-  gridTemplateColumns_gte?: Maybe<string>
-  gridTemplateColumns_contains?: Maybe<string>
-  gridTemplateColumns_not_contains?: Maybe<string>
-  gridTemplateColumns_starts_with?: Maybe<string>
-  gridTemplateColumns_not_starts_with?: Maybe<string>
-  gridTemplateColumns_ends_with?: Maybe<string>
-  gridTemplateColumns_not_ends_with?: Maybe<string>
-  gridTemplateRows?: Maybe<string>
-  gridTemplateRows_not?: Maybe<string>
-  gridTemplateRows_in?: Maybe<string[] | string>
-  gridTemplateRows_not_in?: Maybe<string[] | string>
-  gridTemplateRows_lt?: Maybe<string>
-  gridTemplateRows_lte?: Maybe<string>
-  gridTemplateRows_gt?: Maybe<string>
-  gridTemplateRows_gte?: Maybe<string>
-  gridTemplateRows_contains?: Maybe<string>
-  gridTemplateRows_not_contains?: Maybe<string>
-  gridTemplateRows_starts_with?: Maybe<string>
-  gridTemplateRows_not_starts_with?: Maybe<string>
-  gridTemplateRows_ends_with?: Maybe<string>
-  gridTemplateRows_not_ends_with?: Maybe<string>
-  AND?: Maybe<GridScalarWhereInput[] | GridScalarWhereInput>
-  OR?: Maybe<GridScalarWhereInput[] | GridScalarWhereInput>
-  NOT?: Maybe<GridScalarWhereInput[] | GridScalarWhereInput>
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  createdAt?: Maybe<DateTimeInput>;
+  createdAt_not?: Maybe<DateTimeInput>;
+  createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  createdAt_lt?: Maybe<DateTimeInput>;
+  createdAt_lte?: Maybe<DateTimeInput>;
+  createdAt_gt?: Maybe<DateTimeInput>;
+  createdAt_gte?: Maybe<DateTimeInput>;
+  updatedAt?: Maybe<DateTimeInput>;
+  updatedAt_not?: Maybe<DateTimeInput>;
+  updatedAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_not_in?: Maybe<DateTimeInput[] | DateTimeInput>;
+  updatedAt_lt?: Maybe<DateTimeInput>;
+  updatedAt_lte?: Maybe<DateTimeInput>;
+  updatedAt_gt?: Maybe<DateTimeInput>;
+  updatedAt_gte?: Maybe<DateTimeInput>;
+  published?: Maybe<Boolean>;
+  published_not?: Maybe<Boolean>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  rows?: Maybe<Int>;
+  rows_not?: Maybe<Int>;
+  rows_in?: Maybe<Int[] | Int>;
+  rows_not_in?: Maybe<Int[] | Int>;
+  rows_lt?: Maybe<Int>;
+  rows_lte?: Maybe<Int>;
+  rows_gt?: Maybe<Int>;
+  rows_gte?: Maybe<Int>;
+  columns?: Maybe<Int>;
+  columns_not?: Maybe<Int>;
+  columns_in?: Maybe<Int[] | Int>;
+  columns_not_in?: Maybe<Int[] | Int>;
+  columns_lt?: Maybe<Int>;
+  columns_lte?: Maybe<Int>;
+  columns_gt?: Maybe<Int>;
+  columns_gte?: Maybe<Int>;
+  gridTemplateColumns?: Maybe<String>;
+  gridTemplateColumns_not?: Maybe<String>;
+  gridTemplateColumns_in?: Maybe<String[] | String>;
+  gridTemplateColumns_not_in?: Maybe<String[] | String>;
+  gridTemplateColumns_lt?: Maybe<String>;
+  gridTemplateColumns_lte?: Maybe<String>;
+  gridTemplateColumns_gt?: Maybe<String>;
+  gridTemplateColumns_gte?: Maybe<String>;
+  gridTemplateColumns_contains?: Maybe<String>;
+  gridTemplateColumns_not_contains?: Maybe<String>;
+  gridTemplateColumns_starts_with?: Maybe<String>;
+  gridTemplateColumns_not_starts_with?: Maybe<String>;
+  gridTemplateColumns_ends_with?: Maybe<String>;
+  gridTemplateColumns_not_ends_with?: Maybe<String>;
+  gridTemplateRows?: Maybe<String>;
+  gridTemplateRows_not?: Maybe<String>;
+  gridTemplateRows_in?: Maybe<String[] | String>;
+  gridTemplateRows_not_in?: Maybe<String[] | String>;
+  gridTemplateRows_lt?: Maybe<String>;
+  gridTemplateRows_lte?: Maybe<String>;
+  gridTemplateRows_gt?: Maybe<String>;
+  gridTemplateRows_gte?: Maybe<String>;
+  gridTemplateRows_contains?: Maybe<String>;
+  gridTemplateRows_not_contains?: Maybe<String>;
+  gridTemplateRows_starts_with?: Maybe<String>;
+  gridTemplateRows_not_starts_with?: Maybe<String>;
+  gridTemplateRows_ends_with?: Maybe<String>;
+  gridTemplateRows_not_ends_with?: Maybe<String>;
+  AND?: Maybe<GridScalarWhereInput[] | GridScalarWhereInput>;
+  OR?: Maybe<GridScalarWhereInput[] | GridScalarWhereInput>;
+  NOT?: Maybe<GridScalarWhereInput[] | GridScalarWhereInput>;
 }
 
 export interface GridUpdateManyWithWhereNestedInput {
-  where: GridScalarWhereInput
-  data: GridUpdateManyDataInput
+  where: GridScalarWhereInput;
+  data: GridUpdateManyDataInput;
 }
 
 export interface GridUpdateManyDataInput {
-  published?: Maybe<boolean>
-  name?: Maybe<string>
-  rows?: Maybe<Int>
-  columns?: Maybe<Int>
-  gridTemplateColumns?: Maybe<string>
-  gridTemplateRows?: Maybe<string>
+  published?: Maybe<Boolean>;
+  name?: Maybe<String>;
+  rows?: Maybe<Int>;
+  columns?: Maybe<Int>;
+  gridTemplateColumns?: Maybe<String>;
+  gridTemplateRows?: Maybe<String>;
 }
 
 export interface UserUpdateManyMutationInput {
-  email?: Maybe<string>
-  name?: Maybe<string>
-  password?: Maybe<string>
-  firstName?: Maybe<string>
-  lastName?: Maybe<string>
-  username?: Maybe<string>
-  phoneNumber?: Maybe<Int>
+  email?: Maybe<String>;
+  name?: Maybe<String>;
+  password?: Maybe<String>;
+  firstName?: Maybe<String>;
+  lastName?: Maybe<String>;
+  username?: Maybe<String>;
+  phoneNumber?: Maybe<Int>;
 }
 
 export interface GridSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>
-  updatedFields_contains?: Maybe<string>
-  updatedFields_contains_every?: Maybe<string[] | string>
-  updatedFields_contains_some?: Maybe<string[] | string>
-  node?: Maybe<GridWhereInput>
-  AND?: Maybe<GridSubscriptionWhereInput[] | GridSubscriptionWhereInput>
-  OR?: Maybe<GridSubscriptionWhereInput[] | GridSubscriptionWhereInput>
-  NOT?: Maybe<GridSubscriptionWhereInput[] | GridSubscriptionWhereInput>
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<GridWhereInput>;
+  AND?: Maybe<GridSubscriptionWhereInput[] | GridSubscriptionWhereInput>;
+  OR?: Maybe<GridSubscriptionWhereInput[] | GridSubscriptionWhereInput>;
+  NOT?: Maybe<GridSubscriptionWhereInput[] | GridSubscriptionWhereInput>;
 }
 
 export interface UserSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>
-  updatedFields_contains?: Maybe<string>
-  updatedFields_contains_every?: Maybe<string[] | string>
-  updatedFields_contains_some?: Maybe<string[] | string>
-  node?: Maybe<UserWhereInput>
-  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>
-  OR?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>
-  NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<UserWhereInput>;
+  AND?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+  OR?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
+  NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
 }
 
 export interface NodeNode {
-  id: ID_Output
+  id: ID_Output;
 }
 
 export interface Grid {
-  id: ID_Output
-  createdAt: DateTimeOutput
-  updatedAt: DateTimeOutput
-  published: boolean
-  name?: string
-  rows?: Int
-  columns?: Int
-  gridTemplateColumns?: string
-  gridTemplateRows?: string
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  published: Boolean;
+  name?: String;
+  rows?: Int;
+  columns?: Int;
+  gridTemplateColumns?: String;
+  gridTemplateRows?: String;
 }
 
 export interface GridPromise extends Promise<Grid>, Fragmentable {
-  id: () => Promise<ID_Output>
-  createdAt: () => Promise<DateTimeOutput>
-  updatedAt: () => Promise<DateTimeOutput>
-  published: () => Promise<boolean>
-  name: () => Promise<string>
-  rows: () => Promise<Int>
-  columns: () => Promise<Int>
-  gridTemplateColumns: () => Promise<string>
-  gridTemplateRows: () => Promise<string>
-  author: <T = UserPromise>() => T
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  published: () => Promise<Boolean>;
+  name: () => Promise<String>;
+  rows: () => Promise<Int>;
+  columns: () => Promise<Int>;
+  gridTemplateColumns: () => Promise<String>;
+  gridTemplateRows: () => Promise<String>;
+  author: <T = UserPromise>() => T;
 }
 
 export interface GridSubscription
   extends Promise<AsyncIterator<Grid>>,
     Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>
-  published: () => Promise<AsyncIterator<boolean>>
-  name: () => Promise<AsyncIterator<string>>
-  rows: () => Promise<AsyncIterator<Int>>
-  columns: () => Promise<AsyncIterator<Int>>
-  gridTemplateColumns: () => Promise<AsyncIterator<string>>
-  gridTemplateRows: () => Promise<AsyncIterator<string>>
-  author: <T = UserSubscription>() => T
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  published: () => Promise<AsyncIterator<Boolean>>;
+  name: () => Promise<AsyncIterator<String>>;
+  rows: () => Promise<AsyncIterator<Int>>;
+  columns: () => Promise<AsyncIterator<Int>>;
+  gridTemplateColumns: () => Promise<AsyncIterator<String>>;
+  gridTemplateRows: () => Promise<AsyncIterator<String>>;
+  author: <T = UserSubscription>() => T;
 }
 
 export interface GridNullablePromise
   extends Promise<Grid | null>,
     Fragmentable {
-  id: () => Promise<ID_Output>
-  createdAt: () => Promise<DateTimeOutput>
-  updatedAt: () => Promise<DateTimeOutput>
-  published: () => Promise<boolean>
-  name: () => Promise<string>
-  rows: () => Promise<Int>
-  columns: () => Promise<Int>
-  gridTemplateColumns: () => Promise<string>
-  gridTemplateRows: () => Promise<string>
-  author: <T = UserPromise>() => T
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  published: () => Promise<Boolean>;
+  name: () => Promise<String>;
+  rows: () => Promise<Int>;
+  columns: () => Promise<Int>;
+  gridTemplateColumns: () => Promise<String>;
+  gridTemplateRows: () => Promise<String>;
+  author: <T = UserPromise>() => T;
 }
 
 export interface User {
-  id: ID_Output
-  createdAt: DateTimeOutput
-  updatedAt: DateTimeOutput
-  email: string
-  name?: string
-  password: string
-  firstName?: string
-  lastName?: string
-  username?: string
-  phoneNumber?: Int
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  email: String;
+  name?: String;
+  password: String;
+  firstName?: String;
+  lastName?: String;
+  username?: String;
+  phoneNumber?: Int;
 }
 
 export interface UserPromise extends Promise<User>, Fragmentable {
-  id: () => Promise<ID_Output>
-  createdAt: () => Promise<DateTimeOutput>
-  updatedAt: () => Promise<DateTimeOutput>
-  email: () => Promise<string>
-  name: () => Promise<string>
-  password: () => Promise<string>
-  firstName: () => Promise<string>
-  lastName: () => Promise<string>
-  username: () => Promise<string>
-  phoneNumber: () => Promise<Int>
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  email: () => Promise<String>;
+  name: () => Promise<String>;
+  password: () => Promise<String>;
+  firstName: () => Promise<String>;
+  lastName: () => Promise<String>;
+  username: () => Promise<String>;
+  phoneNumber: () => Promise<Int>;
   grids: <T = FragmentableArray<Grid>>(args?: {
-    where?: GridWhereInput
-    orderBy?: GridOrderByInput
-    skip?: Int
-    after?: string
-    before?: string
-    first?: Int
-    last?: Int
-  }) => T
+    where?: GridWhereInput;
+    orderBy?: GridOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface UserSubscription
   extends Promise<AsyncIterator<User>>,
     Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>
-  email: () => Promise<AsyncIterator<string>>
-  name: () => Promise<AsyncIterator<string>>
-  password: () => Promise<AsyncIterator<string>>
-  firstName: () => Promise<AsyncIterator<string>>
-  lastName: () => Promise<AsyncIterator<string>>
-  username: () => Promise<AsyncIterator<string>>
-  phoneNumber: () => Promise<AsyncIterator<Int>>
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  email: () => Promise<AsyncIterator<String>>;
+  name: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
+  firstName: () => Promise<AsyncIterator<String>>;
+  lastName: () => Promise<AsyncIterator<String>>;
+  username: () => Promise<AsyncIterator<String>>;
+  phoneNumber: () => Promise<AsyncIterator<Int>>;
   grids: <T = Promise<AsyncIterator<GridSubscription>>>(args?: {
-    where?: GridWhereInput
-    orderBy?: GridOrderByInput
-    skip?: Int
-    after?: string
-    before?: string
-    first?: Int
-    last?: Int
-  }) => T
+    where?: GridWhereInput;
+    orderBy?: GridOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface UserNullablePromise
   extends Promise<User | null>,
     Fragmentable {
-  id: () => Promise<ID_Output>
-  createdAt: () => Promise<DateTimeOutput>
-  updatedAt: () => Promise<DateTimeOutput>
-  email: () => Promise<string>
-  name: () => Promise<string>
-  password: () => Promise<string>
-  firstName: () => Promise<string>
-  lastName: () => Promise<string>
-  username: () => Promise<string>
-  phoneNumber: () => Promise<Int>
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  email: () => Promise<String>;
+  name: () => Promise<String>;
+  password: () => Promise<String>;
+  firstName: () => Promise<String>;
+  lastName: () => Promise<String>;
+  username: () => Promise<String>;
+  phoneNumber: () => Promise<Int>;
   grids: <T = FragmentableArray<Grid>>(args?: {
-    where?: GridWhereInput
-    orderBy?: GridOrderByInput
-    skip?: Int
-    after?: string
-    before?: string
-    first?: Int
-    last?: Int
-  }) => T
+    where?: GridWhereInput;
+    orderBy?: GridOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => T;
 }
 
 export interface GridConnection {
-  pageInfo: PageInfo
-  edges: GridEdge[]
+  pageInfo: PageInfo;
+  edges: GridEdge[];
 }
 
 export interface GridConnectionPromise
   extends Promise<GridConnection>,
     Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T
-  edges: <T = FragmentableArray<GridEdge>>() => T
-  aggregate: <T = AggregateGridPromise>() => T
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<GridEdge>>() => T;
+  aggregate: <T = AggregateGridPromise>() => T;
 }
 
 export interface GridConnectionSubscription
   extends Promise<AsyncIterator<GridConnection>>,
     Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T
-  edges: <T = Promise<AsyncIterator<GridEdgeSubscription>>>() => T
-  aggregate: <T = AggregateGridSubscription>() => T
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<GridEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateGridSubscription>() => T;
 }
 
 export interface PageInfo {
-  hasNextPage: boolean
-  hasPreviousPage: boolean
-  startCursor?: string
-  endCursor?: string
+  hasNextPage: Boolean;
+  hasPreviousPage: Boolean;
+  startCursor?: String;
+  endCursor?: String;
 }
 
 export interface PageInfoPromise extends Promise<PageInfo>, Fragmentable {
-  hasNextPage: () => Promise<boolean>
-  hasPreviousPage: () => Promise<boolean>
-  startCursor: () => Promise<string>
-  endCursor: () => Promise<string>
+  hasNextPage: () => Promise<Boolean>;
+  hasPreviousPage: () => Promise<Boolean>;
+  startCursor: () => Promise<String>;
+  endCursor: () => Promise<String>;
 }
 
 export interface PageInfoSubscription
   extends Promise<AsyncIterator<PageInfo>>,
     Fragmentable {
-  hasNextPage: () => Promise<AsyncIterator<boolean>>
-  hasPreviousPage: () => Promise<AsyncIterator<boolean>>
-  startCursor: () => Promise<AsyncIterator<string>>
-  endCursor: () => Promise<AsyncIterator<string>>
+  hasNextPage: () => Promise<AsyncIterator<Boolean>>;
+  hasPreviousPage: () => Promise<AsyncIterator<Boolean>>;
+  startCursor: () => Promise<AsyncIterator<String>>;
+  endCursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface GridEdge {
-  node: Grid
-  cursor: string
+  node: Grid;
+  cursor: String;
 }
 
 export interface GridEdgePromise extends Promise<GridEdge>, Fragmentable {
-  node: <T = GridPromise>() => T
-  cursor: () => Promise<string>
+  node: <T = GridPromise>() => T;
+  cursor: () => Promise<String>;
 }
 
 export interface GridEdgeSubscription
   extends Promise<AsyncIterator<GridEdge>>,
     Fragmentable {
-  node: <T = GridSubscription>() => T
-  cursor: () => Promise<AsyncIterator<string>>
+  node: <T = GridSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface AggregateGrid {
-  count: Int
+  count: Int;
 }
 
 export interface AggregateGridPromise
   extends Promise<AggregateGrid>,
     Fragmentable {
-  count: () => Promise<Int>
+  count: () => Promise<Int>;
 }
 
 export interface AggregateGridSubscription
   extends Promise<AsyncIterator<AggregateGrid>>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface UserConnection {
-  pageInfo: PageInfo
-  edges: UserEdge[]
+  pageInfo: PageInfo;
+  edges: UserEdge[];
 }
 
 export interface UserConnectionPromise
   extends Promise<UserConnection>,
     Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T
-  edges: <T = FragmentableArray<UserEdge>>() => T
-  aggregate: <T = AggregateUserPromise>() => T
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<UserEdge>>() => T;
+  aggregate: <T = AggregateUserPromise>() => T;
 }
 
 export interface UserConnectionSubscription
   extends Promise<AsyncIterator<UserConnection>>,
     Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T
-  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T
-  aggregate: <T = AggregateUserSubscription>() => T
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<UserEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateUserSubscription>() => T;
 }
 
 export interface UserEdge {
-  node: User
-  cursor: string
+  node: User;
+  cursor: String;
 }
 
 export interface UserEdgePromise extends Promise<UserEdge>, Fragmentable {
-  node: <T = UserPromise>() => T
-  cursor: () => Promise<string>
+  node: <T = UserPromise>() => T;
+  cursor: () => Promise<String>;
 }
 
 export interface UserEdgeSubscription
   extends Promise<AsyncIterator<UserEdge>>,
     Fragmentable {
-  node: <T = UserSubscription>() => T
-  cursor: () => Promise<AsyncIterator<string>>
+  node: <T = UserSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
 }
 
 export interface AggregateUser {
-  count: Int
+  count: Int;
 }
 
 export interface AggregateUserPromise
   extends Promise<AggregateUser>,
     Fragmentable {
-  count: () => Promise<Int>
+  count: () => Promise<Int>;
 }
 
 export interface AggregateUserSubscription
   extends Promise<AsyncIterator<AggregateUser>>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>
+  count: () => Promise<AsyncIterator<Int>>;
 }
 
 export interface BatchPayload {
-  count: Long
+  count: Long;
 }
 
 export interface BatchPayloadPromise
   extends Promise<BatchPayload>,
     Fragmentable {
-  count: () => Promise<Long>
+  count: () => Promise<Long>;
 }
 
 export interface BatchPayloadSubscription
   extends Promise<AsyncIterator<BatchPayload>>,
     Fragmentable {
-  count: () => Promise<AsyncIterator<Long>>
+  count: () => Promise<AsyncIterator<Long>>;
 }
 
 export interface GridSubscriptionPayload {
-  mutation: MutationType
-  node: Grid
-  updatedFields: string[]
-  previousValues: GridPreviousValues
+  mutation: MutationType;
+  node: Grid;
+  updatedFields: String[];
+  previousValues: GridPreviousValues;
 }
 
 export interface GridSubscriptionPayloadPromise
   extends Promise<GridSubscriptionPayload>,
     Fragmentable {
-  mutation: () => Promise<MutationType>
-  node: <T = GridPromise>() => T
-  updatedFields: () => Promise<string[]>
-  previousValues: <T = GridPreviousValuesPromise>() => T
+  mutation: () => Promise<MutationType>;
+  node: <T = GridPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = GridPreviousValuesPromise>() => T;
 }
 
 export interface GridSubscriptionPayloadSubscription
   extends Promise<AsyncIterator<GridSubscriptionPayload>>,
     Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>
-  node: <T = GridSubscription>() => T
-  updatedFields: () => Promise<AsyncIterator<string[]>>
-  previousValues: <T = GridPreviousValuesSubscription>() => T
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = GridSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = GridPreviousValuesSubscription>() => T;
 }
 
 export interface GridPreviousValues {
-  id: ID_Output
-  createdAt: DateTimeOutput
-  updatedAt: DateTimeOutput
-  published: boolean
-  name?: string
-  rows?: Int
-  columns?: Int
-  gridTemplateColumns?: string
-  gridTemplateRows?: string
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  published: Boolean;
+  name?: String;
+  rows?: Int;
+  columns?: Int;
+  gridTemplateColumns?: String;
+  gridTemplateRows?: String;
 }
 
 export interface GridPreviousValuesPromise
   extends Promise<GridPreviousValues>,
     Fragmentable {
-  id: () => Promise<ID_Output>
-  createdAt: () => Promise<DateTimeOutput>
-  updatedAt: () => Promise<DateTimeOutput>
-  published: () => Promise<boolean>
-  name: () => Promise<string>
-  rows: () => Promise<Int>
-  columns: () => Promise<Int>
-  gridTemplateColumns: () => Promise<string>
-  gridTemplateRows: () => Promise<string>
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  published: () => Promise<Boolean>;
+  name: () => Promise<String>;
+  rows: () => Promise<Int>;
+  columns: () => Promise<Int>;
+  gridTemplateColumns: () => Promise<String>;
+  gridTemplateRows: () => Promise<String>;
 }
 
 export interface GridPreviousValuesSubscription
   extends Promise<AsyncIterator<GridPreviousValues>>,
     Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>
-  published: () => Promise<AsyncIterator<boolean>>
-  name: () => Promise<AsyncIterator<string>>
-  rows: () => Promise<AsyncIterator<Int>>
-  columns: () => Promise<AsyncIterator<Int>>
-  gridTemplateColumns: () => Promise<AsyncIterator<string>>
-  gridTemplateRows: () => Promise<AsyncIterator<string>>
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  published: () => Promise<AsyncIterator<Boolean>>;
+  name: () => Promise<AsyncIterator<String>>;
+  rows: () => Promise<AsyncIterator<Int>>;
+  columns: () => Promise<AsyncIterator<Int>>;
+  gridTemplateColumns: () => Promise<AsyncIterator<String>>;
+  gridTemplateRows: () => Promise<AsyncIterator<String>>;
 }
 
 export interface UserSubscriptionPayload {
-  mutation: MutationType
-  node: User
-  updatedFields: string[]
-  previousValues: UserPreviousValues
+  mutation: MutationType;
+  node: User;
+  updatedFields: String[];
+  previousValues: UserPreviousValues;
 }
 
 export interface UserSubscriptionPayloadPromise
   extends Promise<UserSubscriptionPayload>,
     Fragmentable {
-  mutation: () => Promise<MutationType>
-  node: <T = UserPromise>() => T
-  updatedFields: () => Promise<string[]>
-  previousValues: <T = UserPreviousValuesPromise>() => T
+  mutation: () => Promise<MutationType>;
+  node: <T = UserPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = UserPreviousValuesPromise>() => T;
 }
 
 export interface UserSubscriptionPayloadSubscription
   extends Promise<AsyncIterator<UserSubscriptionPayload>>,
     Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>
-  node: <T = UserSubscription>() => T
-  updatedFields: () => Promise<AsyncIterator<string[]>>
-  previousValues: <T = UserPreviousValuesSubscription>() => T
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = UserSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = UserPreviousValuesSubscription>() => T;
 }
 
 export interface UserPreviousValues {
-  id: ID_Output
-  createdAt: DateTimeOutput
-  updatedAt: DateTimeOutput
-  email: string
-  name?: string
-  password: string
-  firstName?: string
-  lastName?: string
-  username?: string
-  phoneNumber?: Int
+  id: ID_Output;
+  createdAt: DateTimeOutput;
+  updatedAt: DateTimeOutput;
+  email: String;
+  name?: String;
+  password: String;
+  firstName?: String;
+  lastName?: String;
+  username?: String;
+  phoneNumber?: Int;
 }
 
 export interface UserPreviousValuesPromise
   extends Promise<UserPreviousValues>,
     Fragmentable {
-  id: () => Promise<ID_Output>
-  createdAt: () => Promise<DateTimeOutput>
-  updatedAt: () => Promise<DateTimeOutput>
-  email: () => Promise<string>
-  name: () => Promise<string>
-  password: () => Promise<string>
-  firstName: () => Promise<string>
-  lastName: () => Promise<string>
-  username: () => Promise<string>
-  phoneNumber: () => Promise<Int>
+  id: () => Promise<ID_Output>;
+  createdAt: () => Promise<DateTimeOutput>;
+  updatedAt: () => Promise<DateTimeOutput>;
+  email: () => Promise<String>;
+  name: () => Promise<String>;
+  password: () => Promise<String>;
+  firstName: () => Promise<String>;
+  lastName: () => Promise<String>;
+  username: () => Promise<String>;
+  phoneNumber: () => Promise<Int>;
 }
 
 export interface UserPreviousValuesSubscription
   extends Promise<AsyncIterator<UserPreviousValues>>,
     Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>
-  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>
-  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>
-  email: () => Promise<AsyncIterator<string>>
-  name: () => Promise<AsyncIterator<string>>
-  password: () => Promise<AsyncIterator<string>>
-  firstName: () => Promise<AsyncIterator<string>>
-  lastName: () => Promise<AsyncIterator<string>>
-  username: () => Promise<AsyncIterator<string>>
-  phoneNumber: () => Promise<AsyncIterator<Int>>
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
+  email: () => Promise<AsyncIterator<String>>;
+  name: () => Promise<AsyncIterator<String>>;
+  password: () => Promise<AsyncIterator<String>>;
+  firstName: () => Promise<AsyncIterator<String>>;
+  lastName: () => Promise<AsyncIterator<String>>;
+  username: () => Promise<AsyncIterator<String>>;
+  phoneNumber: () => Promise<AsyncIterator<Int>>;
 }
 
 /*
 The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
 */
-export type ID_Input = string | number
-export type ID_Output = string
+export type ID_Input = string | number;
+export type ID_Output = string;
 
 /*
 DateTime scalar input type, allowing Date
 */
-export type DateTimeInput = Date | string
+export type DateTimeInput = Date | string;
 
 /*
 DateTime scalar output type, which is always a string
 */
-export type DateTimeOutput = string
+export type DateTimeOutput = string;
 
 /*
 The `Boolean` scalar type represents `true` or `false`.
 */
-export type Boolean = boolean
+export type Boolean = boolean;
 
 /*
 The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
 */
-export type String = string
+export type String = string;
 
 /*
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
 */
-export type Int = number
+export type Int = number;
 
-export type Long = string
+export type Long = string;
 
 /**
  * Model Metadata
@@ -1170,18 +1170,18 @@ export type Long = string
 
 export const models: Model[] = [
   {
-    name: 'User',
+    name: "User",
     embedded: false
   },
   {
-    name: 'Grid',
+    name: "Grid",
     embedded: false
   },
   {
-    name: 'Role',
+    name: "Role",
     embedded: false
   }
-]
+];
 
 /**
  * Type Defs
@@ -1191,5 +1191,5 @@ export const Prisma = makePrismaClientClass<ClientConstructor<Prisma>>({
   typeDefs,
   models,
   endpoint: `https://whatgrid-1562e982ca.herokuapp.com/whatgrid-server/dev`
-})
-export const prisma = new Prisma()
+});
+export const prisma = new Prisma();

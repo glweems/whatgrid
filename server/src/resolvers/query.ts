@@ -15,15 +15,9 @@ export const Query: QueryResolvers.Type = {
   user: async (_parent, { id, email }, { prisma, userId }: Context) => {
     const user = await prisma.user({ id, email })
 
-    if (!user) return null
+    if (!user) throw new Error('user not found')
 
-    return {
-      ...user,
-      permissions: {
-        owner: userId === user.id,
-        user
-      }
-    }
+    return user
   },
 
   users: (_parent, args, ctx) => {

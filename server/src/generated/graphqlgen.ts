@@ -2,13 +2,7 @@
 
 import { GraphQLResolveInfo } from 'graphql'
 import { Grid, User } from './prisma-client'
-import {
-  UserPermissions,
-  AuthPayload,
-  SuccessMessage,
-  Permissions,
-  Context
-} from '../types'
+import { AuthPayload, SuccessMessage, Context } from '../types'
 
 export namespace QueryResolvers {
   export const defaultResolvers = {}
@@ -595,57 +589,6 @@ export namespace UserResolvers {
         ) => string | Promise<string>
       }
 
-  export type PermissionsResolver =
-    | ((
-        parent: User,
-        args: {},
-        ctx: Context,
-        info: GraphQLResolveInfo
-      ) => UserPermissions | Promise<UserPermissions>)
-    | {
-        fragment: string
-        resolve: (
-          parent: User,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo
-        ) => UserPermissions | Promise<UserPermissions>
-      }
-
-  export type CreatedAtResolver =
-    | ((
-        parent: User,
-        args: {},
-        ctx: Context,
-        info: GraphQLResolveInfo
-      ) => string | Promise<string>)
-    | {
-        fragment: string
-        resolve: (
-          parent: User,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo
-        ) => string | Promise<string>
-      }
-
-  export type UpdatedAtResolver =
-    | ((
-        parent: User,
-        args: {},
-        ctx: Context,
-        info: GraphQLResolveInfo
-      ) => string | Promise<string>)
-    | {
-        fragment: string
-        resolve: (
-          parent: User,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo
-        ) => string | Promise<string>
-      }
-
   export type EmailResolver =
     | ((
         parent: User,
@@ -664,23 +607,6 @@ export namespace UserResolvers {
       }
 
   export type NameResolver =
-    | ((
-        parent: User,
-        args: {},
-        ctx: Context,
-        info: GraphQLResolveInfo
-      ) => string | null | Promise<string | null>)
-    | {
-        fragment: string
-        resolve: (
-          parent: User,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo
-        ) => string | null | Promise<string | null>
-      }
-
-  export type PasswordResolver =
     | ((
         parent: User,
         args: {},
@@ -782,59 +708,59 @@ export namespace UserResolvers {
         ) => Grid[] | Promise<Grid[]>
       }
 
+  export type CreatedAtResolver =
+    | ((
+        parent: User,
+        args: {},
+        ctx: Context,
+        info: GraphQLResolveInfo
+      ) => string | Promise<string>)
+    | {
+        fragment: string
+        resolve: (
+          parent: User,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo
+        ) => string | Promise<string>
+      }
+
+  export type UpdatedAtResolver =
+    | ((
+        parent: User,
+        args: {},
+        ctx: Context,
+        info: GraphQLResolveInfo
+      ) => string | Promise<string>)
+    | {
+        fragment: string
+        resolve: (
+          parent: User,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo
+        ) => string | Promise<string>
+      }
+
+  export type PasswordResolver =
+    | ((
+        parent: User,
+        args: {},
+        ctx: Context,
+        info: GraphQLResolveInfo
+      ) => string | null | Promise<string | null>)
+    | {
+        fragment: string
+        resolve: (
+          parent: User,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo
+        ) => string | null | Promise<string | null>
+      }
+
   export interface Type {
     id:
-      | ((
-          parent: User,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo
-        ) => string | Promise<string>)
-      | {
-          fragment: string
-          resolve: (
-            parent: User,
-            args: {},
-            ctx: Context,
-            info: GraphQLResolveInfo
-          ) => string | Promise<string>
-        }
-
-    permissions:
-      | ((
-          parent: User,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo
-        ) => UserPermissions | Promise<UserPermissions>)
-      | {
-          fragment: string
-          resolve: (
-            parent: User,
-            args: {},
-            ctx: Context,
-            info: GraphQLResolveInfo
-          ) => UserPermissions | Promise<UserPermissions>
-        }
-
-    createdAt:
-      | ((
-          parent: User,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo
-        ) => string | Promise<string>)
-      | {
-          fragment: string
-          resolve: (
-            parent: User,
-            args: {},
-            ctx: Context,
-            info: GraphQLResolveInfo
-          ) => string | Promise<string>
-        }
-
-    updatedAt:
       | ((
           parent: User,
           args: {},
@@ -869,23 +795,6 @@ export namespace UserResolvers {
         }
 
     name:
-      | ((
-          parent: User,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo
-        ) => string | null | Promise<string | null>)
-      | {
-          fragment: string
-          resolve: (
-            parent: User,
-            args: {},
-            ctx: Context,
-            info: GraphQLResolveInfo
-          ) => string | null | Promise<string | null>
-        }
-
-    password:
       | ((
           parent: User,
           args: {},
@@ -986,82 +895,56 @@ export namespace UserResolvers {
             info: GraphQLResolveInfo
           ) => Grid[] | Promise<Grid[]>
         }
-  }
-}
 
-export namespace UserPermissionsResolvers {
-  export const defaultResolvers = {
-    owner: (parent: UserPermissions) => parent.owner,
-    edit: (parent: UserPermissions) => parent.edit
-  }
-
-  export type OwnerResolver =
-    | ((
-        parent: UserPermissions,
-        args: {},
-        ctx: Context,
-        info: GraphQLResolveInfo
-      ) => boolean | Promise<boolean>)
-    | {
-        fragment: string
-        resolve: (
-          parent: UserPermissions,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo
-        ) => boolean | Promise<boolean>
-      }
-
-  export type EditResolver =
-    | ((
-        parent: UserPermissions,
-        args: {},
-        ctx: Context,
-        info: GraphQLResolveInfo
-      ) => boolean | Promise<boolean>)
-    | {
-        fragment: string
-        resolve: (
-          parent: UserPermissions,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo
-        ) => boolean | Promise<boolean>
-      }
-
-  export interface Type {
-    owner:
+    createdAt:
       | ((
-          parent: UserPermissions,
+          parent: User,
           args: {},
           ctx: Context,
           info: GraphQLResolveInfo
-        ) => boolean | Promise<boolean>)
+        ) => string | Promise<string>)
       | {
           fragment: string
           resolve: (
-            parent: UserPermissions,
+            parent: User,
             args: {},
             ctx: Context,
             info: GraphQLResolveInfo
-          ) => boolean | Promise<boolean>
+          ) => string | Promise<string>
         }
 
-    edit:
+    updatedAt:
       | ((
-          parent: UserPermissions,
+          parent: User,
           args: {},
           ctx: Context,
           info: GraphQLResolveInfo
-        ) => boolean | Promise<boolean>)
+        ) => string | Promise<string>)
       | {
           fragment: string
           resolve: (
-            parent: UserPermissions,
+            parent: User,
             args: {},
             ctx: Context,
             info: GraphQLResolveInfo
-          ) => boolean | Promise<boolean>
+          ) => string | Promise<string>
+        }
+
+    password:
+      | ((
+          parent: User,
+          args: {},
+          ctx: Context,
+          info: GraphQLResolveInfo
+        ) => string | null | Promise<string | null>)
+      | {
+          fragment: string
+          resolve: (
+            parent: User,
+            args: {},
+            ctx: Context,
+            info: GraphQLResolveInfo
+          ) => string | null | Promise<string | null>
         }
   }
 }
@@ -1072,6 +955,7 @@ export namespace MutationResolvers {
   export interface ArgsSignup {
     email: string
     password: string
+    username?: string | null
   }
 
   export interface ArgsLogin {
@@ -1304,92 +1188,13 @@ export namespace SuccessMessageResolvers {
   }
 }
 
-export namespace PermissionsResolvers {
-  export const defaultResolvers = {
-    authenticated: (parent: Permissions) => parent.authenticated,
-    user: (parent: Permissions) => parent.user
-  }
-
-  export type AuthenticatedResolver =
-    | ((
-        parent: Permissions,
-        args: {},
-        ctx: Context,
-        info: GraphQLResolveInfo
-      ) => boolean | Promise<boolean>)
-    | {
-        fragment: string
-        resolve: (
-          parent: Permissions,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo
-        ) => boolean | Promise<boolean>
-      }
-
-  export type UserResolver =
-    | ((
-        parent: Permissions,
-        args: {},
-        ctx: Context,
-        info: GraphQLResolveInfo
-      ) => User | null | Promise<User | null>)
-    | {
-        fragment: string
-        resolve: (
-          parent: Permissions,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo
-        ) => User | null | Promise<User | null>
-      }
-
-  export interface Type {
-    authenticated:
-      | ((
-          parent: Permissions,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo
-        ) => boolean | Promise<boolean>)
-      | {
-          fragment: string
-          resolve: (
-            parent: Permissions,
-            args: {},
-            ctx: Context,
-            info: GraphQLResolveInfo
-          ) => boolean | Promise<boolean>
-        }
-
-    user:
-      | ((
-          parent: Permissions,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo
-        ) => User | null | Promise<User | null>)
-      | {
-          fragment: string
-          resolve: (
-            parent: Permissions,
-            args: {},
-            ctx: Context,
-            info: GraphQLResolveInfo
-          ) => User | null | Promise<User | null>
-        }
-  }
-}
-
 export interface Resolvers {
   Query: QueryResolvers.Type
   Grid: GridResolvers.Type
   User: UserResolvers.Type
-  UserPermissions: UserPermissionsResolvers.Type
   Mutation: MutationResolvers.Type
   AuthPayload: AuthPayloadResolvers.Type
   SuccessMessage: SuccessMessageResolvers.Type
-  Permissions: PermissionsResolvers.Type
 }
 
 // @ts-ignore

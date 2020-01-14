@@ -9,6 +9,11 @@
     "lint:fix": "yarn lint --fix"
   },
   "dependencies": {
+    "connect-redis": "^4.0.3",
+    "express-rate-limit": "^5.0.0",
+    "express-session": "^1.17.0",
+    "ioredis": "^4.14.1",
+    "rate-limit-redis": "^1.7.0",
     "@types/express-jwt": "^0.0.42",
     "@types/express-session": "^1.15.16",
     "bcrypt": "^3.0.7",
@@ -19,7 +24,6 @@
     "express": "^4.17.1",
     "express-apollo": "^4.13.7",
     "express-jwt": "^5.3.1",
-    "express-session": "^1.17.0",
     "graphql": "^14.5.8",
     "graphql-shield": "^7.0.5",
     "graphql-yoga": "^1.18.3",

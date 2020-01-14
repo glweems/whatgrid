@@ -26,11 +26,6 @@ export interface User {
   phoneNumber: number | null
 }
 
-export interface Permissions {
-  authenticated: boolean
-  user: User
-}
-
 export interface Grid {
   id: string
   createdAt: string
@@ -51,13 +46,8 @@ export interface AuthPayload {
   token: string
   user: User
 }
-
-export interface UserPayload {
-  user: User
-  permissions: UserPermissions
-}
-
-export interface UserPermissions {
-  owner: boolean
-  edit: boolean
+export interface SignupInput {
+  email: string
+  username: string | null
+  password: string
 }

@@ -11,19 +11,9 @@ type Query {
 }
 
 type Mutation {
-  signup(email: String!, password: String!): AuthPayload!
+  signup(email: String!, password: String!, username: String): AuthPayload!
   login(email: String!, password: String!): AuthPayload!
   logout: SuccessMessage
-}
-
-type Permissions {
-  authenticated: Boolean!
-  user: User
-}
-
-type UserPermissions {
-  owner: Boolean!
-  edit: Boolean!
 }
 
 type SuccessMessage {
@@ -37,17 +27,16 @@ type AuthPayload {
 
 type User {
   id: ID!
-  permissions: UserPermissions!
-  createdAt: DateTime!
-  updatedAt: DateTime!
   email: String!
   name: String
-  password: String
   firstName: String
   lastName: String
   username: String
   phoneNumber: Int
   grids: [Grid!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  password: String
 }
 
 type Grid {

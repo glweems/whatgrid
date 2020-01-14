@@ -8,7 +8,7 @@ import { bakeCookie, tokenGenerator } from '../utils'
 
 export const Mutation: MutationResolvers.Type = {
   ...MutationResolvers.defaultResolvers,
-  signup: async (_parent, args: UserCreateInput, ctx) => {
+  signup: async (_parent, args, ctx) => {
     const password = await bcrypt.hash(args.password, 10)
     const user = await ctx.prisma.createUser({
       ...args,
