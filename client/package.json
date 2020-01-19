@@ -51,7 +51,7 @@
     "@graphql-codegen/typescript-react-apollo": "^1.9.1",
     "@rebass/forms": "^4.0.6",
     "@styled-system/css": "^5.1.4",
-    "apollo-boost": "^0.47",
+    "apollo-boost": "^0.4.7",
     "apollo-cache-inmemory": "^1.6.3",
     "apollo-client": "^2.6.8",
     "apollo-link-context": "^1.0.19",
@@ -110,6 +110,7 @@
     "@types/node-fetch": "^2.5.4",
     "@types/react": "^16.9.17",
     "@types/react-dom": "^16.9.4",
+    "@types/react-modal": "^3.10.3",
     "@types/rebass": "^4.0.3",
     "@types/rebass__forms": "^4.0.0",
     "@types/styled-components": "^4.4.1",
@@ -139,15 +140,15 @@
     "husky": "^3.1.0",
     "prettier": "^1.19.1",
     "stylelint": "^13.0.0",
-    "stylelint-config-prettier": "^8.0.1",
+    "stylelint-config-prettier": "^7.0.0",
     "stylelint-config-rational-order": "^0.1.2",
     "stylelint-config-recommended": "^3.0.0",
     "stylelint-config-styled-components": "^0.1.1",
-    "stylelint-order": "^4.0.0",
+    "stylelint-order": "^3.1.1",
     "stylelint-processor-styled-components": "^1.9.0",
     "ts-jest": "^24.2.0",
     "ts-transform-graphql-tag": "^0.2.1",
-    "typescript": "^3.7.4"
+    "typescript": "^3.7.2"
   },
   "bit": {
     "env": {

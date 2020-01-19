@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import React, { useContext } from 'react'
-import styled, { ThemeContext } from 'styled-components/macro'
+import styled, { ThemeContext, css } from 'styled-components/macro'
 import { animated, useSpring, useTransition } from 'react-spring'
+import uuid from 'uuid/v4'
 import { useStoreState } from '../store'
 import { layout as settings } from '../utils/theme'
 
@@ -11,7 +12,9 @@ export const Sidebar: React.FC = ({ children }) => {
   const { toggleTheme } = useContext(ThemeContext)
 
   const animation = useSpring({
-    width: open ? settings.sidebarWidth : 0
+    width: open ? settings.sidebarWidth : 0,
+    opacity: open ? 1 : 0
+    // transform: open ? 'none' : `translateX(-100px)`
   })
 
   const transitions = useTransition(open, null, {
@@ -21,21 +24,20 @@ export const Sidebar: React.FC = ({ children }) => {
   })
 
   return (
-    <aside className="Sidebar">
-      {transitions.map(
-        ({ item, key, props }) =>
-          item && (
-            <animated.div style={animation}>
-              <animated.div key={key} style={props}>
-                {children}
-              </animated.div>
-            </animated.div>
-          )
-      )}
-    </aside>
+    <animated.aside key={uuid()} style={animation} className="Sidebar">
+      <div>{children}</div>
+    </animated.aside>
   )
 }
 
 export default Sidebar
 
-const Wrapper = animated(styled.aside<{ open: boolean }>``)
+const Aside = animated(styled.aside<{ open: boolean }>`
+  ${(props) =>
+    props.open &&
+    css`
+      display: none;
+      * {
+      }
+    `}
+`)

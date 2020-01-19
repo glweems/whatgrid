@@ -1,16 +1,16 @@
 import { Action, action } from 'easy-peasy'
 
+type SidebarModel = {
+  open: boolean
+  toggle: Action<SidebarModel>
+}
+
 const sidebarModel: SidebarModel = {
   open: true,
   toggle: action(({ open, ...state }) => ({
     ...state,
     open: !open
   }))
-}
-
-type SidebarModel = {
-  open: boolean
-  toggle: Action<SidebarModel>
 }
 
 export type LayoutModel = {

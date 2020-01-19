@@ -17,7 +17,7 @@ type ButtonProps = React.HTMLProps<HTMLButtonElement>
 type Props = ButtonProps &
   ColorProps & {
     loading?: boolean
-    variant?: DefaultVariants
+    variant?: DefaultVariants | 'link'
   }
 
 const Button: React.FC<Props> = ({

@@ -1,12 +1,12 @@
-import React, { FC } from 'react'
-import { NextPage } from '../@types'
+import React from 'react'
 import Layout from '../components/Layout'
+import { FPC } from '../@types'
 
 interface Props {
   id: any
 }
 
-const DashboardPage: NextPage<Props> = ({ id }) => {
+const DashboardPage: FPC<Props> = ({ id }) => {
   return <Layout sidebar={<Sidebar />}>{id}</Layout>
 }
 

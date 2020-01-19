@@ -1708,6 +1708,13 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-modal@^3.10.3":
+  version "3.10.3"
+  resolved "https://registry.yarnpkg.com/@types/react-modal/-/react-modal-3.10.3.tgz#dc49edd92808dcff30753c3b7fa1744aa87ba6a8"
+  integrity sha512-b0dMqzEVxAsludWV46HRCRbaQv7BU5CaR0C5ZdzA4g4sMQxtXvqHAlh1S15kyzUZHAuDCOuLn2CBfE55VDiZyA==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-native@*":
   version "0.60.27"
   resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.60.27.tgz#d6313256f3cf9a685bd8885efddb86b85b9a4820"
@@ -2177,7 +2184,7 @@ anymatch@~3.1.1:
     normalize-path "^3.0.0"
     picomatch "^2.0.4"
 
-apollo-boost@^0.47:
+apollo-boost@^0.4.7:
   version "0.4.7"
   resolved "https://registry.yarnpkg.com/apollo-boost/-/apollo-boost-0.4.7.tgz#b0680ab0893e3f8b1ab1058dcfa2b00cb6440d79"
   integrity sha512-jfc3aqO0vpCV+W662EOG5gq4AH94yIsvSgAUuDvS3o/Z+8Joqn4zGC9CgLCDHusK30mFgtsEgwEe0pZoedohsQ==
@@ -9505,10 +9512,10 @@ styled-system@^5.0.0, styled-system@^5.1.4:
     "@styled-system/variant" "^5.1.4"
     object-assign "^4.1.1"
 
-stylelint-config-prettier@^8.0.1:
-  version "8.0.1"
-  resolved "https://registry.yarnpkg.com/stylelint-config-prettier/-/stylelint-config-prettier-8.0.1.tgz#ec7cdd7faabaff52ebfa56c28fed3d995ebb8cab"
-  integrity sha512-RcjNW7MUaNVqONhJH4+rtlAE3ow/9SsAM0YWV0Lgu3dbTKdWTa/pQXRdFWgoHWpzUKn+9oBKR5x8JdH+20wmgw==
+stylelint-config-prettier@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/stylelint-config-prettier/-/stylelint-config-prettier-7.0.0.tgz#a34bd0686dc22f9394271a59b9d7a8a58ec92452"
+  integrity sha512-qF2HcWd4QJJozdqjq/IbnoANHwP7FVRG6dqxGBKWNI/L6bdWi8aXI0hRtkkar2QjrP5riGACE2uDxfcL4AZqRA==
 
 stylelint-config-rational-order@^0.1.2:
   version "0.1.2"
@@ -9537,13 +9544,13 @@ stylelint-order@^2.2.1:
     postcss "^7.0.2"
     postcss-sorting "^4.1.0"
 
-stylelint-order@^4.0.0:
-  version "4.0.0"
-  resolved "https://registry.yarnpkg.com/stylelint-order/-/stylelint-order-4.0.0.tgz#2a945c2198caac3ff44687d7c8582c81d044b556"
-  integrity sha512-bXV0v+jfB0+JKsqIn3mLglg1Dj2QCYkFHNfL1c+rVMEmruZmW5LUqT/ARBERfBm8SFtCuXpEdatidw/3IkcoiA==
+stylelint-order@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/stylelint-order/-/stylelint-order-3.1.1.tgz#ba9ea6844d1482f97f31204e7c9605c7b792c294"
+  integrity sha512-4gP/r8j/6JGZ/LL41b2sYtQqfwZl4VSqTp7WeIwI67v/OXNQ08dnn64BGXNwAUSgb2+YIvIOxQaMzqMyQMzoyQ==
   dependencies:
     lodash "^4.17.15"
-    postcss "^7.0.26"
+    postcss "^7.0.17"
     postcss-sorting "^5.0.1"
 
 stylelint-processor-styled-components@^1.9.0:
@@ -10041,7 +10048,7 @@ typedarray@^0.0.6:
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
   integrity sha1-hnrHTjhkGHsdPUfZlqeOxciDB3c=
 
-typescript@^3.7.4:
+typescript@^3.7.2:
   version "3.7.4"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.7.4.tgz#1743a5ec5fef6a1fa9f3e4708e33c81c73876c19"
   integrity sha512-A25xv5XCtarLwXpcDNZzCGvW2D1S3/bACratYBx2sax8PefsFhlYmkQicKHvpYflFS8if4zne5zT5kpJ7pzuvw==

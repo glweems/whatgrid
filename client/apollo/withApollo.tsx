@@ -1,5 +1,6 @@
+/* eslint-disable no-console */
 /* eslint-disable no-shadow */
-import React from 'react'
+import React, { useEffect, createRef } from 'react'
 import Head from 'next/head'
 import {
   AppContextType,
@@ -9,16 +10,18 @@ import {
 import { ApolloClient } from 'apollo-client'
 import { setContext } from 'apollo-link-context'
 import { HttpLink } from 'apollo-link-http'
-import { InMemoryCache, NormalizedCacheObject } from 'apollo-cache-inmemory'
+import { InMemoryCache } from 'apollo-cache-inmemory'
 import { ApolloProvider } from '@apollo/react-hooks'
 import { IncomingMessage } from 'http'
 import cookie from 'cookie'
 import fetch from 'isomorphic-unfetch'
-import { withApollo } from 'react-apollo'
 import { StoreProvider } from 'easy-peasy'
-import ContextProvider, { ProviderComposer } from '../context'
-import { Client } from '../types'
+import { ThemeProvider } from 'styled-components'
+import gql from 'graphql-tag'
+import { Client } from './types'
 import store from '../store'
+import useTheme from '../hooks/useTheme'
+import ProviderComposer from '../components/ProviderComposer'
 
 /**
  * Get the user token from cookie
@@ -31,17 +34,75 @@ const withContext = (
   { ssr = true } = {}
 ) => {
   const WithApollo = ({ apolloClient, apolloState, ...appProps }) => {
-    const client = apolloClient || initApolloClient(apolloState, { getToken })
+    const client: Client =
+      apolloClient || initApolloClient(apolloState, { getToken })
+    const { theme, componentMounted } = useTheme()
+    const ref = createRef<boolean>()
 
-    store.addModel('client', client)
+    /*     useEffect(() => {
+      if (!componentMounted && !ref.current && !store.getState().theme) {
+        store.addModel('theme', theme)
+      }
+    }, [componentMounted, ref, theme])
+
+    useEffect(() => {
+      if (!componentMounted && !ref.current && !store.getState().modal) {
+        store.addModel('modal', modal)
+      }
+    }, [componentMounted, ref]) */
+
+    useEffect(() => {
+      if (!componentMounted && ref.current && !store.getState().apolloClient) {
+        store.addModel('client', client)
+      }
+    }, [client, componentMounted, ref])
+
+    useEffect(() => {
+      if (!componentMounted && ref.current)
+        if (ref.current && componentMounted) {
+          client
+            .query({
+              query: gql`
+                query Me {
+                  me {
+                    id
+                    email
+                    username
+                  }
+                }
+              `
+            })
+            .then(({ data: { me } }) => {
+              if (me !== null)
+                store.dispatch.session.setSession({
+                  ...me,
+                  authenticated: true
+                })
+              else store.dispatch.session.clearSession()
+            })
+        }
+    }, [client, componentMounted, ref, theme])
+
+    const { authenticated } = store.getState().session
+
+    if (!componentMounted) return null
 
     return (
       <ApolloProvider client={client}>
-        <StoreProvider store={store}>
-          <ContextProvider apolloClient={client} store={store}>
-            <App {...appProps} apolloClient={client} />
-          </ContextProvider>
-        </StoreProvider>
+        <ProviderComposer
+          contexts={[
+            <StoreProvider store={store} />,
+            <ThemeProvider theme={theme} />
+          ]}
+        >
+          <App
+            {...appProps}
+            ref={ref}
+            apolloClient={client}
+            authenticated={authenticated}
+            store={store}
+          />
+        </ProviderComposer>
       </ApolloProvider>
     )
   }
@@ -68,8 +129,10 @@ const withContext = (
         getToken: () => getToken(req)
       }
     ))
-
-    const appProps = App.getInitialProps ? await App.getInitialProps(ctx) : {}
+    let appProps = {}
+    if (App.getInitialProps) {
+      appProps = await App.getInitialProps(ctx)
+    }
 
     if (res && res.finished) {
       // When redirecting, the response is finished.
@@ -85,16 +148,13 @@ const withContext = (
 
         // Run all GraphQL queries
         await getDataFromTree(
-          <ApolloProvider client={apolloClient}>
-            <StoreProvider store={store}>
-              <App
-                {...appProps}
-                Component={Component}
-                router={router}
-                apolloClient={apolloClient}
-              />
-            </StoreProvider>
-          </ApolloProvider>
+          <App
+            {...appProps}
+            // router={router}
+            Component={Component}
+            router={router}
+            apolloClient={apolloClient}
+          />
         )
       } catch (error) {
         // Prevent Apollo Client GraphQL errors from crashing SSR.
@@ -111,10 +171,7 @@ const withContext = (
     // Extract query data from the Apollo's store
     const apolloState = apolloClient.cache.extract()
 
-    return {
-      ...appProps,
-      apolloState
-    }
+    return <App {...apolloState} />
   }
 
   return WithApollo

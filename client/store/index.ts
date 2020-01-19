@@ -5,9 +5,9 @@ import {
   Store as EasyStore
 } from 'easy-peasy'
 import grid, { GridModel } from './grid'
-import session, { SessionModel } from './session'
+import { SessionModel } from './session'
 import layout, { LayoutModel } from './layout'
-import { Client } from '../types'
+import { Client } from '../apollo/types'
 
 export interface StoreModel {
   grid: GridModel
@@ -16,18 +16,14 @@ export interface StoreModel {
   apolloClient?: Client
 }
 
-interface InitialState {
-  isLoggedIn: boolean
-}
-
 export const storeOptions: EasyPeasyConfig = {
   name: 'what grid'
 }
 
 export const storeModel: StoreModel = {
   grid,
-  layout,
-  session
+  layout
+  // session
 }
 
 export type Store = EasyStore<StoreModel, typeof storeOptions>
@@ -44,14 +40,14 @@ export const createStore = (init): Store => {
 export default store
 // Wrapping dev only code like this normally gets stripped out by bundlers
 // such as Webpack when creating a production build.
-if (process.env.NODE_ENV === 'development') {
-  const mod: NodeModule & any = module
-  if (mod.hot) {
-    mod.hot.accept('./model', () => {
-      store.reconfigure(storeModel) // 👈 Here is the magic
-    })
-  }
-}
+// if (process.env.NODE_ENV === 'development') {
+//   const mod: NodeModule & any = module
+//   if (mod.hot) {
+//     mod.hot.accept('./model', () => {
+//       store.reconfigure(storeModel) // 👈 Here is the magic
+//     })
+//   }
+// }
 
 const typedHooks = createTypedHooks<StoreModel>()
 

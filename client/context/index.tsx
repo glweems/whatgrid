@@ -1,49 +1,38 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { FC, useEffect, useRef } from 'react'
-import { ThemeProvider as StyledThemeProvider } from 'styled-components/macro'
+import React, { FC } from 'react'
+import { StoreProvider, Store } from 'easy-peasy'
+import { ThemeProvider } from 'styled-components/macro'
+import { ApolloProvider } from 'react-apollo'
 import useTheme from '../hooks/useTheme'
-import { Store, useStoreActions } from '../store'
+import { Client } from '../apollo/types'
 import { GlobalStyle } from '../utils/theme'
-import { useMeQuery, MeDocument } from '../utils/generated'
-import { Client } from '../types'
-
-export const ProviderComposer: React.FC<{ contexts: any }> = ({
-  contexts,
-  children
-}: any) =>
-  contexts.reduceRight(
-    (kids: any, parent: any) =>
-      React.cloneElement(parent, {
-        children: kids
-      }),
-    children
-  )
+import ProviderComposer from '../components/ProviderComposer'
 
 type Props = { apolloClient: Client; store: Store }
 
-export const ContextProvider: FC<Props> = ({ children, apolloClient }) => {
-  const { data, loading } = useMeQuery()
-  // const [me, setMe] = useState(null)
-  const { theme, componentMounted, toggleTheme } = useTheme()
-  const { setSession } = useStoreActions((state) => state.session)
-  const firstUpdate = useRef(true)
+export const ContextProvider: FC<Props> = ({
+  children,
+  apolloClient,
+  store
+}) => {
+  const { componentMounted, theme, toggleTheme } = useTheme()
 
-  useEffect(() => {
-    if (firstUpdate.current && !loading) {
-      setSession(data)
-    }
-  })
-
-  if (!componentMounted && loading) return <div />
+  if (!componentMounted) return <div />
 
   return (
     <ProviderComposer
-      contexts={[<StyledThemeProvider theme={{ ...theme, toggleTheme }} />]}
+      contexts={[
+        <ApolloProvider client={apolloClient} />,
+        <StoreProvider store={store} />,
+        <ThemeProvider theme={{ ...theme, toggleTheme }} />
+      ]}
     >
       {children}
       <GlobalStyle />
     </ProviderComposer>
   )
 }
+
+ContextProvider.displayName = 'ContextProviders'
 
 export default ContextProvider

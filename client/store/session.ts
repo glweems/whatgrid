@@ -1,4 +1,4 @@
-import { Action, action } from 'easy-peasy'
+import { Action, action, computed, Computed } from 'easy-peasy'
 
 type SessionUser = {
   id?: string
@@ -9,16 +9,21 @@ type SessionUser = {
 export type SessionModel = {
   setSession: Action<SessionModel, SessionUser & { isLoggedIn: boolean } & any>
   clearSession: Action<SessionModel>
+  authenticated?: boolean
 } & SessionUser
 
 const sessionModel: SessionModel = {
-  setSession: action((state, payload) => ({
+  authenticated: false,
+  setSession: action((state, { authenticated, id, username, email }) => ({
     ...state,
-    ...payload
+    authenticated,
+    id,
+    email,
+    username
   })),
   clearSession: action((state) => ({
     ...state,
-    user: null
+    authenticated: false
   }))
 }
 

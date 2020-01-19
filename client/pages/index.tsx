@@ -9,11 +9,11 @@ import GridGapControl from '../components/GridGapControls'
 import { useStoreActions, useStoreState } from '../store'
 import Control from '../components/Control'
 import Button from '../components/Button'
-import { NextPage, FC } from '../@types'
+import { FPC } from '../@types'
 
-const IndexPage: FC = ({ session }) => {
+const IndexPage: FPC = () => {
   return (
-    <Layout sidebar={<Sidebar />} session={session}>
+    <Layout sidebar={<Sidebar />}>
       <CssGrid />
     </Layout>
   )

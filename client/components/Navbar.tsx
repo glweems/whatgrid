@@ -1,3 +1,4 @@
+/* eslint-disable no-shadow */
 import React, { useContext } from 'react'
 import styled, { ThemeContext } from 'styled-components/macro'
 import { Text, FlexProps } from 'rebass/styled-components'
@@ -12,7 +13,7 @@ import {
   flex
 } from 'styled-system'
 import { Link } from './common/Link'
-import { useStoreState, useStoreActions } from '../store'
+import { useStoreActions } from '../store'
 import { Theme } from '../utils/theme'
 import Button from './Button'
 
@@ -35,26 +36,38 @@ const Navbar: React.FC<Props> = ({ showSidebarToggle }) => {
           Home
         </Text>
       </Link>
-      <Nav>
-        <NavLinks />
-      </Nav>
-      <Button onClick={toggleTheme}>Theme</Button>
+
+      <NavLinks />
+
+      {/* <Button onClick={toggleTheme}>Theme</Button> */}
     </Header>
   )
 }
 
-const NavLinks: React.FC = () => {
-  // const { loading } = useStoreState((state) => state.session)
-  const loading = true
+const NavLinks: any = () => {
+  // const { status } = useStoreState((store) => store.session)
 
-  if (!loading) return <Link to="/dashboard" text="Dashboard" />
+  // const { setModal, setComponent } = useStoreActions((actions) => actions.modal)
 
+  const onSignup = () => {
+    // setComponent(<SignupForm />)
+  }
+  const onLogin = () => {
+    // setComponent(<LoginForm />)
+  }
   return (
-    <>
-      <Link to="/signup" text="Sign Up" />
-      <Link to="/login" text="Login" />
-    </>
+    <Nav>
+      <Link to="/welcome">signup</Link>
+      <Link to="/welcome?register=true">signin</Link>
+    </Nav>
   )
+
+  // switch (status) {
+  //   case 'authenticated':
+  //     return <Link to="/dashboard" text="Dashboard" />
+  //   default:
+  //     )
+  // }
 }
 
 type HeaderProps = SpaceProps & ColorProps & FlexProps & LayoutProps & {}

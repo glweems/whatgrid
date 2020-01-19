@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components/macro'
+import { createGlobalStyle, css } from 'styled-components/macro'
 import { darken } from 'polished'
 import {
   ResponsiveValue,
@@ -18,7 +18,13 @@ export type ValuesOf<T extends any[]> = T[number]
 
 export const colors = {
   primary: '#4e67eb',
-  blues: ['#4e67eb', darken(0.1, '#4e67eb')],
+  blues: [
+    '#4e67eb',
+    darken(0.05, '#4e67eb'),
+    darken(0.2, '#4e67eb'),
+    darken(0.3, '#4e67eb'),
+    darken(0.5, '#4e67eb')
+  ],
   primaryDark: darken(0.1, '#4e67eb'),
   blacks: [
     'rgba(0,0,0,.0125)',
@@ -112,10 +118,10 @@ export const layout = {
   navbarHeight: 35,
   sidebarWidth: 300
 }
-const breakpoints = [32, 48, 64]
-const space = [0, 4, 8, 16, 32, 64, 128, 256, 512]
-const fontSizes = [12, 14, 16, 20, 24, 36, 48, 80, 96]
-const borders = [
+export const breakpoints = [32, 48, 64]
+export const space = [0, 4, 8, 16, 32, 64, 128, 256, 512]
+export const fontSizes = [12, 14, 16, 20, 24, 36, 48, 80, 96]
+export const borders = [
   0,
   '1px solid',
   '2px solid',
@@ -124,6 +130,8 @@ const borders = [
   '16px solid',
   '32px solid'
 ]
+
+export const fontWeights = [100, 200, 300, 400, 500, 600, 700, 800, 900]
 
 export type Borders = ValuesOf<typeof borders>
 
@@ -151,7 +159,7 @@ export const baseTheme = {
   breakpoints,
   space,
   fontSizes,
-  fontWeights: [100, 200, 300, 400, 500, 600, 700, 800, 900],
+  fontWeights,
   lineHeights: {
     solid: 1,
     title: 1.25,

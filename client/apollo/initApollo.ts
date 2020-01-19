@@ -5,40 +5,46 @@ import {
   NormalizedCacheObject
 } from 'apollo-boost'
 import { setContext } from 'apollo-link-context'
-import { createHttpLink } from 'apollo-link-http'
+import { createHttpLink, HttpLink } from 'apollo-link-http'
 import Cookies from 'js-cookie'
 import fetch from 'isomorphic-unfetch'
 import { onError } from 'apollo-link-error'
 import isBrowser from './isBrowser'
+import { Client } from './types'
 
-let client: ApolloClient<NormalizedCacheObject> | null = null
+const apolloClient: ApolloClient<NormalizedCacheObject> | null = null
+
+// Polyfill fetch() on the server (used by apollo-client)
 
 interface Options {
   getToken: () => string
 }
 
-const errorLink = onError(({ graphQLErrors, networkError }) => {
-  if (graphQLErrors)
-    graphQLErrors.map(({ message, locations, path }) =>
-      console.log(
-        `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
+const createApolloClient = (initialState = {}, { getToken }): Client => {
+  const fetchOptions = {
+    agent: null
+  }
+
+  // If you are using a https_proxy, add fetchOptions with 'https-proxy-agent' agent instance
+  // 'https-proxy-agent' is required here because it's a sever-side only module
+  if (typeof window === 'undefined') {
+    if (process.env.https_proxy) {
+      // eslint-disable-next-line global-require
+      fetchOptions.agent = new (require('https-proxy-agent'))(
+        process.env.https_proxy
       )
-    )
+    }
+  }
 
-  // eslint-disable-next-line no-console
-  if (networkError) console.log(`[Network error]: ${networkError}`)
-})
-
-function create(initialState: any, fetchOptions: Options) {
-  const httpLink = createHttpLink({
-    uri: process.env.GRAPHQL_ENDPOINT,
+  const httpLink = new HttpLink({
+    uri: process.env.GRAPHQL_API, // Server URL (must be absolute)
     credentials: 'include',
-    fetchOptions,
-    fetch
+    fetch,
+    fetchOptions
   })
 
-  const authLink = setContext((_, { headers }) => {
-    const token = Cookies.get('token')
+  const authLink = setContext((_request, { headers }) => {
+    const token = getToken()
 
     return {
       headers: {
@@ -50,34 +56,10 @@ function create(initialState: any, fetchOptions: Options) {
 
   // Check out https://github.com/zeit/next.js/pull/4611 if you want to use the AWSAppSyncClient
   return new ApolloClient({
-    connectToDevTools: isBrowser,
-    ssrMode: !isBrowser, // Disables forceFetch on the server (so queries are only run once)
-    link: errorLink.concat(authLink.concat(httpLink)),
-    cache: new InMemoryCache().restore(initialState || {})
+    ssrMode: typeof window === 'undefined', // Disables forceFetch on the server (so queries are only run once)
+    link: authLink.concat(httpLink),
+    cache: new InMemoryCache().restore(initialState)
   })
 }
 
-export default function initApollo(initialState, options) {
-  // Make sure to create a new client for every server-side request so that data
-  // isn't shared between connections (which would be bad)
-  if (typeof window === 'undefined') {
-    let fetchOptions = {}
-    // If you are using a https_proxy, add fetchOptions with 'https-proxy-agent' agent instance
-    // 'https-proxy-agent' is required here because it's a sever-side only module
-    if (process.env.https_proxy) {
-      fetchOptions = {
-        // eslint-disable-next-line global-require
-        agent: new (require('https-proxy-agent'))(process.env.https_proxy)
-      }
-    }
-    return create(initialState, {
-      ...options,
-      fetchOptions
-    })
-  }
-  // Reuse client on the client-side
-  if (!client) {
-    client = create(initialState, options)
-  }
-  return client
-}
+export default createApolloClient

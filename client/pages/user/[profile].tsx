@@ -1,19 +1,12 @@
-import React, { useEffect } from 'react'
-import { withRouter } from 'next/router'
-import { WithRouterProps } from 'next/dist/client/with-router'
-// import Next from 'next'
-import gql from 'graphql-tag'
-import { useUserQuery, useLogoutMutation } from '../../utils/generated'
-import { useStoreActions, useStoreState } from '../../store'
+import React from 'react'
 import Layout from '../../components/Layout'
-import Button from '../../components/Button'
-import { NextPage } from '../../@types'
+import { FPC } from '../../@types'
 
 type Props = {
   profile: string
 }
 
-const ProfilePage: NextPage<Props> & any = ({ profile, me }) => {
+const ProfilePage: FPC<Props> & any = ({ profile, me }) => {
   return (
     <Layout>
       <p>Profile: {profile.email}</p>

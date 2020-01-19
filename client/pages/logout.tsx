@@ -1,7 +1,7 @@
 import React from 'react'
-import { NextPage, FC } from '../@types'
+import { FPC } from '../@types'
 
-const LogoutPage: FC = () => {
+const LogoutPage: FPC = () => {
   return <div>logout</div>
 }
 
