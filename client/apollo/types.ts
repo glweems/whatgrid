@@ -1,6 +1,6 @@
 import {
   ApolloClient as ApolloClientDefault,
   NormalizedCacheObject
-} from 'apollo-boost'
+} from 'apollo-boost';
 
-export type Client = ApolloClientDefault<NormalizedCacheObject>
+export type Client = ApolloClientDefault<NormalizedCacheObject>;

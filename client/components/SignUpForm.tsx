@@ -1,13 +1,13 @@
-import React, { useState } from 'react'
-import { useFormik } from 'formik'
-import Button from './Button'
-import TextField from './TextField'
-import { Form } from './common'
-import * as Gen from '../utils/generated'
+import React, { useState } from 'react';
+import { useFormik } from 'formik';
+import Button from './Button';
+import TextField from './TextField';
+import { Form } from './common';
+import * as Gen from '../utils/generated';
 
 const SignupForm = () => {
-  const [signup] = Gen.useSignupMutation()
-  const [msg, setMsg] = useState('')
+  const [signup] = Gen.useSignupMutation();
+  const [msg, setMsg] = useState('');
 
   const { handleChange, handleSubmit, isSubmitting } = useFormik<
     Gen.SignupMutationVariables
@@ -21,10 +21,10 @@ const SignupForm = () => {
       await signup({
         variables: { email, password }
       }).then(({ data }) => {
-        setMsg(data.signup.user.email)
-      })
+        setMsg(data.signup.user.email);
+      });
     }
-  })
+  });
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -56,7 +56,7 @@ const SignupForm = () => {
         </Button>
       </div>
     </Form>
-  )
-}
+  );
+};
 
-export default SignupForm
+export default SignupForm;

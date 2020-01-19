@@ -1,1 +1,1 @@
-declare module 'react-apollo'
+declare module 'react-apollo';

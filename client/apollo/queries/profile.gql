@@ -4,7 +4,6 @@ query Profile($id: ID!) {
     createdAt
     updatedAt
     email
-    name
     firstName
     lastName
     username

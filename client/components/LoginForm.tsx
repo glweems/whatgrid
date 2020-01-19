@@ -1,13 +1,13 @@
-import React, { useState } from 'react'
-import { useFormik } from 'formik'
-import * as Yup from 'yup'
-import { withRouter } from 'next/router'
-import { WithRouterProps } from 'next/dist/client/with-router'
-import { useLoginMutation, LoginMutationVariables } from '../utils/generated'
-import { Form } from './common/Form'
-import TextField from './TextField'
-import Button from './Button'
-import { useStoreActions } from '../store'
+import React, { useState } from 'react';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import { withRouter } from 'next/router';
+import { WithRouterProps } from 'next/dist/client/with-router';
+import { useLoginMutation, LoginMutationVariables } from '../utils/generated';
+import { Form } from './common/Form';
+import TextField from './TextField';
+import Button from './Button';
+import { useStoreActions } from '../store';
 
 const loginValidationSchema = Yup.object().shape({
   email: Yup.string()
@@ -16,13 +16,13 @@ const loginValidationSchema = Yup.object().shape({
   password: Yup.string()
     .min(3, 'Please enter no more than 40 characters')
     .required('Please enter your first name')
-})
+});
 
 const LoginForm: React.FC<WithRouterProps> = ({ router }) => {
-  const { setSession } = useStoreActions((store) => store.session)
-  const [login] = useLoginMutation()
+  const { setSession } = useStoreActions(store => store.session);
+  const [login] = useLoginMutation();
 
-  const [msg, setMsg] = useState('')
+  const [msg, setMsg] = useState('');
 
   const { handleChange, handleSubmit, isSubmitting, errors } = useFormik<
     LoginMutationVariables
@@ -37,11 +37,11 @@ const LoginForm: React.FC<WithRouterProps> = ({ router }) => {
       await login({
         variables: { email, password }
       }).then(({ data }) => {
-        setMsg(data.login.user.email)
-        setSession(data.login.user)
-      })
+        setMsg(data.login.user.email);
+        setSession(data.login.user);
+      });
     }
-  })
+  });
 
   return (
     <Form onSubmit={handleSubmit}>
@@ -63,7 +63,7 @@ const LoginForm: React.FC<WithRouterProps> = ({ router }) => {
         Submit
       </Button>
     </Form>
-  )
-}
+  );
+};
 
-export default withRouter(LoginForm)
+export default withRouter(LoginForm);

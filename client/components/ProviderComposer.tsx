@@ -1,7 +1,7 @@
-import React from 'react'
+import React from 'react';
 
 interface Props {
-  contexts: any[]
+  contexts: any[];
 }
 
 const ProviderComposer: React.FC<Props> = ({ contexts, children }) =>
@@ -11,6 +11,6 @@ const ProviderComposer: React.FC<Props> = ({ contexts, children }) =>
         children: kids
       }),
     children
-  )
+  );
 
-export default ProviderComposer
+export default ProviderComposer;

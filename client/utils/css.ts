@@ -1,8 +1,4 @@
-import { css } from 'styled-components/macro'
-import { fontWeight } from 'styled-system'
-import { colors, fontSizes, Theme, fontWeights } from './theme'
-
-export const linCss = css({})
+import { css } from 'styled-components/macro';
 
 export const linkCss = css({
   color: 'primary',
@@ -16,4 +12,4 @@ export const linkCss = css({
   },
   ':active': { color: 'blues' },
   ':disabled': { opacity: 0.75, pointer: 'not-allowed' }
-})
+});

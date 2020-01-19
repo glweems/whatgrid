@@ -1,9 +1,9 @@
-import { Action, action } from 'easy-peasy'
+import { Action, action } from 'easy-peasy';
 
 type SidebarModel = {
-  open: boolean
-  toggle: Action<SidebarModel>
-}
+  open: boolean;
+  toggle: Action<SidebarModel>;
+};
 
 const sidebarModel: SidebarModel = {
   open: true,
@@ -11,14 +11,14 @@ const sidebarModel: SidebarModel = {
     ...state,
     open: !open
   }))
-}
+};
 
 export type LayoutModel = {
-  sidebar: SidebarModel
-}
+  sidebar: SidebarModel;
+};
 
 const layoutModel: LayoutModel = {
   sidebar: sidebarModel
-}
+};
 
-export default layoutModel
+export default layoutModel;

@@ -1,10 +1,10 @@
-import React, { Fragment } from 'react'
-import uuid from 'uuid/v4'
-import { useStoreState } from '../store'
-import { Box } from './common/Box'
+import React, { Fragment } from 'react';
+import uuid from 'uuid/v4';
+import { useStoreState } from '../store';
+import { Box } from './common/Box';
 
 export const GridItems: React.FC = () => {
-  const { rows, columns } = useStoreState((state) => state.grid)
+  const { rows, columns } = useStoreState(state => state.grid);
   return (
     <Fragment key={uuid()}>
       {rows.map(() => (
@@ -15,7 +15,7 @@ export const GridItems: React.FC = () => {
         </Fragment>
       ))}
     </Fragment>
-  )
-}
+  );
+};
 
-export default GridItems
+export default GridItems;

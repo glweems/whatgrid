@@ -9,17 +9,17 @@ import {
   space,
   typography,
   TypographyProps
-} from 'styled-system'
+} from 'styled-system';
 
-import styled from 'styled-components'
-import { ThemeProps } from '../../utils/theme'
-import { linkCss } from '../../utils/css'
+import styled from 'styled-components';
+import { ThemeProps } from '../../utils/theme';
+import { linkCss } from '../../utils/css';
 
 type Props = SpaceProps &
   ColorProps &
   LayoutProps &
   BorderProps &
-  TypographyProps
+  TypographyProps;
 
 export const A: React.ComponentType<Props & ThemeProps> = styled.a<Props>`
   ${color};
@@ -28,7 +28,7 @@ export const A: React.ComponentType<Props & ThemeProps> = styled.a<Props>`
   ${space};
   ${linkCss};
   ${typography};
-`
+`;
 
 A.defaultProps = {
   m: [1, 2],
@@ -36,6 +36,6 @@ A.defaultProps = {
   fontSize: 2,
   py: 1,
   px: 2
-}
+};
 
 // A.displayName = 'Anchor'

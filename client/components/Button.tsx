@@ -1,6 +1,6 @@
-import React from 'react'
-import { Button as RebassButton } from 'rebass/styled-components'
-import styled from 'styled-components/macro'
+import React from 'react';
+import { Button as RebassButton } from 'rebass/styled-components';
+import styled from 'styled-components/macro';
 import {
   ColorProps,
   variant as variantFn,
@@ -8,17 +8,17 @@ import {
   borderRadius,
   BorderProps,
   BorderRadiusProps
-} from 'styled-system'
-import { DefaultVariants } from '../utils/theme'
-import * as LoadingSpinner from './LoadingSpinner'
+} from 'styled-system';
+import { DefaultVariants } from '../utils/theme';
+import * as LoadingSpinner from './LoadingSpinner';
 
-type ButtonProps = React.HTMLProps<HTMLButtonElement>
+type ButtonProps = React.HTMLProps<HTMLButtonElement>;
 
 type Props = ButtonProps &
   ColorProps & {
-    loading?: boolean
-    variant?: DefaultVariants | 'link'
-  }
+    loading?: boolean;
+    variant?: DefaultVariants | 'link';
+  };
 
 const Button: React.FC<Props> = ({
   children,
@@ -38,16 +38,16 @@ const Button: React.FC<Props> = ({
     >
       {loading ? <LoadingSpinner.Ripple /> : children}
     </StyledButton>
-  )
-}
+  );
+};
 
 Button.defaultProps = {
   type: 'button',
   disabled: false,
   variant: 'default'
-}
+};
 
-type StyledButtonProps = Props & BorderProps & BorderRadiusProps
+type StyledButtonProps = Props & BorderProps & BorderRadiusProps;
 
 const StyledButton: React.ComponentType<StyledButtonProps> = styled(
   RebassButton
@@ -70,7 +70,7 @@ const StyledButton: React.ComponentType<StyledButtonProps> = styled(
   }
 
   ${({ theme: { colors } }) => {
-    const { text, bg, whites, primary, secondary } = colors
+    const { text, bg, whites, primary, secondary } = colors;
 
     return variantFn({
       variants: {
@@ -97,12 +97,12 @@ const StyledButton: React.ComponentType<StyledButtonProps> = styled(
           border: 0
         }
       }
-    })
+    });
   }};
-`
+`;
 StyledButton.defaultProps = {
   borderRadius: 2,
   border: 2
-}
+};
 
-export default Button
+export default Button;

@@ -1,9 +1,9 @@
-import React from 'react'
-import { Flex, Box, Text, Link as RebassLink } from 'rebass/styled-components'
-import NextLink from 'next/link'
+import React from 'react';
+import { Flex, Box, Text, Link as RebassLink } from 'rebass/styled-components';
+import NextLink from 'next/link';
 
 interface Props {
-  children: React.ReactNode
+  children: React.ReactNode;
 }
 
 const Link: React.FC<Props> = ({ children }) => {
@@ -17,7 +17,7 @@ const Link: React.FC<Props> = ({ children }) => {
         <RebassLink variant="nav">Profile</RebassLink>
       </NextLink>
     </Flex>
-  )
-}
+  );
+};
 
-export default Link
+export default Link;

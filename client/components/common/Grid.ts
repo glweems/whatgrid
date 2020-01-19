@@ -9,15 +9,15 @@ import {
   SpaceProps,
   ColorProps,
   LayoutProps
-} from 'styled-system'
-import styled from 'styled-components/macro'
-import { ThemeProps } from '../../utils/theme'
+} from 'styled-system';
+import styled from 'styled-components/macro';
+import { ThemeProps } from '../../utils/theme';
 
 type Props = SpaceProps &
   ColorProps &
   LayoutProps &
   BorderProps &
-  GridProps & {}
+  GridProps & {};
 
 export const Grid: React.ComponentType<Props & ThemeProps> = styled.div<Props>`
   ${grid};
@@ -25,6 +25,6 @@ export const Grid: React.ComponentType<Props & ThemeProps> = styled.div<Props>`
   ${border};
   ${layout};
   ${space};
-`
+`;
 
-Grid.displayName = 'Grid'
+Grid.displayName = 'Grid';

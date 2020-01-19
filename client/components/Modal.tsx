@@ -1,5 +1,5 @@
-import React from 'react'
-import ReactModal from 'react-modal'
+import React from 'react';
+import ReactModal from 'react-modal';
 
 const Modal: React.FC<any> = ({ children, open, onClose, element }) => {
   // const store = useStoreState((store) => store)
@@ -17,7 +17,7 @@ const Modal: React.FC<any> = ({ children, open, onClose, element }) => {
     >
       {children}
     </ReactModal>
-  )
-}
+  );
+};
 
-export default Modal
+export default Modal;

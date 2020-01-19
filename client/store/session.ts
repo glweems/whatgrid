@@ -1,16 +1,16 @@
-import { Action, action, computed, Computed } from 'easy-peasy'
+import { Action, action } from 'easy-peasy';
 
 type SessionUser = {
-  id?: string
-  username?: string
-  email?: string
-}
+  id?: string;
+  username?: string;
+  email?: string;
+};
 
 export type SessionModel = {
-  setSession: Action<SessionModel, SessionUser & { isLoggedIn: boolean } & any>
-  clearSession: Action<SessionModel>
-  authenticated?: boolean
-} & SessionUser
+  setSession: Action<SessionModel, SessionUser & { isLoggedIn: boolean } & any>;
+  clearSession: Action<SessionModel>;
+  authenticated?: boolean;
+} & SessionUser;
 
 const sessionModel: SessionModel = {
   authenticated: false,
@@ -21,10 +21,10 @@ const sessionModel: SessionModel = {
     email,
     username
   })),
-  clearSession: action((state) => ({
+  clearSession: action(state => ({
     ...state,
     authenticated: false
   }))
-}
+};
 
-export default sessionModel
+export default sessionModel;

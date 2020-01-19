@@ -1,21 +1,24 @@
 /* eslint-disable react/destructuring-assignment */
-import React from 'react'
-import { withRouter } from 'next/router'
-import { WithRouterProps } from 'next/dist/client/with-router'
-import { FPC } from '../@types'
+import React from 'react';
+import { withRouter } from 'next/router';
+import { WithRouterProps } from 'next/dist/client/with-router';
+import { FPC } from '../@types';
+import Layout from '../components/Layout';
 
 interface Props extends WithRouterProps {
-  existing: boolean
-  hello: any
+  query: {
+    register: boolean;
+  };
 }
 
-const WelcomePage: FPC<Props> = ({ router: { query }, hello }) => {
-  console.log(query)
+const WelcomePage: FPC<Props> = ({ router: { query } }) => {
   return (
-    <pre>
-      <code>{hello}</code>
-    </pre>
-  )
-}
+    <Layout>
+      <pre>
+        <code>{query.register}</code>
+      </pre>
+    </Layout>
+  );
+};
 
-export default withRouter(WelcomePage)
+export default withRouter(WelcomePage);

@@ -1,5 +1,5 @@
-import { createGlobalStyle, css } from 'styled-components/macro'
-import { darken } from 'polished'
+import { createGlobalStyle, css } from 'styled-components/macro';
+import { darken } from 'polished';
 import {
   ResponsiveValue,
   TLengthStyledSystem,
@@ -11,10 +11,10 @@ import {
   BorderRightProps,
   BorderBottomProps,
   BorderLeftProps
-} from 'styled-system'
-import * as CSS from 'csstype'
+} from 'styled-system';
+import * as CSS from 'csstype';
 
-export type ValuesOf<T extends any[]> = T[number]
+export type ValuesOf<T extends any[]> = T[number];
 
 export const colors = {
   primary: '#4e67eb',
@@ -55,7 +55,7 @@ export const colors = {
     'rgba(255,255,255,.9)',
     'rgba(255,255,255)'
   ]
-}
+};
 
 const colorModes: Modes = {
   light: {
@@ -68,38 +68,38 @@ const colorModes: Modes = {
     bg: '#131217',
     secondary: '#47444e'
   }
-}
+};
 
-export type DefaultVariants = 'default' | 'primary' | 'secondary'
+export type DefaultVariants = 'default' | 'primary' | 'secondary';
 
 export type ColorProps = {
-  color?: ResponsiveValue<keyof ColorMode> | CSS.ColorProperty
-  bg?: ResponsiveValue<keyof ColorMode> | CSS.ColorProperty
-  opacity?: ResponsiveValue<CSS.GlobalsNumber>
-}
+  color?: ResponsiveValue<keyof ColorMode> | CSS.ColorProperty;
+  bg?: ResponsiveValue<keyof ColorMode> | CSS.ColorProperty;
+  opacity?: ResponsiveValue<CSS.GlobalsNumber>;
+};
 
 export const modes = [
   'light',
   'dark'
   // more than two modes can follow...
-]
+];
 
 export interface Modes {
-  light: ColorMode
-  dark: ColorMode
+  light: ColorMode;
+  dark: ColorMode;
 }
 
 export type ColorMode = {
-  text: string
-  bg: string
-  secondary: string
-}
+  text: string;
+  bg: string;
+  secondary: string;
+};
 
-export type Mode = keyof Modes
-export type BaseColors = typeof colors
-export type Colors = BaseColors & Modes[Mode]
-export type GetColors = (mode: Mode) => Colors
-export type GetTheme = (mode: Mode) => Theme
+export type Mode = keyof Modes;
+export type BaseColors = typeof colors;
+export type Colors = BaseColors & Modes[Mode];
+export type GetColors = (mode: Mode) => Colors;
+export type GetTheme = (mode: Mode) => Theme;
 
 /**
  * breakpoints: number[];
@@ -108,19 +108,19 @@ export type GetTheme = (mode: Mode) => Theme
 // eslint-disable-next-line @typescript-eslint/no-use-before-define
 
 export interface Theme {
-  colors: ColorMode
+  colors: ColorMode;
 }
 
 export interface ThemeProps {
-  theme?: Theme
+  theme?: Theme;
 }
 export const layout = {
   navbarHeight: 35,
   sidebarWidth: 300
-}
-export const breakpoints = [32, 48, 64]
-export const space = [0, 4, 8, 16, 32, 64, 128, 256, 512]
-export const fontSizes = [12, 14, 16, 20, 24, 36, 48, 80, 96]
+};
+export const breakpoints = [32, 48, 64];
+export const space = [0, 4, 8, 16, 32, 64, 128, 256, 512];
+export const fontSizes = [12, 14, 16, 20, 24, 36, 48, 80, 96];
 export const borders = [
   0,
   '1px solid',
@@ -129,11 +129,11 @@ export const borders = [
   '8px solid',
   '16px solid',
   '32px solid'
-]
+];
 
-export const fontWeights = [100, 200, 300, 400, 500, 600, 700, 800, 900]
+export const fontWeights = [100, 200, 300, 400, 500, 600, 700, 800, 900];
 
-export type Borders = ValuesOf<typeof borders>
+export type Borders = ValuesOf<typeof borders>;
 
 /**
  * The border CSS property sets an element's border. It's a shorthand for border-width, border-style,
@@ -149,10 +149,10 @@ export type BorderProps<TLength = TLengthStyledSystem> = BorderWidthProps &
   BorderRightProps &
   BorderBottomProps &
   BorderLeftProps & {
-    border?: Borders & ResponsiveValue<CSS.BorderProperty<TLength>>
-    borderX?: Borders & ResponsiveValue<CSS.BorderProperty<TLength>>
-    borderY?: Borders & ResponsiveValue<CSS.BorderProperty<TLength>>
-  }
+    border?: Borders & ResponsiveValue<CSS.BorderProperty<TLength>>;
+    borderX?: Borders & ResponsiveValue<CSS.BorderProperty<TLength>>;
+    borderY?: Borders & ResponsiveValue<CSS.BorderProperty<TLength>>;
+  };
 
 export const baseTheme = {
   layout,
@@ -193,14 +193,14 @@ export const baseTheme = {
       secondary: '#47444e'
     }
   }
-}
+};
 
-const getColors: GetColors = (mode) => ({ ...colors, ...colorModes[mode] })
-export const getTheme: GetTheme = (mode) => ({
+const getColors: GetColors = mode => ({ ...colors, ...colorModes[mode] });
+export const getTheme: GetTheme = mode => ({
   ...baseTheme,
   mode,
   colors: getColors(mode)
-})
+});
 
 export const GlobalStyle = createGlobalStyle`
   html, body {
@@ -214,6 +214,6 @@ export const GlobalStyle = createGlobalStyle`
     font-size: 16px;
     background-color:${({ theme }: { theme: Theme }) => theme.colors.bg};
   }
-`
+`;
 
-export default baseTheme
+export default baseTheme;

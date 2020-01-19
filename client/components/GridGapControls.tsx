@@ -1,35 +1,35 @@
-import React, { FC, ChangeEvent, KeyboardEvent } from 'react'
-import styled from 'styled-components/macro'
-import { useStoreActions } from '../store'
-import { availableGridGapUnits, GridGap } from '../store/grid'
-import Select from './Select'
-import { Input } from './common/Input'
+import React, { FC, ChangeEvent, KeyboardEvent } from 'react';
+import styled from 'styled-components/macro';
+import { useStoreActions } from '../store';
+import { availableGridGapUnits, GridGap } from '../store/grid';
+import Select from './Select';
+import { Input } from './common/Input';
 
 const GridGapControl: FC<GridGap> = ({ type, amount, unit }) => {
-  const { updateGridGap } = useStoreActions((actions) => actions.grid)
+  const { updateGridGap } = useStoreActions(actions => actions.grid);
 
-  const handleChange: (event: ChangeEvent<HTMLInputElement>) => void = (
-    event
-  ) => {
+  const handleChange: (
+    event: ChangeEvent<HTMLInputElement>
+  ) => void = event => {
     // event.preventDefault();
-    const { name, value } = event.currentTarget
-    updateGridGap({ type, [name]: value })
-    event.persist()
-  }
+    const { name, value } = event.currentTarget;
+    updateGridGap({ type, [name]: value });
+    event.persist();
+  };
 
-  const handleKeyDown: (event: KeyboardEvent<HTMLInputElement>) => void = (
-    event
-  ) => {
-    const { name, value } = event.currentTarget
+  const handleKeyDown: (
+    event: KeyboardEvent<HTMLInputElement>
+  ) => void = event => {
+    const { name, value } = event.currentTarget;
     if (event.key === 'Enter' || event.key === 'Tab')
-      updateGridGap({ type, [name]: value })
-    event.persist()
-  }
+      updateGridGap({ type, [name]: value });
+    event.persist();
+  };
 
   const handleUnitChange: (
     event: React.ChangeEvent<HTMLSelectElement>
   ) => void = ({ currentTarget: { name, value } }) =>
-    updateGridGap({ type, amount, [name]: value })
+    updateGridGap({ type, amount, [name]: value });
 
   return (
     <Wrapper>
@@ -48,14 +48,14 @@ const GridGapControl: FC<GridGap> = ({ type, amount, unit }) => {
         onChange={handleUnitChange}
       />
     </Wrapper>
-  )
-}
+  );
+};
 
-export default GridGapControl
+export default GridGapControl;
 
 const Wrapper = styled.div`
   /* display: flex;
   align-content: center;
   align-items: center;
   justify-content: stretch; */
-`
+`;

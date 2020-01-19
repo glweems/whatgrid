@@ -1,5 +1,5 @@
 declare global {
   interface Window {
-    React: any
+    React: any;
   }
 }

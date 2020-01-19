@@ -1,12 +1,12 @@
-import React from 'react'
-import NextLink from 'next/link'
-import { Text } from 'rebass/styled-components'
+import React from 'react';
+import NextLink from 'next/link';
+import { Text } from 'rebass/styled-components';
 
-import { A } from './A'
+import { A } from './A';
 
 interface Props {
-  to: string
-  text?: string
+  to: string;
+  text?: string;
 }
 
 export const Link: React.FC<Props> = ({ to, children, text }) => {
@@ -15,12 +15,12 @@ export const Link: React.FC<Props> = ({ to, children, text }) => {
       <NextLink href={to}>
         <A>{children}</A>
       </NextLink>
-    )
+    );
   return (
     <NextLink href={to}>
       <A>
         <Text>{text}</Text>
       </A>
     </NextLink>
-  )
-}
+  );
+};

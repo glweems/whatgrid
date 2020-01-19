@@ -1,48 +1,29 @@
-import App from 'next/app'
-import React from 'react'
-import gql from 'graphql-tag'
-import store from '../store'
-import withApollo from '../apollo/withApolloClient'
-import sessionModal from '../store/session'
-import ContextProvider from '../context'
+/* eslint-disable no-return-assign */
+/* eslint-disable no-extra-boolean-cast */
+import App from 'next/app';
+import React from 'react';
+import withApollo from '../apollo/withApolloClient';
 
-class MyApp extends App<any, any, any> {
-  componentWillMount() {
-    store.addModel('session', sessionModal)
-    this.props.apolloClient
-      .query({
-        query: gql`
-          query Me {
-            me {
-              id
-              email
-              username
-            }
-          }
-        `
-      })
-      .then(({ data: { me } }) => {
-        if (me !== null)
-          store.dispatch.session.setSession({
-            ...me,
-            authenticated: true
-          })
-        else store.dispatch.session.clearSession()
-      })
-      .catch(() => store.dispatch.session.clearSession())
-  }
+import { Client } from '../apollo/types';
+
+interface Props {
+  apolloClient: Client;
+  registering: boolean;
+  login: boolean;
+}
+
+class MyApp extends App<Props, any, any> {
+  subtitle: any;
 
   render() {
-    const { Component, pageProps, apolloClient } = this.props
+    const { Component, pageProps } = this.props;
 
-    return (
-      <ContextProvider store={store} apolloClient={apolloClient}>
-        <Component {...pageProps} />
-      </ContextProvider>
-    )
+    // if (Boolean(registering)) return <p>hello</p>
+
+    return <Component {...pageProps} />;
   }
 }
 
 // MyApp.displayName = 'WhatGridApp'
 
-export default withApollo(MyApp)
+export default withApollo(MyApp);

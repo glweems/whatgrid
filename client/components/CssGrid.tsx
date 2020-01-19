@@ -1,12 +1,12 @@
-import React from 'react'
-import styled from 'styled-components/macro'
-import { GridItems } from './GridItems'
-import { useStoreState } from '../store'
+import React from 'react';
+import styled from 'styled-components/macro';
+import { GridItems } from './GridItems';
+import { useStoreState } from '../store';
 
 export default () => {
   const { gridTemplateRows, gridTemplateColumns, gridGapCss } = useStoreState(
     ({ grid }) => grid
-  )
+  );
   return (
     <CssGrid
       className="CssGrid"
@@ -16,8 +16,8 @@ export default () => {
     >
       <GridItems />
     </CssGrid>
-  )
-}
+  );
+};
 
 const CssGrid = styled.div<{ columns: string; rows: string; gap: string }>`
   display: grid;
@@ -26,4 +26,4 @@ const CssGrid = styled.div<{ columns: string; rows: string; gap: string }>`
   gap: ${({ gap }) => gap};
   width: 100%;
   height: 100%;
-`
+`;

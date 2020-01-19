@@ -1,7 +1,7 @@
-import React from 'react'
-import styled, { keyframes } from 'styled-components'
+import React from 'react';
+import styled, { keyframes } from 'styled-components';
 
-type Props = {}
+type Props = {};
 
 export const Ripple: React.FC<Props> = () => {
   return (
@@ -11,8 +11,8 @@ export const Ripple: React.FC<Props> = () => {
         <div />
       </div>
     </Wrapper>
-  )
-}
+  );
+};
 
 const rotate = keyframes`
   0% {
@@ -29,7 +29,7 @@ const rotate = keyframes`
     height: 72px;
     opacity: 0;
   }
-`
+`;
 
 const Wrapper = styled.div`
   .lds-ripple {
@@ -48,4 +48,4 @@ const Wrapper = styled.div`
   .lds-ripple div:nth-child(2) {
     animation-delay: -0.5s;
   }
-`
+`;

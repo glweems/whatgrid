@@ -1,29 +1,18 @@
 /* eslint-disable no-console */
-import {
-  ApolloClient,
-  InMemoryCache,
-  NormalizedCacheObject
-} from 'apollo-boost'
-import { setContext } from 'apollo-link-context'
-import { createHttpLink, HttpLink } from 'apollo-link-http'
-import Cookies from 'js-cookie'
-import fetch from 'isomorphic-unfetch'
-import { onError } from 'apollo-link-error'
-import isBrowser from './isBrowser'
-import { Client } from './types'
-
-const apolloClient: ApolloClient<NormalizedCacheObject> | null = null
-
-// Polyfill fetch() on the server (used by apollo-client)
+import { ApolloClient, InMemoryCache } from 'apollo-boost';
+import { setContext } from 'apollo-link-context';
+import { HttpLink } from 'apollo-link-http';
+import fetch from 'isomorphic-unfetch';
+import { Client } from './types';
 
 interface Options {
-  getToken: () => string
+  getToken: () => string;
 }
 
 const createApolloClient = (initialState = {}, { getToken }): Client => {
   const fetchOptions = {
     agent: null
-  }
+  };
 
   // If you are using a https_proxy, add fetchOptions with 'https-proxy-agent' agent instance
   // 'https-proxy-agent' is required here because it's a sever-side only module
@@ -32,7 +21,7 @@ const createApolloClient = (initialState = {}, { getToken }): Client => {
       // eslint-disable-next-line global-require
       fetchOptions.agent = new (require('https-proxy-agent'))(
         process.env.https_proxy
-      )
+      );
     }
   }
 
@@ -41,25 +30,25 @@ const createApolloClient = (initialState = {}, { getToken }): Client => {
     credentials: 'include',
     fetch,
     fetchOptions
-  })
+  });
 
   const authLink = setContext((_request, { headers }) => {
-    const token = getToken()
+    const token = getToken();
 
     return {
       headers: {
         ...headers,
         authorization: token ? `Bearer ${token}` : ''
       }
-    }
-  })
+    };
+  });
 
   // Check out https://github.com/zeit/next.js/pull/4611 if you want to use the AWSAppSyncClient
   return new ApolloClient({
     ssrMode: typeof window === 'undefined', // Disables forceFetch on the server (so queries are only run once)
     link: authLink.concat(httpLink),
     cache: new InMemoryCache().restore(initialState)
-  })
-}
+  });
+};
 
-export default createApolloClient
+export default createApolloClient;

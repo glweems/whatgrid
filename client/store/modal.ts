@@ -1,12 +1,13 @@
-import { Action, action } from 'easy-peasy'
+import { Action, action } from 'easy-peasy';
 
 export type ModalModel = {
-  open: boolean
-  toggle: Action<ModalModel>
-  setModal: Action<ModalModel, boolean>
-  Component: React.ReactNode | null
-  setComponent: Action<ModalModel, React.ReactNode>
-}
+  open: boolean;
+  toggle: Action<ModalModel>;
+  openModal: Action<ModalModel>;
+  closeModal: Action<ModalModel>;
+  Component: React.ReactNode | null;
+  setComponent: Action<ModalModel, React.ReactNode>;
+};
 
 const modalModel: ModalModel = {
   open: false,
@@ -14,15 +15,24 @@ const modalModel: ModalModel = {
     ...state,
     open: !open
   })),
-  setModal: action((state, payload) => ({
+
+  openModal: action(state => ({
     ...state,
-    open: payload
+    open: true
   })),
+
+  closeModal: action(state => {
+    return {
+      ...state,
+      open: false
+    };
+  }),
+
   Component: 'hello',
   setComponent: action((state, payload) => ({
     ...state,
     Component: payload
   }))
-}
+};
 
-export default modalModel
+export default modalModel;

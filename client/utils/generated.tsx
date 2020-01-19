@@ -1,119 +1,118 @@
-import gql from 'graphql-tag'
-import * as ApolloReactCommon from '@apollo/react-common'
-import * as React from 'react'
-import * as ApolloReactComponents from '@apollo/react-components'
-import * as ApolloReactHoc from '@apollo/react-hoc'
-import * as ApolloReactHooks from '@apollo/react-hooks'
+import gql from 'graphql-tag';
+import * as ApolloReactCommon from '@apollo/react-common';
+import * as React from 'react';
+import * as ApolloReactComponents from '@apollo/react-components';
+import * as ApolloReactHoc from '@apollo/react-hoc';
+import * as ApolloReactHooks from '@apollo/react-hooks';
 
-export type Maybe<T> = T | null
-export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>
+export type Maybe<T> = T | null;
+export type Omit<T, K extends keyof T> = Pick<T, Exclude<keyof T, K>>;
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: string
-  String: string
-  Boolean: boolean
-  Int: number
-  Float: number
-  DateTime: any
-  Id: any
-}
+  ID: string;
+  String: string;
+  Boolean: boolean;
+  Int: number;
+  Float: number;
+  DateTime: any;
+  Id: any;
+};
 
 export type AuthPayload = {
-  token: Scalars['String']
-  user: User
-}
+  token: Scalars['String'];
+  user: User;
+};
 
 export type Grid = {
-  id: Scalars['ID']
-  createdAt: Scalars['DateTime']
-  updatedAt: Scalars['DateTime']
-  published: Scalars['Boolean']
-  name?: Maybe<Scalars['String']>
-  rows?: Maybe<Scalars['Int']>
-  columns?: Maybe<Scalars['Int']>
-  gridTemplateColumns?: Maybe<Scalars['String']>
-  gridTemplateRows?: Maybe<Scalars['String']>
-  author: User
-}
+  id: Scalars['ID'];
+  createdAt: Scalars['DateTime'];
+  updatedAt: Scalars['DateTime'];
+  published: Scalars['Boolean'];
+  name?: Maybe<Scalars['String']>;
+  rows?: Maybe<Scalars['Int']>;
+  columns?: Maybe<Scalars['Int']>;
+  gridTemplateColumns?: Maybe<Scalars['String']>;
+  gridTemplateRows?: Maybe<Scalars['String']>;
+  author: User;
+};
 
 export type Mutation = {
-  signup: AuthPayload
-  login: AuthPayload
-  logout?: Maybe<SuccessMessage>
-}
+  signup: AuthPayload;
+  login: AuthPayload;
+  logout?: Maybe<SuccessMessage>;
+};
 
 export type MutationSignupArgs = {
-  email: Scalars['String']
-  password: Scalars['String']
-  username?: Maybe<Scalars['String']>
-}
+  email: Scalars['String'];
+  password: Scalars['String'];
+  username?: Maybe<Scalars['String']>;
+};
 
 export type MutationLoginArgs = {
-  email: Scalars['String']
-  password: Scalars['String']
-}
+  email: Scalars['String'];
+  password: Scalars['String'];
+};
 
 export type Query = {
-  grids: Array<Grid>
-  grid?: Maybe<Grid>
-  user?: Maybe<User>
-  users: Array<User>
-  me?: Maybe<User>
-}
+  grids: Array<Grid>;
+  grid?: Maybe<Grid>;
+  user?: Maybe<User>;
+  users: Array<User>;
+  me?: Maybe<User>;
+};
 
 export type QueryGridArgs = {
-  id: Scalars['ID']
-}
+  id: Scalars['ID'];
+};
 
 export type QueryUserArgs = {
-  id?: Maybe<Scalars['ID']>
-  email?: Maybe<Scalars['String']>
-}
+  id?: Maybe<Scalars['ID']>;
+  email?: Maybe<Scalars['String']>;
+};
 
 export type QueryUsersArgs = {
-  searchString?: Maybe<Scalars['String']>
-}
+  searchString?: Maybe<Scalars['String']>;
+};
 
 export type SuccessMessage = {
-  message?: Maybe<Scalars['String']>
-}
+  message?: Maybe<Scalars['String']>;
+};
 
 export type User = {
-  id: Scalars['ID']
-  email: Scalars['String']
-  name?: Maybe<Scalars['String']>
-  firstName?: Maybe<Scalars['String']>
-  lastName?: Maybe<Scalars['String']>
-  username?: Maybe<Scalars['String']>
-  phoneNumber?: Maybe<Scalars['Int']>
-  grids: Array<Grid>
-  createdAt: Scalars['DateTime']
-  updatedAt: Scalars['DateTime']
-  password?: Maybe<Scalars['String']>
-}
+  id: Scalars['ID'];
+  email: Scalars['String'];
+  firstName?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
+  username?: Maybe<Scalars['String']>;
+  phoneNumber?: Maybe<Scalars['Int']>;
+  grids: Array<Grid>;
+  createdAt: Scalars['DateTime'];
+  updatedAt: Scalars['DateTime'];
+  password?: Maybe<Scalars['String']>;
+};
 
 export type LoginMutationVariables = {
-  email: Scalars['String']
-  password: Scalars['String']
-}
+  email: Scalars['String'];
+  password: Scalars['String'];
+};
 
 export type LoginMutation = {
-  login: Pick<AuthPayload, 'token'> & { user: UserFieldsFragment }
-}
+  login: Pick<AuthPayload, 'token'> & { user: UserFieldsFragment };
+};
 
-export type LogoutMutationVariables = {}
+export type LogoutMutationVariables = {};
 
-export type LogoutMutation = { logout: Maybe<Pick<SuccessMessage, 'message'>> }
+export type LogoutMutation = { logout: Maybe<Pick<SuccessMessage, 'message'>> };
 
 export type SignupMutationVariables = {
-  email: Scalars['String']
-  password: Scalars['String']
-  username?: Maybe<Scalars['String']>
-}
+  email: Scalars['String'];
+  password: Scalars['String'];
+  username?: Maybe<Scalars['String']>;
+};
 
 export type SignupMutation = {
-  signup: Pick<AuthPayload, 'token'> & { user: UserFieldsFragment }
-}
+  signup: Pick<AuthPayload, 'token'> & { user: UserFieldsFragment };
+};
 
 export type UserFieldsFragment = Pick<
   User,
@@ -121,7 +120,6 @@ export type UserFieldsFragment = Pick<
   | 'createdAt'
   | 'updatedAt'
   | 'email'
-  | 'name'
   | 'firstName'
   | 'lastName'
   | 'username'
@@ -140,16 +138,16 @@ export type UserFieldsFragment = Pick<
       | 'gridTemplateColumns'
       | 'gridTemplateRows'
     >
-  >
-}
+  >;
+};
 
-export type MeQueryVariables = {}
+export type MeQueryVariables = {};
 
-export type MeQuery = { me: Maybe<Pick<User, 'id' | 'email' | 'username'>> }
+export type MeQuery = { me: Maybe<Pick<User, 'id' | 'email' | 'username'>> };
 
 export type ProfileQueryVariables = {
-  id: Scalars['ID']
-}
+  id: Scalars['ID'];
+};
 
 export type ProfileQuery = {
   profile: Maybe<
@@ -159,7 +157,6 @@ export type ProfileQuery = {
       | 'createdAt'
       | 'updatedAt'
       | 'email'
-      | 'name'
       | 'firstName'
       | 'lastName'
       | 'username'
@@ -178,15 +175,15 @@ export type ProfileQuery = {
           | 'gridTemplateColumns'
           | 'gridTemplateRows'
         >
-      >
+      >;
     }
-  >
-  me: Maybe<Pick<User, 'id'>>
-}
+  >;
+  me: Maybe<Pick<User, 'id'>>;
+};
 
 export type UserQueryVariables = {
-  id?: Maybe<Scalars['ID']>
-}
+  id?: Maybe<Scalars['ID']>;
+};
 
 export type UserQuery = {
   user: Maybe<
@@ -196,7 +193,6 @@ export type UserQuery = {
       | 'createdAt'
       | 'updatedAt'
       | 'email'
-      | 'name'
       | 'firstName'
       | 'lastName'
       | 'username'
@@ -215,14 +211,14 @@ export type UserQuery = {
           | 'gridTemplateColumns'
           | 'gridTemplateRows'
         >
-      >
+      >;
     }
-  >
-}
+  >;
+};
 
-export type UsersQueryVariables = {}
+export type UsersQueryVariables = {};
 
-export type UsersQuery = { users: Array<Pick<User, 'id' | 'email'>> }
+export type UsersQuery = { users: Array<Pick<User, 'id' | 'email'>> };
 
 export const UserFieldsFragmentDoc = gql`
   fragment userFields on User {
@@ -230,7 +226,6 @@ export const UserFieldsFragmentDoc = gql`
     createdAt
     updatedAt
     email
-    name
     firstName
     lastName
     username
@@ -247,7 +242,7 @@ export const UserFieldsFragmentDoc = gql`
       gridTemplateRows
     }
   }
-`
+`;
 export const LoginDocument = gql`
   mutation Login($email: String!, $password: String!) {
     login(email: $email, password: $password) {
@@ -258,29 +253,29 @@ export const LoginDocument = gql`
     }
   }
   ${UserFieldsFragmentDoc}
-`
+`;
 export type LoginMutationFn = ApolloReactCommon.MutationFunction<
   LoginMutation,
   LoginMutationVariables
->
+>;
 export type LoginComponentProps = Omit<
   ApolloReactComponents.MutationComponentOptions<
     LoginMutation,
     LoginMutationVariables
   >,
   'mutation'
->
+>;
 
 export const LoginComponent = (props: LoginComponentProps) => (
   <ApolloReactComponents.Mutation<LoginMutation, LoginMutationVariables>
     mutation={LoginDocument}
     {...props}
   />
-)
+);
 
 export type LoginProps<TChildProps = {}> =
   | ApolloReactHoc.MutateProps<LoginMutation, LoginMutationVariables>
-  | TChildProps
+  | TChildProps;
 export function withLogin<TProps, TChildProps = {}>(
   operationOptions?: ApolloReactHoc.OperationOption<
     TProps,
@@ -297,7 +292,7 @@ export function withLogin<TProps, TChildProps = {}>(
   >(LoginDocument, {
     alias: 'login',
     ...operationOptions
-  })
+  });
 }
 
 /**
@@ -327,45 +322,45 @@ export function useLoginMutation(
   return ApolloReactHooks.useMutation<LoginMutation, LoginMutationVariables>(
     LoginDocument,
     baseOptions
-  )
+  );
 }
-export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>
+export type LoginMutationHookResult = ReturnType<typeof useLoginMutation>;
 export type LoginMutationResult = ApolloReactCommon.MutationResult<
   LoginMutation
->
+>;
 export type LoginMutationOptions = ApolloReactCommon.BaseMutationOptions<
   LoginMutation,
   LoginMutationVariables
->
+>;
 export const LogoutDocument = gql`
   mutation Logout {
     logout {
       message
     }
   }
-`
+`;
 export type LogoutMutationFn = ApolloReactCommon.MutationFunction<
   LogoutMutation,
   LogoutMutationVariables
->
+>;
 export type LogoutComponentProps = Omit<
   ApolloReactComponents.MutationComponentOptions<
     LogoutMutation,
     LogoutMutationVariables
   >,
   'mutation'
->
+>;
 
 export const LogoutComponent = (props: LogoutComponentProps) => (
   <ApolloReactComponents.Mutation<LogoutMutation, LogoutMutationVariables>
     mutation={LogoutDocument}
     {...props}
   />
-)
+);
 
 export type LogoutProps<TChildProps = {}> =
   | ApolloReactHoc.MutateProps<LogoutMutation, LogoutMutationVariables>
-  | TChildProps
+  | TChildProps;
 export function withLogout<TProps, TChildProps = {}>(
   operationOptions?: ApolloReactHoc.OperationOption<
     TProps,
@@ -382,7 +377,7 @@ export function withLogout<TProps, TChildProps = {}>(
   >(LogoutDocument, {
     alias: 'logout',
     ...operationOptions
-  })
+  });
 }
 
 /**
@@ -410,16 +405,16 @@ export function useLogoutMutation(
   return ApolloReactHooks.useMutation<LogoutMutation, LogoutMutationVariables>(
     LogoutDocument,
     baseOptions
-  )
+  );
 }
-export type LogoutMutationHookResult = ReturnType<typeof useLogoutMutation>
+export type LogoutMutationHookResult = ReturnType<typeof useLogoutMutation>;
 export type LogoutMutationResult = ApolloReactCommon.MutationResult<
   LogoutMutation
->
+>;
 export type LogoutMutationOptions = ApolloReactCommon.BaseMutationOptions<
   LogoutMutation,
   LogoutMutationVariables
->
+>;
 export const SignupDocument = gql`
   mutation Signup($email: String!, $password: String!, $username: String) {
     signup(email: $email, password: $password, username: $username) {
@@ -430,29 +425,29 @@ export const SignupDocument = gql`
     }
   }
   ${UserFieldsFragmentDoc}
-`
+`;
 export type SignupMutationFn = ApolloReactCommon.MutationFunction<
   SignupMutation,
   SignupMutationVariables
->
+>;
 export type SignupComponentProps = Omit<
   ApolloReactComponents.MutationComponentOptions<
     SignupMutation,
     SignupMutationVariables
   >,
   'mutation'
->
+>;
 
 export const SignupComponent = (props: SignupComponentProps) => (
   <ApolloReactComponents.Mutation<SignupMutation, SignupMutationVariables>
     mutation={SignupDocument}
     {...props}
   />
-)
+);
 
 export type SignupProps<TChildProps = {}> =
   | ApolloReactHoc.MutateProps<SignupMutation, SignupMutationVariables>
-  | TChildProps
+  | TChildProps;
 export function withSignup<TProps, TChildProps = {}>(
   operationOptions?: ApolloReactHoc.OperationOption<
     TProps,
@@ -469,7 +464,7 @@ export function withSignup<TProps, TChildProps = {}>(
   >(SignupDocument, {
     alias: 'signup',
     ...operationOptions
-  })
+  });
 }
 
 /**
@@ -500,16 +495,16 @@ export function useSignupMutation(
   return ApolloReactHooks.useMutation<SignupMutation, SignupMutationVariables>(
     SignupDocument,
     baseOptions
-  )
+  );
 }
-export type SignupMutationHookResult = ReturnType<typeof useSignupMutation>
+export type SignupMutationHookResult = ReturnType<typeof useSignupMutation>;
 export type SignupMutationResult = ApolloReactCommon.MutationResult<
   SignupMutation
->
+>;
 export type SignupMutationOptions = ApolloReactCommon.BaseMutationOptions<
   SignupMutation,
   SignupMutationVariables
->
+>;
 export const MeDocument = gql`
   query Me {
     me {
@@ -518,22 +513,22 @@ export const MeDocument = gql`
       username
     }
   }
-`
+`;
 export type MeComponentProps = Omit<
   ApolloReactComponents.QueryComponentOptions<MeQuery, MeQueryVariables>,
   'query'
->
+>;
 
 export const MeComponent = (props: MeComponentProps) => (
   <ApolloReactComponents.Query<MeQuery, MeQueryVariables>
     query={MeDocument}
     {...props}
   />
-)
+);
 
 export type MeProps<TChildProps = {}> =
   | ApolloReactHoc.DataProps<MeQuery, MeQueryVariables>
-  | TChildProps
+  | TChildProps;
 export function withMe<TProps, TChildProps = {}>(
   operationOptions?: ApolloReactHoc.OperationOption<
     TProps,
@@ -550,7 +545,7 @@ export function withMe<TProps, TChildProps = {}>(
   >(MeDocument, {
     alias: 'me',
     ...operationOptions
-  })
+  });
 }
 
 /**
@@ -574,7 +569,7 @@ export function useMeQuery(
   return ApolloReactHooks.useQuery<MeQuery, MeQueryVariables>(
     MeDocument,
     baseOptions
-  )
+  );
 }
 export function useMeLazyQuery(
   baseOptions?: ApolloReactHooks.LazyQueryHookOptions<MeQuery, MeQueryVariables>
@@ -582,14 +577,14 @@ export function useMeLazyQuery(
   return ApolloReactHooks.useLazyQuery<MeQuery, MeQueryVariables>(
     MeDocument,
     baseOptions
-  )
+  );
 }
-export type MeQueryHookResult = ReturnType<typeof useMeQuery>
-export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>
+export type MeQueryHookResult = ReturnType<typeof useMeQuery>;
+export type MeLazyQueryHookResult = ReturnType<typeof useMeLazyQuery>;
 export type MeQueryResult = ApolloReactCommon.QueryResult<
   MeQuery,
   MeQueryVariables
->
+>;
 export const ProfileDocument = gql`
   query Profile($id: ID!) {
     profile: user(id: $id) {
@@ -597,7 +592,6 @@ export const ProfileDocument = gql`
       createdAt
       updatedAt
       email
-      name
       firstName
       lastName
       username
@@ -618,7 +612,7 @@ export const ProfileDocument = gql`
       id
     }
   }
-`
+`;
 export type ProfileComponentProps = Omit<
   ApolloReactComponents.QueryComponentOptions<
     ProfileQuery,
@@ -626,18 +620,18 @@ export type ProfileComponentProps = Omit<
   >,
   'query'
 > &
-  ({ variables: ProfileQueryVariables; skip?: boolean } | { skip: boolean })
+  ({ variables: ProfileQueryVariables; skip?: boolean } | { skip: boolean });
 
 export const ProfileComponent = (props: ProfileComponentProps) => (
   <ApolloReactComponents.Query<ProfileQuery, ProfileQueryVariables>
     query={ProfileDocument}
     {...props}
   />
-)
+);
 
 export type ProfileProps<TChildProps = {}> =
   | ApolloReactHoc.DataProps<ProfileQuery, ProfileQueryVariables>
-  | TChildProps
+  | TChildProps;
 export function withProfile<TProps, TChildProps = {}>(
   operationOptions?: ApolloReactHoc.OperationOption<
     TProps,
@@ -654,7 +648,7 @@ export function withProfile<TProps, TChildProps = {}>(
   >(ProfileDocument, {
     alias: 'profile',
     ...operationOptions
-  })
+  });
 }
 
 /**
@@ -682,7 +676,7 @@ export function useProfileQuery(
   return ApolloReactHooks.useQuery<ProfileQuery, ProfileQueryVariables>(
     ProfileDocument,
     baseOptions
-  )
+  );
 }
 export function useProfileLazyQuery(
   baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
@@ -693,14 +687,14 @@ export function useProfileLazyQuery(
   return ApolloReactHooks.useLazyQuery<ProfileQuery, ProfileQueryVariables>(
     ProfileDocument,
     baseOptions
-  )
+  );
 }
-export type ProfileQueryHookResult = ReturnType<typeof useProfileQuery>
-export type ProfileLazyQueryHookResult = ReturnType<typeof useProfileLazyQuery>
+export type ProfileQueryHookResult = ReturnType<typeof useProfileQuery>;
+export type ProfileLazyQueryHookResult = ReturnType<typeof useProfileLazyQuery>;
 export type ProfileQueryResult = ApolloReactCommon.QueryResult<
   ProfileQuery,
   ProfileQueryVariables
->
+>;
 export const UserDocument = gql`
   query User($id: ID) {
     user(id: $id) {
@@ -708,7 +702,6 @@ export const UserDocument = gql`
       createdAt
       updatedAt
       email
-      name
       firstName
       lastName
       username
@@ -726,22 +719,22 @@ export const UserDocument = gql`
       }
     }
   }
-`
+`;
 export type UserComponentProps = Omit<
   ApolloReactComponents.QueryComponentOptions<UserQuery, UserQueryVariables>,
   'query'
->
+>;
 
 export const UserComponent = (props: UserComponentProps) => (
   <ApolloReactComponents.Query<UserQuery, UserQueryVariables>
     query={UserDocument}
     {...props}
   />
-)
+);
 
 export type UserProps<TChildProps = {}> =
   | ApolloReactHoc.DataProps<UserQuery, UserQueryVariables>
-  | TChildProps
+  | TChildProps;
 export function withUser<TProps, TChildProps = {}>(
   operationOptions?: ApolloReactHoc.OperationOption<
     TProps,
@@ -758,7 +751,7 @@ export function withUser<TProps, TChildProps = {}>(
   >(UserDocument, {
     alias: 'user',
     ...operationOptions
-  })
+  });
 }
 
 /**
@@ -783,7 +776,7 @@ export function useUserQuery(
   return ApolloReactHooks.useQuery<UserQuery, UserQueryVariables>(
     UserDocument,
     baseOptions
-  )
+  );
 }
 export function useUserLazyQuery(
   baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
@@ -794,14 +787,14 @@ export function useUserLazyQuery(
   return ApolloReactHooks.useLazyQuery<UserQuery, UserQueryVariables>(
     UserDocument,
     baseOptions
-  )
+  );
 }
-export type UserQueryHookResult = ReturnType<typeof useUserQuery>
-export type UserLazyQueryHookResult = ReturnType<typeof useUserLazyQuery>
+export type UserQueryHookResult = ReturnType<typeof useUserQuery>;
+export type UserLazyQueryHookResult = ReturnType<typeof useUserLazyQuery>;
 export type UserQueryResult = ApolloReactCommon.QueryResult<
   UserQuery,
   UserQueryVariables
->
+>;
 export const UsersDocument = gql`
   query Users {
     users {
@@ -809,22 +802,22 @@ export const UsersDocument = gql`
       email
     }
   }
-`
+`;
 export type UsersComponentProps = Omit<
   ApolloReactComponents.QueryComponentOptions<UsersQuery, UsersQueryVariables>,
   'query'
->
+>;
 
 export const UsersComponent = (props: UsersComponentProps) => (
   <ApolloReactComponents.Query<UsersQuery, UsersQueryVariables>
     query={UsersDocument}
     {...props}
   />
-)
+);
 
 export type UsersProps<TChildProps = {}> =
   | ApolloReactHoc.DataProps<UsersQuery, UsersQueryVariables>
-  | TChildProps
+  | TChildProps;
 export function withUsers<TProps, TChildProps = {}>(
   operationOptions?: ApolloReactHoc.OperationOption<
     TProps,
@@ -841,7 +834,7 @@ export function withUsers<TProps, TChildProps = {}>(
   >(UsersDocument, {
     alias: 'users',
     ...operationOptions
-  })
+  });
 }
 
 /**
@@ -868,7 +861,7 @@ export function useUsersQuery(
   return ApolloReactHooks.useQuery<UsersQuery, UsersQueryVariables>(
     UsersDocument,
     baseOptions
-  )
+  );
 }
 export function useUsersLazyQuery(
   baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
@@ -879,11 +872,11 @@ export function useUsersLazyQuery(
   return ApolloReactHooks.useLazyQuery<UsersQuery, UsersQueryVariables>(
     UsersDocument,
     baseOptions
-  )
+  );
 }
-export type UsersQueryHookResult = ReturnType<typeof useUsersQuery>
-export type UsersLazyQueryHookResult = ReturnType<typeof useUsersLazyQuery>
+export type UsersQueryHookResult = ReturnType<typeof useUsersQuery>;
+export type UsersLazyQueryHookResult = ReturnType<typeof useUsersLazyQuery>;
 export type UsersQueryResult = ApolloReactCommon.QueryResult<
   UsersQuery,
   UsersQueryVariables
->
+>;

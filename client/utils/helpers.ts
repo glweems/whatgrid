@@ -1,5 +1,5 @@
 export function printCode(code: any) {
-  return JSON.stringify(code)
+  return JSON.stringify(code);
 }
 
 export const whoAmI = {
@@ -13,4 +13,4 @@ export const whoAmI = {
   username: undefined,
   phoneNumber: undefined,
   grids: undefined
-}
+};

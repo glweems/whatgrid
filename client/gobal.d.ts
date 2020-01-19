@@ -1,3 +1,3 @@
-declare module '@rebass/forms'
+declare module '@rebass/forms';
 
-type module = any
+type module = any;

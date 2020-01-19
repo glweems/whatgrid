@@ -1,18 +1,18 @@
-import React from 'react'
-import Layout from '../components/Layout'
-import { FPC } from '../@types'
+import React, { FC } from 'react';
+import Layout from '../components/Layout';
+import { FPC } from '../@types';
 
 interface Props {
-  id: any
+  id: any;
 }
 
 const DashboardPage: FPC<Props> = ({ id }) => {
-  return <Layout sidebar={<Sidebar />}>{id}</Layout>
-}
+  return <Layout sidebar={<Sidebar />}>{id}</Layout>;
+};
 
-DashboardPage.getInitialProps = async ({ client, query, rest }) => {
-  return { id: 12345 }
-}
+DashboardPage.getInitialProps = async () => {
+  return { id: 12345 };
+};
 
 const Sidebar: FC = () => (
   <div>
@@ -21,6 +21,6 @@ const Sidebar: FC = () => (
       <li key="asdf">settings</li>
     </ul>
   </div>
-)
+);
 
-export default DashboardPage
+export default DashboardPage;
