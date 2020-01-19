@@ -169,8 +169,6 @@ export type UserOrderByInput =
   | "updatedAt_DESC"
   | "email_ASC"
   | "email_DESC"
-  | "name_ASC"
-  | "name_DESC"
   | "password_ASC"
   | "password_DESC"
   | "firstName_ASC"
@@ -330,20 +328,6 @@ export interface UserWhereInput {
   email_not_starts_with?: Maybe<String>;
   email_ends_with?: Maybe<String>;
   email_not_ends_with?: Maybe<String>;
-  name?: Maybe<String>;
-  name_not?: Maybe<String>;
-  name_in?: Maybe<String[] | String>;
-  name_not_in?: Maybe<String[] | String>;
-  name_lt?: Maybe<String>;
-  name_lte?: Maybe<String>;
-  name_gt?: Maybe<String>;
-  name_gte?: Maybe<String>;
-  name_contains?: Maybe<String>;
-  name_not_contains?: Maybe<String>;
-  name_starts_with?: Maybe<String>;
-  name_not_starts_with?: Maybe<String>;
-  name_ends_with?: Maybe<String>;
-  name_not_ends_with?: Maybe<String>;
   password?: Maybe<String>;
   password_not?: Maybe<String>;
   password_in?: Maybe<String[] | String>;
@@ -440,7 +424,6 @@ export interface UserCreateOneWithoutGridsInput {
 export interface UserCreateWithoutGridsInput {
   id?: Maybe<ID_Input>;
   email: String;
-  name?: Maybe<String>;
   password: String;
   firstName?: Maybe<String>;
   lastName?: Maybe<String>;
@@ -467,7 +450,6 @@ export interface UserUpdateOneRequiredWithoutGridsInput {
 
 export interface UserUpdateWithoutGridsDataInput {
   email?: Maybe<String>;
-  name?: Maybe<String>;
   password?: Maybe<String>;
   firstName?: Maybe<String>;
   lastName?: Maybe<String>;
@@ -492,7 +474,6 @@ export interface GridUpdateManyMutationInput {
 export interface UserCreateInput {
   id?: Maybe<ID_Input>;
   email: String;
-  name?: Maybe<String>;
   password: String;
   firstName?: Maybe<String>;
   lastName?: Maybe<String>;
@@ -518,7 +499,6 @@ export interface GridCreateWithoutAuthorInput {
 
 export interface UserUpdateInput {
   email?: Maybe<String>;
-  name?: Maybe<String>;
   password?: Maybe<String>;
   firstName?: Maybe<String>;
   lastName?: Maybe<String>;
@@ -679,7 +659,6 @@ export interface GridUpdateManyDataInput {
 
 export interface UserUpdateManyMutationInput {
   email?: Maybe<String>;
-  name?: Maybe<String>;
   password?: Maybe<String>;
   firstName?: Maybe<String>;
   lastName?: Maybe<String>;
@@ -773,7 +752,6 @@ export interface User {
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
   email: String;
-  name?: String;
   password: String;
   firstName?: String;
   lastName?: String;
@@ -786,7 +764,6 @@ export interface UserPromise extends Promise<User>, Fragmentable {
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
   email: () => Promise<String>;
-  name: () => Promise<String>;
   password: () => Promise<String>;
   firstName: () => Promise<String>;
   lastName: () => Promise<String>;
@@ -810,7 +787,6 @@ export interface UserSubscription
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   email: () => Promise<AsyncIterator<String>>;
-  name: () => Promise<AsyncIterator<String>>;
   password: () => Promise<AsyncIterator<String>>;
   firstName: () => Promise<AsyncIterator<String>>;
   lastName: () => Promise<AsyncIterator<String>>;
@@ -834,7 +810,6 @@ export interface UserNullablePromise
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
   email: () => Promise<String>;
-  name: () => Promise<String>;
   password: () => Promise<String>;
   firstName: () => Promise<String>;
   lastName: () => Promise<String>;
@@ -1093,7 +1068,6 @@ export interface UserPreviousValues {
   createdAt: DateTimeOutput;
   updatedAt: DateTimeOutput;
   email: String;
-  name?: String;
   password: String;
   firstName?: String;
   lastName?: String;
@@ -1108,7 +1082,6 @@ export interface UserPreviousValuesPromise
   createdAt: () => Promise<DateTimeOutput>;
   updatedAt: () => Promise<DateTimeOutput>;
   email: () => Promise<String>;
-  name: () => Promise<String>;
   password: () => Promise<String>;
   firstName: () => Promise<String>;
   lastName: () => Promise<String>;
@@ -1123,7 +1096,6 @@ export interface UserPreviousValuesSubscription
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   updatedAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   email: () => Promise<AsyncIterator<String>>;
-  name: () => Promise<AsyncIterator<String>>;
   password: () => Promise<AsyncIterator<String>>;
   firstName: () => Promise<AsyncIterator<String>>;
   lastName: () => Promise<AsyncIterator<String>>;

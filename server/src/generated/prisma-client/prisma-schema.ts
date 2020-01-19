@@ -433,7 +433,6 @@ type User {
   createdAt: DateTime!
   updatedAt: DateTime!
   email: String!
-  name: String
   password: String!
   firstName: String
   lastName: String
@@ -451,7 +450,6 @@ type UserConnection {
 input UserCreateInput {
   id: ID
   email: String!
-  name: String
   password: String!
   firstName: String
   lastName: String
@@ -468,7 +466,6 @@ input UserCreateOneWithoutGridsInput {
 input UserCreateWithoutGridsInput {
   id: ID
   email: String!
-  name: String
   password: String!
   firstName: String
   lastName: String
@@ -490,8 +487,6 @@ enum UserOrderByInput {
   updatedAt_DESC
   email_ASC
   email_DESC
-  name_ASC
-  name_DESC
   password_ASC
   password_DESC
   firstName_ASC
@@ -509,7 +504,6 @@ type UserPreviousValues {
   createdAt: DateTime!
   updatedAt: DateTime!
   email: String!
-  name: String
   password: String!
   firstName: String
   lastName: String
@@ -537,7 +531,6 @@ input UserSubscriptionWhereInput {
 
 input UserUpdateInput {
   email: String
-  name: String
   password: String
   firstName: String
   lastName: String
@@ -548,7 +541,6 @@ input UserUpdateInput {
 
 input UserUpdateManyMutationInput {
   email: String
-  name: String
   password: String
   firstName: String
   lastName: String
@@ -565,7 +557,6 @@ input UserUpdateOneRequiredWithoutGridsInput {
 
 input UserUpdateWithoutGridsDataInput {
   email: String
-  name: String
   password: String
   firstName: String
   lastName: String
@@ -623,20 +614,6 @@ input UserWhereInput {
   email_not_starts_with: String
   email_ends_with: String
   email_not_ends_with: String
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
   password: String
   password_not: String
   password_in: [String!]

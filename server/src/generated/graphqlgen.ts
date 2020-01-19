@@ -560,7 +560,6 @@ export namespace UserResolvers {
     createdAt: (parent: User) => parent.createdAt,
     updatedAt: (parent: User) => parent.updatedAt,
     email: (parent: User) => parent.email,
-    name: (parent: User) => (parent.name === undefined ? null : parent.name),
     password: (parent: User) => parent.password,
     firstName: (parent: User) =>
       parent.firstName === undefined ? null : parent.firstName,
@@ -604,23 +603,6 @@ export namespace UserResolvers {
           ctx: Context,
           info: GraphQLResolveInfo
         ) => string | Promise<string>
-      }
-
-  export type NameResolver =
-    | ((
-        parent: User,
-        args: {},
-        ctx: Context,
-        info: GraphQLResolveInfo
-      ) => string | null | Promise<string | null>)
-    | {
-        fragment: string
-        resolve: (
-          parent: User,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo
-        ) => string | null | Promise<string | null>
       }
 
   export type FirstNameResolver =
@@ -792,23 +774,6 @@ export namespace UserResolvers {
             ctx: Context,
             info: GraphQLResolveInfo
           ) => string | Promise<string>
-        }
-
-    name:
-      | ((
-          parent: User,
-          args: {},
-          ctx: Context,
-          info: GraphQLResolveInfo
-        ) => string | null | Promise<string | null>)
-      | {
-          fragment: string
-          resolve: (
-            parent: User,
-            args: {},
-            ctx: Context,
-            info: GraphQLResolveInfo
-          ) => string | null | Promise<string | null>
         }
 
     firstName:

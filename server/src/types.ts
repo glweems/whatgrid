@@ -18,7 +18,6 @@ export interface User {
   createdAt: string
   updatedAt: string
   email: string
-  name: string | null
   password: string | null
   firstName: string | null
   lastName: string | null
@@ -28,10 +27,10 @@ export interface User {
 
 export interface Grid {
   id: string
+  name: string | null
   createdAt: string
   updatedAt: string
   published: boolean
-  name: string | null
   rows: number | null
   columns: number | null
   gridTemplateColumns: string | null
