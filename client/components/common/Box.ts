@@ -7,12 +7,17 @@ import {
   BorderProps,
   SpaceProps,
   ColorProps,
-  LayoutProps
+  LayoutProps,
+  borderRadius,
+  BorderRadiusProps
 } from 'styled-system';
 import { Theme } from '../../utils/theme';
 
-type Props = SpaceProps & ColorProps & LayoutProps & BorderProps;
-
+type Props = SpaceProps &
+  ColorProps &
+  LayoutProps &
+  BorderProps &
+  BorderRadiusProps & { className?: string };
 interface ThemeProps {
   theme?: Theme;
 }
@@ -22,10 +27,14 @@ export const Box: React.ComponentType<Props & ThemeProps> = styled.div<Props>`
   ${border};
   ${layout};
   ${space};
+  ${borderRadius};
 `;
 
 Box.displayName = 'Box';
 
 Box.defaultProps = {
-  border: 1
+  className: 'Box',
+  border: 1,
+  borderRadius: 2,
+  maxWidth: [500, 700, 900]
 };

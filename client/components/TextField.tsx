@@ -1,7 +1,7 @@
 import React from 'react';
 import { Label as RebassLabel } from '@rebass/forms';
 import styled, { StyledComponent } from 'styled-components/macro';
-import { fontSize } from 'styled-system';
+import { fontSize, borderRadius, border } from 'styled-system';
 import { Input } from './common/Input';
 
 const defaultProps = {

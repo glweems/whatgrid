@@ -8,6 +8,8 @@ import { Form } from './common/Form';
 import TextField from './TextField';
 import Button from './Button';
 import { useStoreActions } from '../store';
+import ErrorList from './ErrorList';
+import { Box } from './common';
 
 const loginValidationSchema = Yup.object().shape({
   email: Yup.string()
@@ -43,8 +45,11 @@ const LoginForm: React.FC<WithRouterProps> = ({ router }) => {
     }
   });
 
+  console.log(errors);
+
   return (
     <Form onSubmit={handleSubmit}>
+      <ErrorList errors={errors} />
       <TextField
         label="Email Address"
         name="email"

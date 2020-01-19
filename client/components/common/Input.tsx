@@ -1,8 +1,17 @@
 import styled, { StyledComponent } from 'styled-components';
 import { Input as RebassInput } from '@rebass/forms';
-import { border, space, BorderProps, SpaceProps } from 'styled-system';
+import {
+  border,
+  space,
+  borderRadius,
+  BorderProps,
+  SpaceProps,
+  BorderRadiusProps,
+  ColorProps,
+  color
+} from 'styled-system';
 
-type Props = {} & SpaceProps & BorderProps;
+type Props = {} & SpaceProps & BorderProps & BorderRadiusProps & ColorProps;
 
 type InputProps = React.HTMLProps<HTMLButtonElement>;
 
@@ -12,8 +21,10 @@ export const Input: StyledComponent<
   Props,
   never
 > = styled(RebassInput)`
+  ${borderRadius};
   ${border};
   ${space};
+  ${color};
   :focus {
     border-color: ${({ theme }) => theme.colors.primary};
     outline: none;
@@ -22,7 +33,9 @@ export const Input: StyledComponent<
 
 Input.defaultProps = {
   padding: 2,
-  border: 2
+  border: 2,
+  borderRadius: 2,
+  bg: ''
 };
 
 Input.displayName = 'Input';

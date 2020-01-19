@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import React from 'react';
 import styled, { css } from 'styled-components/macro';
 import { useRouter } from 'next/router';
@@ -36,7 +37,7 @@ const Layout: FPC<Props> = ({
     <Wrapper showToggle={showSidebarToggle}>
       <Navbar showSidebarToggle={showSidebarToggle} />
       <Sidebar>{sidebar}</Sidebar>
-      <Main>{children}</Main>
+      <Main>{signup ? <SignupForm /> : login ? <LoginForm /> : children}</Main>
     </Wrapper>
   );
 };

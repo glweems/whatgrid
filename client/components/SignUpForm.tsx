@@ -50,11 +50,9 @@ const SignupForm = () => {
         onChange={handleChange}
       />
 
-      <div>
-        <Button type="submit" variant="primary" loading={isSubmitting}>
-          Submit
-        </Button>
-      </div>
+      <Button type="submit" variant="primary" loading={isSubmitting}>
+        Submit
+      </Button>
     </Form>
   );
 };

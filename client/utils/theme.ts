@@ -18,6 +18,7 @@ export type ValuesOf<T extends any[]> = T[number];
 
 export const colors = {
   primary: '#4e67eb',
+  error: '#EC3939',
   blues: [
     '#4e67eb',
     darken(0.05, '#4e67eb'),
