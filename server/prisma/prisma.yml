@@ -11,11 +11,13 @@ generate:
 
 # Seed your service with initial data based on `seed.graphql`.
 seed:
-  import: seed.graphql
+  run: yarn ts-node ./prisma/seed.ts
 
 # Ensures Prisma client is re-generated after a datamodel change.
 hooks:
   post-deploy:
+    - graphql get-schema --project db
+    - graphql codegen
 # If specified, the `secret` must be used to generate a JWT which is attached
 # to the `Authorization` header of HTTP requests made against the Prisma API.
 # Info: https://www.prisma.io/docs/prisma-graphql-api/reference/authentication-ghd4/

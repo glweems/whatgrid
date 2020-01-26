@@ -22,7 +22,7 @@ export interface User {
   firstName: string | null
   lastName: string | null
   username: string | null
-  phoneNumber: number | null
+  phoneNumber: string | null
 }
 
 export interface Grid {
@@ -44,9 +44,4 @@ export interface SuccessMessage {
 export interface AuthPayload {
   token: string
   user: User
-}
-export interface SignupInput {
-  email: string
-  username: string | null
-  password: string
 }

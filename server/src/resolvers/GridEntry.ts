@@ -4,10 +4,5 @@
 import { GridEntryResolvers } from '../generated/graphqlgen'
 
 export const GridEntry: GridEntryResolvers.Type = {
-  ...GridEntryResolvers.defaultResolvers,
-
-  grid: (parent, args, ctx) => {
-    console.log('TCL: parent', parent)
-    return ctx.prisma.gridEntries({ id: parent.id }).gridEntries()
-  }
+  ...GridEntryResolvers.defaultResolvers
 }

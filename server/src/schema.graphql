@@ -11,7 +11,14 @@ type Query {
 }
 
 type Mutation {
-  signup(email: String!, password: String!, username: String): AuthPayload!
+  signup(
+    email: String!
+    password: String!
+    username: String
+    firstName: String
+    lastName: String
+    phoneNumber: String
+  ): AuthPayload!
   login(email: String!, password: String!): AuthPayload!
   logout: SuccessMessage
 }
@@ -31,22 +38,30 @@ type User {
   firstName: String
   lastName: String
   username: String
-  phoneNumber: Int
-  grids: [Grid!]!
+  phoneNumber: String
   createdAt: DateTime!
   updatedAt: DateTime!
   password: String
+  grids: [Grid]
 }
 
 type Grid {
   id: ID!
+  name: String!
+  entries: [GridEntry]!
+  author: User!
   createdAt: DateTime!
   updatedAt: DateTime!
-  published: Boolean!
-  name: String
-  rows: Int
-  columns: Int
-  gridTemplateColumns: String
-  gridTemplateRows: String
-  author: User!
+}
+
+type GridEntry {
+  id: String!
+  type: GridEntryType!
+  amount: String!
+  unit: String!
+}
+
+enum GridEntryType {
+  Column
+  Row
 }

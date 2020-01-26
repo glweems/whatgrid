@@ -5,6 +5,7 @@ import { Resolvers } from '../graphqlgen'
 
 import { Query } from './Query'
 import { Grid } from './Grid'
+import { GridEntry } from './GridEntry'
 import { User } from './User'
 import { Mutation } from './Mutation'
 import { AuthPayload } from './AuthPayload'
@@ -13,6 +14,7 @@ import { SuccessMessage } from './SuccessMessage'
 export const resolvers: Resolvers = {
   Query,
   Grid,
+  GridEntry,
   User,
   Mutation,
   AuthPayload,

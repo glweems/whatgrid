@@ -5,8 +5,10 @@ import { GridResolvers } from '../generated/graphqlgen'
 
 export const Grid: GridResolvers.Type = {
   ...GridResolvers.defaultResolvers,
-
-  author: ({ id }, args, ctx) => {
-    return ctx.prisma.grid({ id }).author()
+  entries: ({ id }, args, ctx) => {
+    return ctx.prisma.grid({ id }).entries()
+  },
+  author: async ({ id }, args, ctx) => {
+    return ctx.prisma.users({ where: { id } })
   }
 }

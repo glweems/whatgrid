@@ -4,9 +4,5 @@
 import { GridEntryResolvers } from '../graphqlgen'
 
 export const GridEntry: GridEntryResolvers.Type = {
-  ...GridEntryResolvers.defaultResolvers,
-
-  grid: (parent, args, ctx) => {
-    throw new Error('Resolver not implemented')
-  }
+  ...GridEntryResolvers.defaultResolvers
 }

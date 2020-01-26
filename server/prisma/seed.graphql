@@ -1,27 +1,18 @@
 mutation {
   createUser(
-    data: {
-      firstName: "Bobby"
-      lastName: "Bob"
-      username: "bigbob"
-      phoneNumber: 1234567890
-      email: "bob@bob.com"
-      password: "bob"
-      grids: {
+    firstName: "Bobby"
+    lastName: "Bob"
+    username: "bigbob"
+    phoneNumber: 1234567890
+    email: "bob@bob.com"
+    password: "bob"
+    grids: {
+      entries: {
         create: [
+          { name: "bob's first grid" }
           {
-            name: "My First Grid"
-            rows: 3
-            columns: 3
-            gridTemplateColumns: "1fr 1fr 1fr"
-            gridTemplateRows: "1fr 1fr 1fr"
-          }
-          {
-            name: "My Second Grid"
-            rows: 2
-            columns: 2
-            gridTemplateColumns: "1fr 1fr"
-            gridTemplateRows: "2fr 1fr"
+            name: "bob's second grid"
+            entries: { create: [{ type: "Column", amount: "1", unit: "fr" }] }
           }
         ]
       }
@@ -37,5 +28,14 @@ mutation {
     grids {
       name
     }
+  }
+  error {
+    message
+  }
+}
+
+query hello {
+  users {
+    email
   }
 }

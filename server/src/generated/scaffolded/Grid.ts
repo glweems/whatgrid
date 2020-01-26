@@ -6,6 +6,9 @@ import { GridResolvers } from '../graphqlgen'
 export const Grid: GridResolvers.Type = {
   ...GridResolvers.defaultResolvers,
 
+  entries: (parent, args, ctx) => {
+    throw new Error('Resolver not implemented')
+  },
   author: (parent, args, ctx) => {
     throw new Error('Resolver not implemented')
   }

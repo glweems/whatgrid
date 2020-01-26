@@ -6,6 +6,10 @@ export const typeDefs = /* GraphQL */ `type AggregateGrid {
   count: Int!
 }
 
+type AggregateGridEntry {
+  count: Int!
+}
+
 type AggregateUser {
   count: Int!
 }
@@ -18,15 +22,11 @@ scalar DateTime
 
 type Grid {
   id: ID!
+  name: String!
+  entries(where: GridEntryWhereInput, orderBy: GridEntryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [GridEntry!]
+  author: User
   createdAt: DateTime!
   updatedAt: DateTime!
-  published: Boolean!
-  name: String
-  rows: Int
-  columns: Int
-  gridTemplateColumns: String
-  gridTemplateRows: String
-  author: User!
 }
 
 type GridConnection {
@@ -37,13 +37,9 @@ type GridConnection {
 
 input GridCreateInput {
   id: ID
-  published: Boolean
-  name: String
-  rows: Int
-  columns: Int
-  gridTemplateColumns: String
-  gridTemplateRows: String
-  author: UserCreateOneWithoutGridsInput!
+  name: String!
+  entries: GridEntryCreateManyWithoutGridInput
+  author: UserCreateOneWithoutGridsInput
 }
 
 input GridCreateManyWithoutAuthorInput {
@@ -51,14 +47,21 @@ input GridCreateManyWithoutAuthorInput {
   connect: [GridWhereUniqueInput!]
 }
 
+input GridCreateOneWithoutEntriesInput {
+  create: GridCreateWithoutEntriesInput
+  connect: GridWhereUniqueInput
+}
+
 input GridCreateWithoutAuthorInput {
   id: ID
-  published: Boolean
-  name: String
-  rows: Int
-  columns: Int
-  gridTemplateColumns: String
-  gridTemplateRows: String
+  name: String!
+  entries: GridEntryCreateManyWithoutGridInput
+}
+
+input GridCreateWithoutEntriesInput {
+  id: ID
+  name: String!
+  author: UserCreateOneWithoutGridsInput
 }
 
 type GridEdge {
@@ -66,37 +69,313 @@ type GridEdge {
   cursor: String!
 }
 
+type GridEntry {
+  id: ID!
+  type: GridEntryType!
+  amount: String!
+  unit: String!
+  grid: Grid!
+  author: User!
+}
+
+type GridEntryConnection {
+  pageInfo: PageInfo!
+  edges: [GridEntryEdge]!
+  aggregate: AggregateGridEntry!
+}
+
+input GridEntryCreateInput {
+  id: ID
+  type: GridEntryType!
+  amount: String!
+  unit: String!
+  grid: GridCreateOneWithoutEntriesInput!
+  author: UserCreateOneWithoutGridEntriesInput!
+}
+
+input GridEntryCreateManyWithoutAuthorInput {
+  create: [GridEntryCreateWithoutAuthorInput!]
+  connect: [GridEntryWhereUniqueInput!]
+}
+
+input GridEntryCreateManyWithoutGridInput {
+  create: [GridEntryCreateWithoutGridInput!]
+  connect: [GridEntryWhereUniqueInput!]
+}
+
+input GridEntryCreateWithoutAuthorInput {
+  id: ID
+  type: GridEntryType!
+  amount: String!
+  unit: String!
+  grid: GridCreateOneWithoutEntriesInput!
+}
+
+input GridEntryCreateWithoutGridInput {
+  id: ID
+  type: GridEntryType!
+  amount: String!
+  unit: String!
+  author: UserCreateOneWithoutGridEntriesInput!
+}
+
+type GridEntryEdge {
+  node: GridEntry!
+  cursor: String!
+}
+
+enum GridEntryOrderByInput {
+  id_ASC
+  id_DESC
+  type_ASC
+  type_DESC
+  amount_ASC
+  amount_DESC
+  unit_ASC
+  unit_DESC
+}
+
+type GridEntryPreviousValues {
+  id: ID!
+  type: GridEntryType!
+  amount: String!
+  unit: String!
+}
+
+input GridEntryScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  type: GridEntryType
+  type_not: GridEntryType
+  type_in: [GridEntryType!]
+  type_not_in: [GridEntryType!]
+  amount: String
+  amount_not: String
+  amount_in: [String!]
+  amount_not_in: [String!]
+  amount_lt: String
+  amount_lte: String
+  amount_gt: String
+  amount_gte: String
+  amount_contains: String
+  amount_not_contains: String
+  amount_starts_with: String
+  amount_not_starts_with: String
+  amount_ends_with: String
+  amount_not_ends_with: String
+  unit: String
+  unit_not: String
+  unit_in: [String!]
+  unit_not_in: [String!]
+  unit_lt: String
+  unit_lte: String
+  unit_gt: String
+  unit_gte: String
+  unit_contains: String
+  unit_not_contains: String
+  unit_starts_with: String
+  unit_not_starts_with: String
+  unit_ends_with: String
+  unit_not_ends_with: String
+  AND: [GridEntryScalarWhereInput!]
+  OR: [GridEntryScalarWhereInput!]
+  NOT: [GridEntryScalarWhereInput!]
+}
+
+type GridEntrySubscriptionPayload {
+  mutation: MutationType!
+  node: GridEntry
+  updatedFields: [String!]
+  previousValues: GridEntryPreviousValues
+}
+
+input GridEntrySubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: GridEntryWhereInput
+  AND: [GridEntrySubscriptionWhereInput!]
+  OR: [GridEntrySubscriptionWhereInput!]
+  NOT: [GridEntrySubscriptionWhereInput!]
+}
+
+enum GridEntryType {
+  Column
+  Row
+}
+
+input GridEntryUpdateInput {
+  type: GridEntryType
+  amount: String
+  unit: String
+  grid: GridUpdateOneRequiredWithoutEntriesInput
+  author: UserUpdateOneRequiredWithoutGridEntriesInput
+}
+
+input GridEntryUpdateManyDataInput {
+  type: GridEntryType
+  amount: String
+  unit: String
+}
+
+input GridEntryUpdateManyMutationInput {
+  type: GridEntryType
+  amount: String
+  unit: String
+}
+
+input GridEntryUpdateManyWithoutAuthorInput {
+  create: [GridEntryCreateWithoutAuthorInput!]
+  delete: [GridEntryWhereUniqueInput!]
+  connect: [GridEntryWhereUniqueInput!]
+  set: [GridEntryWhereUniqueInput!]
+  disconnect: [GridEntryWhereUniqueInput!]
+  update: [GridEntryUpdateWithWhereUniqueWithoutAuthorInput!]
+  upsert: [GridEntryUpsertWithWhereUniqueWithoutAuthorInput!]
+  deleteMany: [GridEntryScalarWhereInput!]
+  updateMany: [GridEntryUpdateManyWithWhereNestedInput!]
+}
+
+input GridEntryUpdateManyWithoutGridInput {
+  create: [GridEntryCreateWithoutGridInput!]
+  delete: [GridEntryWhereUniqueInput!]
+  connect: [GridEntryWhereUniqueInput!]
+  set: [GridEntryWhereUniqueInput!]
+  disconnect: [GridEntryWhereUniqueInput!]
+  update: [GridEntryUpdateWithWhereUniqueWithoutGridInput!]
+  upsert: [GridEntryUpsertWithWhereUniqueWithoutGridInput!]
+  deleteMany: [GridEntryScalarWhereInput!]
+  updateMany: [GridEntryUpdateManyWithWhereNestedInput!]
+}
+
+input GridEntryUpdateManyWithWhereNestedInput {
+  where: GridEntryScalarWhereInput!
+  data: GridEntryUpdateManyDataInput!
+}
+
+input GridEntryUpdateWithoutAuthorDataInput {
+  type: GridEntryType
+  amount: String
+  unit: String
+  grid: GridUpdateOneRequiredWithoutEntriesInput
+}
+
+input GridEntryUpdateWithoutGridDataInput {
+  type: GridEntryType
+  amount: String
+  unit: String
+  author: UserUpdateOneRequiredWithoutGridEntriesInput
+}
+
+input GridEntryUpdateWithWhereUniqueWithoutAuthorInput {
+  where: GridEntryWhereUniqueInput!
+  data: GridEntryUpdateWithoutAuthorDataInput!
+}
+
+input GridEntryUpdateWithWhereUniqueWithoutGridInput {
+  where: GridEntryWhereUniqueInput!
+  data: GridEntryUpdateWithoutGridDataInput!
+}
+
+input GridEntryUpsertWithWhereUniqueWithoutAuthorInput {
+  where: GridEntryWhereUniqueInput!
+  update: GridEntryUpdateWithoutAuthorDataInput!
+  create: GridEntryCreateWithoutAuthorInput!
+}
+
+input GridEntryUpsertWithWhereUniqueWithoutGridInput {
+  where: GridEntryWhereUniqueInput!
+  update: GridEntryUpdateWithoutGridDataInput!
+  create: GridEntryCreateWithoutGridInput!
+}
+
+input GridEntryWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  type: GridEntryType
+  type_not: GridEntryType
+  type_in: [GridEntryType!]
+  type_not_in: [GridEntryType!]
+  amount: String
+  amount_not: String
+  amount_in: [String!]
+  amount_not_in: [String!]
+  amount_lt: String
+  amount_lte: String
+  amount_gt: String
+  amount_gte: String
+  amount_contains: String
+  amount_not_contains: String
+  amount_starts_with: String
+  amount_not_starts_with: String
+  amount_ends_with: String
+  amount_not_ends_with: String
+  unit: String
+  unit_not: String
+  unit_in: [String!]
+  unit_not_in: [String!]
+  unit_lt: String
+  unit_lte: String
+  unit_gt: String
+  unit_gte: String
+  unit_contains: String
+  unit_not_contains: String
+  unit_starts_with: String
+  unit_not_starts_with: String
+  unit_ends_with: String
+  unit_not_ends_with: String
+  grid: GridWhereInput
+  author: UserWhereInput
+  AND: [GridEntryWhereInput!]
+  OR: [GridEntryWhereInput!]
+  NOT: [GridEntryWhereInput!]
+}
+
+input GridEntryWhereUniqueInput {
+  id: ID
+}
+
 enum GridOrderByInput {
   id_ASC
   id_DESC
+  name_ASC
+  name_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
   updatedAt_DESC
-  published_ASC
-  published_DESC
-  name_ASC
-  name_DESC
-  rows_ASC
-  rows_DESC
-  columns_ASC
-  columns_DESC
-  gridTemplateColumns_ASC
-  gridTemplateColumns_DESC
-  gridTemplateRows_ASC
-  gridTemplateRows_DESC
 }
 
 type GridPreviousValues {
   id: ID!
+  name: String!
   createdAt: DateTime!
   updatedAt: DateTime!
-  published: Boolean!
-  name: String
-  rows: Int
-  columns: Int
-  gridTemplateColumns: String
-  gridTemplateRows: String
 }
 
 input GridScalarWhereInput {
@@ -114,6 +393,20 @@ input GridScalarWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
@@ -130,66 +423,6 @@ input GridScalarWhereInput {
   updatedAt_lte: DateTime
   updatedAt_gt: DateTime
   updatedAt_gte: DateTime
-  published: Boolean
-  published_not: Boolean
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
-  rows: Int
-  rows_not: Int
-  rows_in: [Int!]
-  rows_not_in: [Int!]
-  rows_lt: Int
-  rows_lte: Int
-  rows_gt: Int
-  rows_gte: Int
-  columns: Int
-  columns_not: Int
-  columns_in: [Int!]
-  columns_not_in: [Int!]
-  columns_lt: Int
-  columns_lte: Int
-  columns_gt: Int
-  columns_gte: Int
-  gridTemplateColumns: String
-  gridTemplateColumns_not: String
-  gridTemplateColumns_in: [String!]
-  gridTemplateColumns_not_in: [String!]
-  gridTemplateColumns_lt: String
-  gridTemplateColumns_lte: String
-  gridTemplateColumns_gt: String
-  gridTemplateColumns_gte: String
-  gridTemplateColumns_contains: String
-  gridTemplateColumns_not_contains: String
-  gridTemplateColumns_starts_with: String
-  gridTemplateColumns_not_starts_with: String
-  gridTemplateColumns_ends_with: String
-  gridTemplateColumns_not_ends_with: String
-  gridTemplateRows: String
-  gridTemplateRows_not: String
-  gridTemplateRows_in: [String!]
-  gridTemplateRows_not_in: [String!]
-  gridTemplateRows_lt: String
-  gridTemplateRows_lte: String
-  gridTemplateRows_gt: String
-  gridTemplateRows_gte: String
-  gridTemplateRows_contains: String
-  gridTemplateRows_not_contains: String
-  gridTemplateRows_starts_with: String
-  gridTemplateRows_not_starts_with: String
-  gridTemplateRows_ends_with: String
-  gridTemplateRows_not_ends_with: String
   AND: [GridScalarWhereInput!]
   OR: [GridScalarWhereInput!]
   NOT: [GridScalarWhereInput!]
@@ -214,31 +447,17 @@ input GridSubscriptionWhereInput {
 }
 
 input GridUpdateInput {
-  published: Boolean
   name: String
-  rows: Int
-  columns: Int
-  gridTemplateColumns: String
-  gridTemplateRows: String
-  author: UserUpdateOneRequiredWithoutGridsInput
+  entries: GridEntryUpdateManyWithoutGridInput
+  author: UserUpdateOneWithoutGridsInput
 }
 
 input GridUpdateManyDataInput {
-  published: Boolean
   name: String
-  rows: Int
-  columns: Int
-  gridTemplateColumns: String
-  gridTemplateRows: String
 }
 
 input GridUpdateManyMutationInput {
-  published: Boolean
   name: String
-  rows: Int
-  columns: Int
-  gridTemplateColumns: String
-  gridTemplateRows: String
 }
 
 input GridUpdateManyWithoutAuthorInput {
@@ -258,18 +477,31 @@ input GridUpdateManyWithWhereNestedInput {
   data: GridUpdateManyDataInput!
 }
 
+input GridUpdateOneRequiredWithoutEntriesInput {
+  create: GridCreateWithoutEntriesInput
+  update: GridUpdateWithoutEntriesDataInput
+  upsert: GridUpsertWithoutEntriesInput
+  connect: GridWhereUniqueInput
+}
+
 input GridUpdateWithoutAuthorDataInput {
-  published: Boolean
   name: String
-  rows: Int
-  columns: Int
-  gridTemplateColumns: String
-  gridTemplateRows: String
+  entries: GridEntryUpdateManyWithoutGridInput
+}
+
+input GridUpdateWithoutEntriesDataInput {
+  name: String
+  author: UserUpdateOneWithoutGridsInput
 }
 
 input GridUpdateWithWhereUniqueWithoutAuthorInput {
   where: GridWhereUniqueInput!
   data: GridUpdateWithoutAuthorDataInput!
+}
+
+input GridUpsertWithoutEntriesInput {
+  update: GridUpdateWithoutEntriesDataInput!
+  create: GridCreateWithoutEntriesInput!
 }
 
 input GridUpsertWithWhereUniqueWithoutAuthorInput {
@@ -293,6 +525,24 @@ input GridWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  entries_every: GridEntryWhereInput
+  entries_some: GridEntryWhereInput
+  entries_none: GridEntryWhereInput
+  author: UserWhereInput
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
@@ -309,67 +559,6 @@ input GridWhereInput {
   updatedAt_lte: DateTime
   updatedAt_gt: DateTime
   updatedAt_gte: DateTime
-  published: Boolean
-  published_not: Boolean
-  name: String
-  name_not: String
-  name_in: [String!]
-  name_not_in: [String!]
-  name_lt: String
-  name_lte: String
-  name_gt: String
-  name_gte: String
-  name_contains: String
-  name_not_contains: String
-  name_starts_with: String
-  name_not_starts_with: String
-  name_ends_with: String
-  name_not_ends_with: String
-  rows: Int
-  rows_not: Int
-  rows_in: [Int!]
-  rows_not_in: [Int!]
-  rows_lt: Int
-  rows_lte: Int
-  rows_gt: Int
-  rows_gte: Int
-  columns: Int
-  columns_not: Int
-  columns_in: [Int!]
-  columns_not_in: [Int!]
-  columns_lt: Int
-  columns_lte: Int
-  columns_gt: Int
-  columns_gte: Int
-  gridTemplateColumns: String
-  gridTemplateColumns_not: String
-  gridTemplateColumns_in: [String!]
-  gridTemplateColumns_not_in: [String!]
-  gridTemplateColumns_lt: String
-  gridTemplateColumns_lte: String
-  gridTemplateColumns_gt: String
-  gridTemplateColumns_gte: String
-  gridTemplateColumns_contains: String
-  gridTemplateColumns_not_contains: String
-  gridTemplateColumns_starts_with: String
-  gridTemplateColumns_not_starts_with: String
-  gridTemplateColumns_ends_with: String
-  gridTemplateColumns_not_ends_with: String
-  gridTemplateRows: String
-  gridTemplateRows_not: String
-  gridTemplateRows_in: [String!]
-  gridTemplateRows_not_in: [String!]
-  gridTemplateRows_lt: String
-  gridTemplateRows_lte: String
-  gridTemplateRows_gt: String
-  gridTemplateRows_gte: String
-  gridTemplateRows_contains: String
-  gridTemplateRows_not_contains: String
-  gridTemplateRows_starts_with: String
-  gridTemplateRows_not_starts_with: String
-  gridTemplateRows_ends_with: String
-  gridTemplateRows_not_ends_with: String
-  author: UserWhereInput
   AND: [GridWhereInput!]
   OR: [GridWhereInput!]
   NOT: [GridWhereInput!]
@@ -388,6 +577,12 @@ type Mutation {
   upsertGrid(where: GridWhereUniqueInput!, create: GridCreateInput!, update: GridUpdateInput!): Grid!
   deleteGrid(where: GridWhereUniqueInput!): Grid
   deleteManyGrids(where: GridWhereInput): BatchPayload!
+  createGridEntry(data: GridEntryCreateInput!): GridEntry!
+  updateGridEntry(data: GridEntryUpdateInput!, where: GridEntryWhereUniqueInput!): GridEntry
+  updateManyGridEntries(data: GridEntryUpdateManyMutationInput!, where: GridEntryWhereInput): BatchPayload!
+  upsertGridEntry(where: GridEntryWhereUniqueInput!, create: GridEntryCreateInput!, update: GridEntryUpdateInput!): GridEntry!
+  deleteGridEntry(where: GridEntryWhereUniqueInput!): GridEntry
+  deleteManyGridEntries(where: GridEntryWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
@@ -417,6 +612,9 @@ type Query {
   grid(where: GridWhereUniqueInput!): Grid
   grids(where: GridWhereInput, orderBy: GridOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Grid]!
   gridsConnection(where: GridWhereInput, orderBy: GridOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GridConnection!
+  gridEntry(where: GridEntryWhereUniqueInput!): GridEntry
+  gridEntries(where: GridEntryWhereInput, orderBy: GridEntryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [GridEntry]!
+  gridEntriesConnection(where: GridEntryWhereInput, orderBy: GridEntryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): GridEntryConnection!
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
@@ -425,20 +623,22 @@ type Query {
 
 type Subscription {
   grid(where: GridSubscriptionWhereInput): GridSubscriptionPayload
+  gridEntry(where: GridEntrySubscriptionWhereInput): GridEntrySubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 
 type User {
   id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  email: String!
-  password: String!
   firstName: String
   lastName: String
-  username: String
-  phoneNumber: Int
+  username: String!
+  email: String!
+  password: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  phoneNumber: String
   grids(where: GridWhereInput, orderBy: GridOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Grid!]
+  GridEntries(where: GridEntryWhereInput, orderBy: GridEntryOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [GridEntry!]
 }
 
 type UserConnection {
@@ -449,13 +649,19 @@ type UserConnection {
 
 input UserCreateInput {
   id: ID
-  email: String!
-  password: String!
   firstName: String
   lastName: String
-  username: String
-  phoneNumber: Int
+  username: String!
+  email: String!
+  password: String!
+  phoneNumber: String
   grids: GridCreateManyWithoutAuthorInput
+  GridEntries: GridEntryCreateManyWithoutAuthorInput
+}
+
+input UserCreateOneWithoutGridEntriesInput {
+  create: UserCreateWithoutGridEntriesInput
+  connect: UserWhereUniqueInput
 }
 
 input UserCreateOneWithoutGridsInput {
@@ -463,14 +669,26 @@ input UserCreateOneWithoutGridsInput {
   connect: UserWhereUniqueInput
 }
 
-input UserCreateWithoutGridsInput {
+input UserCreateWithoutGridEntriesInput {
   id: ID
-  email: String!
-  password: String!
   firstName: String
   lastName: String
-  username: String
-  phoneNumber: Int
+  username: String!
+  email: String!
+  password: String!
+  phoneNumber: String
+  grids: GridCreateManyWithoutAuthorInput
+}
+
+input UserCreateWithoutGridsInput {
+  id: ID
+  firstName: String
+  lastName: String
+  username: String!
+  email: String!
+  password: String!
+  phoneNumber: String
+  GridEntries: GridEntryCreateManyWithoutAuthorInput
 }
 
 type UserEdge {
@@ -481,34 +699,34 @@ type UserEdge {
 enum UserOrderByInput {
   id_ASC
   id_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-  email_ASC
-  email_DESC
-  password_ASC
-  password_DESC
   firstName_ASC
   firstName_DESC
   lastName_ASC
   lastName_DESC
   username_ASC
   username_DESC
+  email_ASC
+  email_DESC
+  password_ASC
+  password_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
   phoneNumber_ASC
   phoneNumber_DESC
 }
 
 type UserPreviousValues {
   id: ID!
-  createdAt: DateTime!
-  updatedAt: DateTime!
-  email: String!
-  password: String!
   firstName: String
   lastName: String
-  username: String
-  phoneNumber: Int
+  username: String!
+  email: String!
+  password: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  phoneNumber: String
 }
 
 type UserSubscriptionPayload {
@@ -530,38 +748,64 @@ input UserSubscriptionWhereInput {
 }
 
 input UserUpdateInput {
-  email: String
-  password: String
   firstName: String
   lastName: String
   username: String
-  phoneNumber: Int
+  email: String
+  password: String
+  phoneNumber: String
   grids: GridUpdateManyWithoutAuthorInput
+  GridEntries: GridEntryUpdateManyWithoutAuthorInput
 }
 
 input UserUpdateManyMutationInput {
-  email: String
-  password: String
   firstName: String
   lastName: String
   username: String
-  phoneNumber: Int
+  email: String
+  password: String
+  phoneNumber: String
 }
 
-input UserUpdateOneRequiredWithoutGridsInput {
-  create: UserCreateWithoutGridsInput
-  update: UserUpdateWithoutGridsDataInput
-  upsert: UserUpsertWithoutGridsInput
+input UserUpdateOneRequiredWithoutGridEntriesInput {
+  create: UserCreateWithoutGridEntriesInput
+  update: UserUpdateWithoutGridEntriesDataInput
+  upsert: UserUpsertWithoutGridEntriesInput
   connect: UserWhereUniqueInput
 }
 
-input UserUpdateWithoutGridsDataInput {
-  email: String
-  password: String
+input UserUpdateOneWithoutGridsInput {
+  create: UserCreateWithoutGridsInput
+  update: UserUpdateWithoutGridsDataInput
+  upsert: UserUpsertWithoutGridsInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: UserWhereUniqueInput
+}
+
+input UserUpdateWithoutGridEntriesDataInput {
   firstName: String
   lastName: String
   username: String
-  phoneNumber: Int
+  email: String
+  password: String
+  phoneNumber: String
+  grids: GridUpdateManyWithoutAuthorInput
+}
+
+input UserUpdateWithoutGridsDataInput {
+  firstName: String
+  lastName: String
+  username: String
+  email: String
+  password: String
+  phoneNumber: String
+  GridEntries: GridEntryUpdateManyWithoutAuthorInput
+}
+
+input UserUpsertWithoutGridEntriesInput {
+  update: UserUpdateWithoutGridEntriesDataInput!
+  create: UserCreateWithoutGridEntriesInput!
 }
 
 input UserUpsertWithoutGridsInput {
@@ -584,50 +828,6 @@ input UserWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  email: String
-  email_not: String
-  email_in: [String!]
-  email_not_in: [String!]
-  email_lt: String
-  email_lte: String
-  email_gt: String
-  email_gte: String
-  email_contains: String
-  email_not_contains: String
-  email_starts_with: String
-  email_not_starts_with: String
-  email_ends_with: String
-  email_not_ends_with: String
-  password: String
-  password_not: String
-  password_in: [String!]
-  password_not_in: [String!]
-  password_lt: String
-  password_lte: String
-  password_gt: String
-  password_gte: String
-  password_contains: String
-  password_not_contains: String
-  password_starts_with: String
-  password_not_starts_with: String
-  password_ends_with: String
-  password_not_ends_with: String
   firstName: String
   firstName_not: String
   firstName_in: [String!]
@@ -670,17 +870,70 @@ input UserWhereInput {
   username_not_starts_with: String
   username_ends_with: String
   username_not_ends_with: String
-  phoneNumber: Int
-  phoneNumber_not: Int
-  phoneNumber_in: [Int!]
-  phoneNumber_not_in: [Int!]
-  phoneNumber_lt: Int
-  phoneNumber_lte: Int
-  phoneNumber_gt: Int
-  phoneNumber_gte: Int
+  email: String
+  email_not: String
+  email_in: [String!]
+  email_not_in: [String!]
+  email_lt: String
+  email_lte: String
+  email_gt: String
+  email_gte: String
+  email_contains: String
+  email_not_contains: String
+  email_starts_with: String
+  email_not_starts_with: String
+  email_ends_with: String
+  email_not_ends_with: String
+  password: String
+  password_not: String
+  password_in: [String!]
+  password_not_in: [String!]
+  password_lt: String
+  password_lte: String
+  password_gt: String
+  password_gte: String
+  password_contains: String
+  password_not_contains: String
+  password_starts_with: String
+  password_not_starts_with: String
+  password_ends_with: String
+  password_not_ends_with: String
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  phoneNumber: String
+  phoneNumber_not: String
+  phoneNumber_in: [String!]
+  phoneNumber_not_in: [String!]
+  phoneNumber_lt: String
+  phoneNumber_lte: String
+  phoneNumber_gt: String
+  phoneNumber_gte: String
+  phoneNumber_contains: String
+  phoneNumber_not_contains: String
+  phoneNumber_starts_with: String
+  phoneNumber_not_starts_with: String
+  phoneNumber_ends_with: String
+  phoneNumber_not_ends_with: String
   grids_every: GridWhereInput
   grids_some: GridWhereInput
   grids_none: GridWhereInput
+  GridEntries_every: GridEntryWhereInput
+  GridEntries_some: GridEntryWhereInput
+  GridEntries_none: GridEntryWhereInput
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]
@@ -688,6 +941,7 @@ input UserWhereInput {
 
 input UserWhereUniqueInput {
   id: ID
+  username: String
   email: String
 }
 `
