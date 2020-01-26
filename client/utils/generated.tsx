@@ -25,16 +25,24 @@ export type AuthPayload = {
 
 export type Grid = {
   id: Scalars['ID'];
+  name: Scalars['String'];
+  entries: Array<Maybe<GridEntry>>;
+  author: User;
   createdAt: Scalars['DateTime'];
   updatedAt: Scalars['DateTime'];
-  published: Scalars['Boolean'];
-  name?: Maybe<Scalars['String']>;
-  rows?: Maybe<Scalars['Int']>;
-  columns?: Maybe<Scalars['Int']>;
-  gridTemplateColumns?: Maybe<Scalars['String']>;
-  gridTemplateRows?: Maybe<Scalars['String']>;
-  author: User;
 };
+
+export type GridEntry = {
+  id: Scalars['String'];
+  type: GridEntryType;
+  amount: Scalars['String'];
+  unit: Scalars['String'];
+};
+
+export enum GridEntryType {
+  Column = 'Column',
+  Row = 'Row'
+}
 
 export type Mutation = {
   signup: AuthPayload;
@@ -46,6 +54,9 @@ export type MutationSignupArgs = {
   email: Scalars['String'];
   password: Scalars['String'];
   username?: Maybe<Scalars['String']>;
+  firstName?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
+  phoneNumber?: Maybe<Scalars['String']>;
 };
 
 export type MutationLoginArgs = {
@@ -84,11 +95,11 @@ export type User = {
   firstName?: Maybe<Scalars['String']>;
   lastName?: Maybe<Scalars['String']>;
   username?: Maybe<Scalars['String']>;
-  phoneNumber?: Maybe<Scalars['Int']>;
-  grids: Array<Grid>;
+  phoneNumber?: Maybe<Scalars['String']>;
   createdAt: Scalars['DateTime'];
   updatedAt: Scalars['DateTime'];
   password?: Maybe<Scalars['String']>;
+  grids?: Maybe<Array<Maybe<Grid>>>;
 };
 
 export type LoginMutationVariables = {
@@ -114,42 +125,11 @@ export type SignupMutation = {
   signup: Pick<AuthPayload, 'token'> & { user: UserFieldsFragment };
 };
 
-export type UserFieldsFragment = Pick<
-  User,
-  | 'id'
-  | 'createdAt'
-  | 'updatedAt'
-  | 'email'
-  | 'firstName'
-  | 'lastName'
-  | 'username'
-  | 'phoneNumber'
-> & {
-  grids: Array<
-    Pick<
-      Grid,
-      | 'id'
-      | 'createdAt'
-      | 'updatedAt'
-      | 'published'
-      | 'name'
-      | 'rows'
-      | 'columns'
-      | 'gridTemplateColumns'
-      | 'gridTemplateRows'
-    >
-  >;
-};
-
-export type MeQueryVariables = {};
-
-export type MeQuery = { me: Maybe<Pick<User, 'id' | 'email' | 'username'>> };
-
-export type ProfileQueryVariables = {
+export type DashboardQueryVariables = {
   id: Scalars['ID'];
 };
 
-export type ProfileQuery = {
+export type DashboardQuery = {
   profile: Maybe<
     Pick<
       User,
@@ -161,25 +141,25 @@ export type ProfileQuery = {
       | 'lastName'
       | 'username'
       | 'phoneNumber'
-    > & {
-      grids: Array<
-        Pick<
-          Grid,
-          | 'id'
-          | 'createdAt'
-          | 'updatedAt'
-          | 'published'
-          | 'name'
-          | 'rows'
-          | 'columns'
-          | 'gridTemplateColumns'
-          | 'gridTemplateRows'
-        >
-      >;
-    }
+    > & { grids: Maybe<Array<Maybe<Pick<Grid, 'id'>>>> }
   >;
-  me: Maybe<Pick<User, 'id'>>;
 };
+
+export type UserFieldsFragment = Pick<
+  User,
+  | 'id'
+  | 'createdAt'
+  | 'updatedAt'
+  | 'email'
+  | 'firstName'
+  | 'lastName'
+  | 'username'
+  | 'phoneNumber'
+> & { grids: Maybe<Array<Maybe<Pick<Grid, 'id'>>>> };
+
+export type MeQueryVariables = {};
+
+export type MeQuery = { me: Maybe<Pick<User, 'id' | 'email' | 'username'>> };
 
 export type UserQueryVariables = {
   id?: Maybe<Scalars['ID']>;
@@ -197,22 +177,7 @@ export type UserQuery = {
       | 'lastName'
       | 'username'
       | 'phoneNumber'
-    > & {
-      grids: Array<
-        Pick<
-          Grid,
-          | 'id'
-          | 'createdAt'
-          | 'updatedAt'
-          | 'published'
-          | 'name'
-          | 'rows'
-          | 'columns'
-          | 'gridTemplateColumns'
-          | 'gridTemplateRows'
-        >
-      >;
-    }
+    > & { grids: Maybe<Array<Maybe<Pick<Grid, 'id'>>>> }
   >;
 };
 
@@ -232,14 +197,6 @@ export const UserFieldsFragmentDoc = gql`
     phoneNumber
     grids {
       id
-      createdAt
-      updatedAt
-      published
-      name
-      rows
-      columns
-      gridTemplateColumns
-      gridTemplateRows
     }
   }
 `;
@@ -273,9 +230,11 @@ export const LoginComponent = (props: LoginComponentProps) => (
   />
 );
 
-export type LoginProps<TChildProps = {}> =
-  | ApolloReactHoc.MutateProps<LoginMutation, LoginMutationVariables>
-  | TChildProps;
+export type LoginProps<TChildProps = {}> = ApolloReactHoc.MutateProps<
+  LoginMutation,
+  LoginMutationVariables
+> &
+  TChildProps;
 export function withLogin<TProps, TChildProps = {}>(
   operationOptions?: ApolloReactHoc.OperationOption<
     TProps,
@@ -358,9 +317,11 @@ export const LogoutComponent = (props: LogoutComponentProps) => (
   />
 );
 
-export type LogoutProps<TChildProps = {}> =
-  | ApolloReactHoc.MutateProps<LogoutMutation, LogoutMutationVariables>
-  | TChildProps;
+export type LogoutProps<TChildProps = {}> = ApolloReactHoc.MutateProps<
+  LogoutMutation,
+  LogoutMutationVariables
+> &
+  TChildProps;
 export function withLogout<TProps, TChildProps = {}>(
   operationOptions?: ApolloReactHoc.OperationOption<
     TProps,
@@ -445,9 +406,11 @@ export const SignupComponent = (props: SignupComponentProps) => (
   />
 );
 
-export type SignupProps<TChildProps = {}> =
-  | ApolloReactHoc.MutateProps<SignupMutation, SignupMutationVariables>
-  | TChildProps;
+export type SignupProps<TChildProps = {}> = ApolloReactHoc.MutateProps<
+  SignupMutation,
+  SignupMutationVariables
+> &
+  TChildProps;
 export function withSignup<TProps, TChildProps = {}>(
   operationOptions?: ApolloReactHoc.OperationOption<
     TProps,
@@ -505,6 +468,109 @@ export type SignupMutationOptions = ApolloReactCommon.BaseMutationOptions<
   SignupMutation,
   SignupMutationVariables
 >;
+export const DashboardDocument = gql`
+  query Dashboard($id: ID!) {
+    profile: user(id: $id) {
+      id
+      createdAt
+      updatedAt
+      email
+      firstName
+      lastName
+      username
+      phoneNumber
+      grids {
+        id
+      }
+    }
+  }
+`;
+export type DashboardComponentProps = Omit<
+  ApolloReactComponents.QueryComponentOptions<
+    DashboardQuery,
+    DashboardQueryVariables
+  >,
+  'query'
+> &
+  ({ variables: DashboardQueryVariables; skip?: boolean } | { skip: boolean });
+
+export const DashboardComponent = (props: DashboardComponentProps) => (
+  <ApolloReactComponents.Query<DashboardQuery, DashboardQueryVariables>
+    query={DashboardDocument}
+    {...props}
+  />
+);
+
+export type DashboardProps<TChildProps = {}> = ApolloReactHoc.DataProps<
+  DashboardQuery,
+  DashboardQueryVariables
+> &
+  TChildProps;
+export function withDashboard<TProps, TChildProps = {}>(
+  operationOptions?: ApolloReactHoc.OperationOption<
+    TProps,
+    DashboardQuery,
+    DashboardQueryVariables,
+    DashboardProps<TChildProps>
+  >
+) {
+  return ApolloReactHoc.withQuery<
+    TProps,
+    DashboardQuery,
+    DashboardQueryVariables,
+    DashboardProps<TChildProps>
+  >(DashboardDocument, {
+    alias: 'dashboard',
+    ...operationOptions
+  });
+}
+
+/**
+ * __useDashboardQuery__
+ *
+ * To run a query within a React component, call `useDashboardQuery` and pass it any options that fit your needs.
+ * When your component renders, `useDashboardQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useDashboardQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDashboardQuery(
+  baseOptions?: ApolloReactHooks.QueryHookOptions<
+    DashboardQuery,
+    DashboardQueryVariables
+  >
+) {
+  return ApolloReactHooks.useQuery<DashboardQuery, DashboardQueryVariables>(
+    DashboardDocument,
+    baseOptions
+  );
+}
+export function useDashboardLazyQuery(
+  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
+    DashboardQuery,
+    DashboardQueryVariables
+  >
+) {
+  return ApolloReactHooks.useLazyQuery<DashboardQuery, DashboardQueryVariables>(
+    DashboardDocument,
+    baseOptions
+  );
+}
+export type DashboardQueryHookResult = ReturnType<typeof useDashboardQuery>;
+export type DashboardLazyQueryHookResult = ReturnType<
+  typeof useDashboardLazyQuery
+>;
+export type DashboardQueryResult = ApolloReactCommon.QueryResult<
+  DashboardQuery,
+  DashboardQueryVariables
+>;
 export const MeDocument = gql`
   query Me {
     me {
@@ -526,9 +592,11 @@ export const MeComponent = (props: MeComponentProps) => (
   />
 );
 
-export type MeProps<TChildProps = {}> =
-  | ApolloReactHoc.DataProps<MeQuery, MeQueryVariables>
-  | TChildProps;
+export type MeProps<TChildProps = {}> = ApolloReactHoc.DataProps<
+  MeQuery,
+  MeQueryVariables
+> &
+  TChildProps;
 export function withMe<TProps, TChildProps = {}>(
   operationOptions?: ApolloReactHoc.OperationOption<
     TProps,
@@ -585,116 +653,6 @@ export type MeQueryResult = ApolloReactCommon.QueryResult<
   MeQuery,
   MeQueryVariables
 >;
-export const ProfileDocument = gql`
-  query Profile($id: ID!) {
-    profile: user(id: $id) {
-      id
-      createdAt
-      updatedAt
-      email
-      firstName
-      lastName
-      username
-      phoneNumber
-      grids {
-        id
-        createdAt
-        updatedAt
-        published
-        name
-        rows
-        columns
-        gridTemplateColumns
-        gridTemplateRows
-      }
-    }
-    me {
-      id
-    }
-  }
-`;
-export type ProfileComponentProps = Omit<
-  ApolloReactComponents.QueryComponentOptions<
-    ProfileQuery,
-    ProfileQueryVariables
-  >,
-  'query'
-> &
-  ({ variables: ProfileQueryVariables; skip?: boolean } | { skip: boolean });
-
-export const ProfileComponent = (props: ProfileComponentProps) => (
-  <ApolloReactComponents.Query<ProfileQuery, ProfileQueryVariables>
-    query={ProfileDocument}
-    {...props}
-  />
-);
-
-export type ProfileProps<TChildProps = {}> =
-  | ApolloReactHoc.DataProps<ProfileQuery, ProfileQueryVariables>
-  | TChildProps;
-export function withProfile<TProps, TChildProps = {}>(
-  operationOptions?: ApolloReactHoc.OperationOption<
-    TProps,
-    ProfileQuery,
-    ProfileQueryVariables,
-    ProfileProps<TChildProps>
-  >
-) {
-  return ApolloReactHoc.withQuery<
-    TProps,
-    ProfileQuery,
-    ProfileQueryVariables,
-    ProfileProps<TChildProps>
-  >(ProfileDocument, {
-    alias: 'profile',
-    ...operationOptions
-  });
-}
-
-/**
- * __useProfileQuery__
- *
- * To run a query within a React component, call `useProfileQuery` and pass it any options that fit your needs.
- * When your component renders, `useProfileQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useProfileQuery({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
-export function useProfileQuery(
-  baseOptions?: ApolloReactHooks.QueryHookOptions<
-    ProfileQuery,
-    ProfileQueryVariables
-  >
-) {
-  return ApolloReactHooks.useQuery<ProfileQuery, ProfileQueryVariables>(
-    ProfileDocument,
-    baseOptions
-  );
-}
-export function useProfileLazyQuery(
-  baseOptions?: ApolloReactHooks.LazyQueryHookOptions<
-    ProfileQuery,
-    ProfileQueryVariables
-  >
-) {
-  return ApolloReactHooks.useLazyQuery<ProfileQuery, ProfileQueryVariables>(
-    ProfileDocument,
-    baseOptions
-  );
-}
-export type ProfileQueryHookResult = ReturnType<typeof useProfileQuery>;
-export type ProfileLazyQueryHookResult = ReturnType<typeof useProfileLazyQuery>;
-export type ProfileQueryResult = ApolloReactCommon.QueryResult<
-  ProfileQuery,
-  ProfileQueryVariables
->;
 export const UserDocument = gql`
   query User($id: ID) {
     user(id: $id) {
@@ -708,14 +666,6 @@ export const UserDocument = gql`
       phoneNumber
       grids {
         id
-        createdAt
-        updatedAt
-        published
-        name
-        rows
-        columns
-        gridTemplateColumns
-        gridTemplateRows
       }
     }
   }
@@ -732,9 +682,11 @@ export const UserComponent = (props: UserComponentProps) => (
   />
 );
 
-export type UserProps<TChildProps = {}> =
-  | ApolloReactHoc.DataProps<UserQuery, UserQueryVariables>
-  | TChildProps;
+export type UserProps<TChildProps = {}> = ApolloReactHoc.DataProps<
+  UserQuery,
+  UserQueryVariables
+> &
+  TChildProps;
 export function withUser<TProps, TChildProps = {}>(
   operationOptions?: ApolloReactHoc.OperationOption<
     TProps,
@@ -815,9 +767,11 @@ export const UsersComponent = (props: UsersComponentProps) => (
   />
 );
 
-export type UsersProps<TChildProps = {}> =
-  | ApolloReactHoc.DataProps<UsersQuery, UsersQueryVariables>
-  | TChildProps;
+export type UsersProps<TChildProps = {}> = ApolloReactHoc.DataProps<
+  UsersQuery,
+  UsersQueryVariables
+> &
+  TChildProps;
 export function withUsers<TProps, TChildProps = {}>(
   operationOptions?: ApolloReactHoc.OperationOption<
     TProps,

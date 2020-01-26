@@ -1,5 +1,5 @@
-query User($id: ID) {
-  user(id: $id) {
+query Dashboard($id: ID!) {
+  profile: user(id: $id) {
     id
     createdAt
     updatedAt

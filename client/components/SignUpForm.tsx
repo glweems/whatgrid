@@ -1,36 +1,59 @@
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
+import withRouter, { WithRouterProps } from 'next/dist/client/with-router';
 import Button from './Button';
 import TextField from './TextField';
-import { Form } from './common';
-import * as Gen from '../utils/generated';
+import Form from './Form';
+import * as GQL from '../utils/generated';
+import { signupValidationSchema } from '../utils/formValidation';
+import { useStoreActions } from '../store';
 
-const SignupForm = () => {
-  const [signup] = Gen.useSignupMutation();
+const SignupForm: React.FC<WithRouterProps> = ({ router }) => {
+  const [signup] = GQL.useSignupMutation();
+  const [error, setError] = useState<{ message: string }[]>([]);
+  const { setSession } = useStoreActions(store => store.session);
   const [msg, setMsg] = useState('');
 
-  const { handleChange, handleSubmit, isSubmitting } = useFormik<
-    Gen.SignupMutationVariables
+  const { handleChange, handleSubmit, isSubmitting, errors } = useFormik<
+    GQL.SignupMutationVariables
   >({
     initialValues: {
       email: '',
       password: ''
     },
-
-    onSubmit: async ({ email, password }) => {
+    validationSchema: signupValidationSchema,
+    validateOnChange: false,
+    onSubmit: async values => {
       await signup({
-        variables: { email, password }
-      }).then(({ data }) => {
-        setMsg(data.signup.user.email);
-      });
+        variables: { ...values }
+      })
+        .then(({ data }) => {
+          setSession(data.signup.user);
+          router.push('/dashboard');
+        })
+        .catch(err => setError(err));
     }
   });
 
   return (
-    <Form onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit} errors={errors}>
       <TextField
-        label="Email Address"
-        name="email"
+        label="First Name"
+        name="firstName"
+        type="text"
+        onChange={handleChange}
+      />
+
+      <TextField
+        label="Last Name"
+        name="lastName"
+        type="text"
+        onChange={handleChange}
+      />
+
+      <TextField
+        label="Phone Number"
+        name="phoneNumber"
         type="text"
         onChange={handleChange}
       />
@@ -38,6 +61,13 @@ const SignupForm = () => {
       <TextField
         label="Username"
         name="username"
+        type="text"
+        onChange={handleChange}
+      />
+
+      <TextField
+        label="Email Address"
+        name="email"
         type="text"
         onChange={handleChange}
       />
@@ -57,4 +87,4 @@ const SignupForm = () => {
   );
 };
 
-export default SignupForm;
+export default withRouter(SignupForm);

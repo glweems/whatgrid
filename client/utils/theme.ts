@@ -1,4 +1,4 @@
-import { createGlobalStyle, css } from 'styled-components/macro';
+import { createGlobalStyle } from 'styled-components/macro';
 import { darken } from 'polished';
 import {
   ResponsiveValue,
@@ -27,6 +27,21 @@ export const colors = {
     darken(0.5, '#4e67eb')
   ],
   primaryDark: darken(0.1, '#4e67eb'),
+  errors: [
+    'rgba(243, 46, 32,.0125)',
+    'rgba(243, 46, 32,.025)',
+    'rgba(243, 46, 32,.05)',
+    'rgba(243, 46, 32,.1)',
+    'rgba(243, 46, 32,.2)',
+    'rgba(243, 46, 32,.3)',
+    'rgba(243, 46, 32,.4)',
+    'rgba(243, 46, 32,.5)',
+    'rgba(243, 46, 32,.6)',
+    'rgba(243, 46, 32,.7)',
+    'rgba(243, 46, 32,.8)',
+    'rgba(243, 46, 32,.9)',
+    'rgba(243, 46, 32)'
+  ],
   blacks: [
     'rgba(0,0,0,.0125)',
     'rgba(0,0,0,.025)',
@@ -160,22 +175,23 @@ export const baseTheme = {
   breakpoints,
   space,
   fontSizes,
-  fontWeights,
-  lineHeights: {
-    solid: 1,
-    title: 1.25,
-    copy: 1.5
-  },
-  letterSpacings: {
-    normal: 'normal',
-    tracked: '0.1em',
-    tight: '-0.05em',
-    mega: '0.25em'
-  },
   fonts: {
-    serif: 'athelas, georgia, times, serif',
-    sansSerif:
-      '-apple-system, "Noto Sans", BlinkMacSystemFont, "avenir next", avenir, "helvetica neue", helvetica, ubuntu, roboto, noto, "segoe ui", arial, sans-serif'
+    body: 'system-ui, sans-serif',
+    heading: 'inherit',
+    monospace: 'Menlo, monospace'
+  },
+  fontWeights: {
+    body: 400,
+    heading: 700,
+    bold: 700
+  },
+  lineHeights: {
+    body: 1.5,
+    heading: 1.25
+  },
+  shadows: {
+    small: '0 0 4px rgba(0, 0, 0, .125)',
+    large: '0 0 24px rgba(0, 0, 0, .125)'
   },
   borders,
   radii: [0, 2, 4, 16, 9999, '100%'],
@@ -195,8 +211,16 @@ export const baseTheme = {
     }
   }
 };
+const getShades = mode => (mode === 'dark' ? colors.whites : colors.blacks);
 
-const getColors: GetColors = mode => ({ ...colors, ...colorModes[mode] });
+const getColors: GetColors = mode => {
+  return {
+    ...colors,
+    ...colorModes[mode],
+    shades: getShades(mode)
+  };
+};
+
 export const getTheme: GetTheme = mode => ({
   ...baseTheme,
   mode,

@@ -12,19 +12,19 @@ import {
 
 type Props = {
   errors: {
-    [key: string]: string;
-  };
+    message: string;
+  }[];
 } & ListProps;
 
 type ListProps = SpaceProps & ColorProps & TypographyProps;
 
-const ErrorList: React.FC<Props> = ({ errors, ...props }) => {
-  const msgs = Object.keys(errors).map(key => `${key}: ${errors[key]}`);
+const ErrorList: React.FC<Props> = ({ errors }) => {
+  // const msgs = Object.keys(errors).map(key => `${key}: ${errors[key]}`);
 
   return (
     <List>
-      {msgs.map(err => (
-        <li key={uuid()}>{err}</li>
+      {errors.map(err => (
+        <li key={uuid()}>{err.message}</li>
       ))}
     </List>
   );

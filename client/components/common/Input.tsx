@@ -1,41 +1,54 @@
 import styled, { StyledComponent } from 'styled-components';
 import { Input as RebassInput } from '@rebass/forms';
-import {
-  border,
-  space,
-  borderRadius,
-  BorderProps,
-  SpaceProps,
-  BorderRadiusProps,
-  ColorProps,
-  color
-} from 'styled-system';
+import * as System from 'styled-system';
 
-type Props = {} & SpaceProps & BorderProps & BorderRadiusProps & ColorProps;
+const utility = System.compose(
+  System.borderRadius,
+  System.border,
+  System.space,
+  System.color
+);
 
-type InputProps = React.HTMLProps<HTMLButtonElement>;
+type Props = {} & System.SpaceProps &
+  System.BorderProps &
+  System.BorderRadiusProps &
+  System.ColorProps;
+
+type InputProps = { error: boolean } & React.HTMLProps<HTMLButtonElement>;
 
 export const Input: StyledComponent<
   typeof RebassInput,
   InputProps,
   Props,
   never
-> = styled(RebassInput)`
-  ${borderRadius};
-  ${border};
-  ${space};
-  ${color};
+> = styled.input<{ error: boolean }>`
+  ${utility};
+  display: block;
+  box-sizing: border-box;
+  min-width: 0;
+  color: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  border-color: ${({ theme, error }) =>
+    error ? theme.colors.errors[7] : theme.colors.shades[5]};
+  appearance: none;
   :focus {
-    border-color: ${({ theme }) => theme.colors.primary};
+    border: ${({ theme }) => `${theme.borders[1]} ${theme.colors.primary}`};
+    border-color: ${({ theme, error }) =>
+      error ? theme.colors.errors[10] : theme.colors.primary};
     outline: none;
+    box-shadow: 0 0 0 2px ${({ theme }) => theme.colors.blues[1]};
   }
 `;
 
 Input.defaultProps = {
-  padding: 2,
-  border: 2,
+  padding: 1,
+  w: '100%',
+  border: 1,
+  m: 0,
   borderRadius: 2,
-  bg: ''
+  bg: 'white',
+  borderColor: 'whites[2]'
 };
 
 Input.displayName = 'Input';

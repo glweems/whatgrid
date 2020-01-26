@@ -1,0 +1,12 @@
+projects:
+  db:
+    schemaPath: prisma.graphql
+    extensions:
+      endpoints:
+        default: 'https:////whatgrid-1562e982ca.herokuapp.com/whatgrid-server/dev'
+      codegen:
+        - generator: prisma-binding
+          language: typescript
+          input: ./src/schema.graphql
+          output:
+            binding: prisma.ts

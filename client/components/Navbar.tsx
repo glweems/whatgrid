@@ -16,6 +16,7 @@ import { Link } from './common/Link';
 import { useStoreActions, useStoreState } from '../store';
 import { Theme } from '../utils/theme';
 import Button from './Button';
+import { signup, login } from '../utils/routes';
 
 interface Props {
   showSidebarToggle: boolean;
@@ -49,8 +50,8 @@ const NavLinks: any = () => {
   if (authenticated) return <Link to="/dashboard" text="Dashboard" />;
   return (
     <Nav>
-      <Link to="/welcome?login=true">signup</Link>
-      <Link to="/welcome?signup=true">signin</Link>
+      <Link to={signup.path}>{signup.text}</Link>
+      <Link to={login.path}>{login.text}</Link>
     </Nav>
   );
 };

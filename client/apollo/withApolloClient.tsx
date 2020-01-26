@@ -7,6 +7,7 @@ import Head from 'next/head';
 import { ApolloClient } from 'apollo-client';
 import { NormalizedCacheObject } from 'apollo-cache-inmemory';
 import cookie from 'cookie';
+import Cookie from 'js-cookie';
 import { getDataFromTree } from 'react-apollo';
 import gql from 'graphql-tag';
 import initApollo from './initApollo';
@@ -25,7 +26,8 @@ function parseCookies(req?: any, options = {}) {
   );
 }
 
-export default (App: any) => {
+export default (App: any, { ssr = true } = {}) => {
+  console.log(ssr);
   return class WithData extends React.Component<any> {
     static displayName = `WhatGridApplication`;
 
@@ -66,6 +68,7 @@ export default (App: any) => {
               Component={Component}
               router={router}
               apolloClient={apollo}
+              store={store}
             />
           );
         } catch (error) {
@@ -99,10 +102,11 @@ export default (App: any) => {
         getToken: () => parseCookies().token
       });
 
-      if (!store.getState().apolloClient)
-        store.addModel('client', this.apolloClient);
-      if (!store.getState().router) store.addModel('router', this.props.router);
-      if (!store.getState().session) store.addModel('session', sessionModal);
+      const models = store.getState();
+
+      if ((!models as any).client) store.addModel('client', this.apolloClient);
+      if (!models.router) store.addModel('router', this.props.router);
+      if (!models.session) store.addModel('session', sessionModal);
 
       this.apolloClient
         .query({
@@ -116,13 +120,35 @@ export default (App: any) => {
             }
           `
         })
-        .then(({ data: { me } }) => {
-          if (me !== null)
+        .then(async ({ data: { me } }) => {
+          if (me !== null) {
+            const profile = await this.apolloClient.query({
+              query: gql`
+                query Dashboard($id: ID!) {
+                  profile: user(id: $id) {
+                    id
+                    createdAt
+                    updatedAt
+                    email
+                    firstName
+                    lastName
+                    username
+                    phoneNumber
+                    grids {
+                      id
+                    }
+                  }
+                }
+              `,
+              variables: { id: me.id }
+            });
+
             store.dispatch.session.setSession({
               ...me,
+              ...profile,
               authenticated: true
             });
-          else store.dispatch.session.clearSession();
+          }
         })
         .catch(() => store.dispatch.session.clearSession());
     }

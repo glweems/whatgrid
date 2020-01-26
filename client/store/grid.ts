@@ -99,6 +99,8 @@ export const initialColumns: GridItem[] = [
 
 export interface GridModel {
   items: GridItem[];
+  horizontalGap: GridGap;
+  verticalGap: GridGap;
   rows: Computed<GridModel, GridItem[]>;
   columns: Computed<GridModel, GridItem[]>;
   rowCount: Computed<GridModel, number>;
@@ -108,8 +110,6 @@ export interface GridModel {
   updateGridItem: Action<GridModel, GridItem>;
   gridTemplateRows: Computed<GridModel, string>;
   gridTemplateColumns: Computed<GridModel, string>;
-  verticalGap: GridGap;
-  horizontalGap: GridGap;
   gridGap: Computed<GridModel, GridGap[]>;
   gridGapCss: Computed<GridModel, string>;
   updateGridGap: Action<

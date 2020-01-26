@@ -9,13 +9,5 @@ fragment userFields on User {
   phoneNumber
   grids {
     id
-    createdAt
-    updatedAt
-    published
-    name
-    rows
-    columns
-    gridTemplateColumns
-    gridTemplateRows
   }
 }
