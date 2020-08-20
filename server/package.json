@@ -9,7 +9,7 @@
     "lint:fix": "yarn lint --fix"
   },
   "dependencies": {
-    "bcrypt": "^3.0.7",
+    "bcrypt": "^5.0.0",
     "colors": "^1.4.0",
     "cookie-parser": "^1.4.4",
     "dotenv": "^8.2.0",
